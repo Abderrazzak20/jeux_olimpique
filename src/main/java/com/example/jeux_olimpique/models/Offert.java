@@ -16,10 +16,11 @@ import lombok.Setter;
 
 public class Offert {
 	@jakarta.persistence.Id @GeneratedValue(strategy = GenerationType.IDENTITY)
-private Long id;
+    private Long id;
+	
 	private String name;
-	private String descritption;
-	private int accesNumber;
+	private Integer max_People;
+	private Integer price;
 	
 
 }
