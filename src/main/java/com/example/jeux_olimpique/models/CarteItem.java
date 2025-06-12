@@ -18,10 +18,13 @@ import lombok.Setter;
 @NoArgsConstructor
 public class CarteItem {
 
-
-    @jakarta.persistence.Id @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-    @ManyToOne
-    private Offert offert;
-    private int quantity;
+	@jakarta.persistence.Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long id;
+	@ManyToOne
+	private Offert offert;
+	
+	@ManyToOne
+	private Cart cart;
+	private int quantity;
 }
