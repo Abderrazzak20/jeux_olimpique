@@ -12,6 +12,7 @@ import com.example.jeux_olimpique.models.User;
 import com.example.jeux_olimpique.repository.CartRepository;
 import com.example.jeux_olimpique.repository.CarteItemRepository;
 import com.example.jeux_olimpique.repository.OffertRepository;
+import com.example.jeux_olimpique.repository.UserRepository;
 
 @Service
 public class CarteService {
@@ -22,6 +23,9 @@ public class CarteService {
 	private CarteItemRepository carteItemRepository;
 	@Autowired
 	private OffertRepository offertRepository;
+	
+	@Autowired
+	private UserRepository userRepository;
 
 	// nuovo carrelo per il cliente ou cercarlo
 	public Cart getCartByUser(User user) {
@@ -35,32 +39,54 @@ public class CarteService {
 		return cart;
 	}
 
-	public void addOffertToCart(Long offertId, User user, int quantity) {
-		Cart cart = getCartByUser(user);
-		Offert offert = offertRepository.findById(offertId)
-				.orElseThrow(() -> new RuntimeException("l'offert n'est pas disponible"));
-
-		CarteItem item = new CarteItem();
-		item.setCart(cart);
-		item.setOffert(offert);
-		item.setQuantity(quantity);
-		carteItemRepository.save(item);
+	public List<Cart> getAllCart() {
+		return cartRepository.findAll();
 	}
 
-	public List<CarteItem> getCarteItems(User user) {
+		
+	public void addOffertToCart(Long userId ,Long offerId,int quantity) {
+		
+		User user = userRepository.findById(userId)
+				.orElseThrow(()-> new RuntimeException("user il est pas trouve"));
 		Cart cart = getCartByUser(user);
+		
+		Offert offert = offertRepository.findById(offerId)
+				.orElseThrow(()-> new RuntimeException("l'offert n'est pas disponible"));
+		
+		
+		
+		CarteItem items= new CarteItem();
+		items.setCart(cart);
+		items.setOffert(offert);
+		items.setQuantity(quantity);
+		carteItemRepository.save(items);
+		
+	}
+
+	public List<CarteItem> getCarteItems(Long userId) {
+		Cart cart = cartRepository.findById(userId)
+				.orElseThrow(()-> new RuntimeException("cart inexistante"));
+				
 		return cart.getItems();
 	}
 
-	public void removeCartItems(User user, Long carteId) {
-		CarteItem item = carteItemRepository.findById(carteId)
+	public void removeCartItems(Long userId, Long cartItemId) {
+		CarteItem item = carteItemRepository.findById(cartItemId)
 				.orElseThrow(() -> new RuntimeException("item pas trouvé"));
-		if (item.getCart().getUser().getId().equals(user.getId())) {
+		
+		
+		if (item.getCart().getUser().getUserId().equals(userId)) {
 			carteItemRepository.delete(item);
+			
 		} else {
 			throw new RuntimeException("element impossible a supperimer pk il est pas trouve");
 		}
 
 	}
+	
+	public void removeCart(Long cartId) {
+		cartRepository.deleteById(cartId);
+	}
+	
 
 }

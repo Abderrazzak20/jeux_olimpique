@@ -17,7 +17,7 @@ import lombok.Setter;
 public class User {
 
 	@jakarta.persistence.Id @GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long id;
+	private Long UserId;
 	private String username ;
 	private String name;
 	private String password;

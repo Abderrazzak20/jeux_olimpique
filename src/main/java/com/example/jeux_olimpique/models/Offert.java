@@ -16,7 +16,7 @@ import lombok.Setter;
 
 public class Offert {
 	@jakarta.persistence.Id @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Long offertId;
 	
 	private String name;
 	private Integer max_People;

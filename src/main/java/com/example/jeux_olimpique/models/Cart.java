@@ -1,7 +1,9 @@
 package com.example.jeux_olimpique.models;
 
+import java.util.ArrayList;
 import java.util.List;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -21,10 +23,10 @@ import lombok.Setter;
 public class Cart {
 
 	@jakarta.persistence.Id @GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long id;
+	private Long cartId;
 	@OneToOne
 	private User user;
-	@OneToMany
-	private List<CarteItem> items;
+	@OneToMany(mappedBy = "cart", cascade = CascadeType.ALL, orphanRemoval = true) //da comprendere
+	private List<CarteItem> items = new ArrayList<CarteItem>();
 	
 }

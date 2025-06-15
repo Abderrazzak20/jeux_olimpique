@@ -23,19 +23,34 @@ public class CarteController {
 	@Autowired
 	private CarteService carteService;
 
-	@GetMapping
-	public List<CarteItem> gatCartItems(User user) {
-		return carteService.getCarteItems(user);
+	@GetMapping // tutti i carrelli presenti
+	public List<Cart> getCart() {
+		return carteService.getAllCart();
 	}
 
-	@PostMapping("/{id}/")
-	public void addOffertToCart(User user, @RequestParam Long offerid, @RequestParam int quantity) {
-		carteService.addOffertToCart(offerid, user, quantity);
-	}
-	
-	@DeleteMapping("/{id}/")
-	public void deletecarteItem(User user,@PathVariable Long id) {
-		carteService.removeCartItems(user, id);
+	@GetMapping("/{userId}/items") // tutti i prodotti presenti per un user
+	public List<CarteItem> getAllItems(@PathVariable Long userId) {
+		return carteService.getCarteItems(userId);
 	}
 
+	@PostMapping("/{userId}/") // aggiungi un offerta al carrello
+	public void addOffertToCart(@PathVariable Long userId, @RequestParam Long offerid, @RequestParam int quantity) {
+		carteService.addOffertToCart(userId, offerid, quantity);
+	}
+
+	@DeleteMapping("/{userId}/") // elima un prodotto nel carrello
+	public String deletecarteItem(@PathVariable Long userId, @RequestParam Long cartItemId) {
+		carteService.removeCartItems(userId, cartItemId);
+		return "produit elimine";
+	}
+
+	@DeleteMapping("{cartId}")
+
+	public String deleteCarte(@PathVariable Long cartId) {
+		carteService.removeCart(cartId);
+		return "cart supprime avec succes";
+
+	}
 }
+
+
