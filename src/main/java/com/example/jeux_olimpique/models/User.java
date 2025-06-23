@@ -1,5 +1,6 @@
 package com.example.jeux_olimpique.models;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -17,7 +18,8 @@ import lombok.Setter;
 public class User {
 
 	@jakarta.persistence.Id @GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long UserId;
+	@Column(name = "userId")
+	private Long Id;
 	private String username ;
 	private String name;
 	private String password;
@@ -25,3 +27,4 @@ public class User {
 	private String accountKey;
 
 }
+

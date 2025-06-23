@@ -2,6 +2,7 @@ package com.example.jeux_olimpique.models;
 
 import java.util.List;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -21,7 +22,8 @@ public class Reservation {
 
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long id;
+    @Column(name = "reservationId")
+	private Long Id;
     @ManyToOne
     private User user;
     @ManyToOne
@@ -29,5 +31,6 @@ public class Reservation {
     
     private String ticketKey;
     private String finalKey;
+    @Column(length = 2048)
     private String qrCode;
 }

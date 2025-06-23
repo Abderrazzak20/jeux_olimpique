@@ -30,7 +30,7 @@ public class OffertServiceImpl implements OffertService{
 	}
 
 	public Offert updateOffert(Offert offert) {
-		if (!offertRepository.existsById(offert.getOffertId())) {
+		if (!offertRepository.existsById(offert.getId())) {
 			throw new RuntimeException("offerte pas present");
 		}
 		return offertRepository.save(offert);

@@ -75,7 +75,7 @@ public class CarteService {
 				.orElseThrow(() -> new RuntimeException("item pas trouvé"));
 		
 		
-		if (item.getCart().getUser().getUserId().equals(userId)) {
+		if (item.getCart().getUser().getId().equals(userId)) {
 			carteItemRepository.delete(item);
 			
 		} else {

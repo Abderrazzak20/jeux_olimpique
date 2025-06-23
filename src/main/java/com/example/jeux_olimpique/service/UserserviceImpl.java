@@ -47,7 +47,7 @@ public class UserserviceImpl implements UserService {
 
 	@Override
 	public User updateUser(User user) {
-		if (!userRepository.existsById(user.getUserId())) {
+		if (!userRepository.existsById(user.getId())) {
 			throw new RuntimeException("utente non esiste");
 		}
 		return userRepository.save(user);
