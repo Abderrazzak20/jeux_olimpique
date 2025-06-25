@@ -27,15 +27,19 @@ public class ReservationController {
 	private ReservationService reservationService;
 
 	@PostMapping
-	public ResponseEntity<Reservation> createReservation(@RequestParam Long userId, @RequestParam Long offertId)
-			throws WriterException, IOException {
-		Reservation reservation = reservationService.createReservation(userId, offertId);
-
-		return ResponseEntity.ok(reservation);
+	public ResponseEntity<?> createReservation(@RequestParam Long userId, @RequestParam Long offertId) {
+	    try {
+	        Reservation reservation = reservationService.createReservation(userId, offertId);
+	        return ResponseEntity.ok(reservation);
+	    } catch (RuntimeException | WriterException | IOException e) {
+	        return ResponseEntity.badRequest().body(e.getMessage());
+	    }
 	}
 
+
+
 	// Ottieni tutte le prenotazioni di un utente
-	@GetMapping("/user/{userId}/")
+	@GetMapping("/user/{userId}")
 	public List<Reservation> getReservationByUser(@PathVariable Long userId) {
 
 		List<Reservation> listReservationByUser = reservationService.getReservationByUser(userId);
@@ -43,7 +47,7 @@ public class ReservationController {
 	}
 
 	// Ottieni tutte le prenotazioni di un offert
-	@GetMapping("/offert/{offertId}/")
+	@GetMapping("/offert/{offertId}")
 	public List<Reservation> getReservationByOffert(@PathVariable Long offertId) {
 
 		List<Reservation> listReservationByOffert = reservationService.getReservationByOffert(offertId);

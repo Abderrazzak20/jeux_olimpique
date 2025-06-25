@@ -23,6 +23,6 @@ public class Offert {
 	private String name;
 	private Integer max_People;
 	private Integer price;
-	
+	private int availableSeats;
 
 }
