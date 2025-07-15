@@ -2,6 +2,8 @@ package com.example.jeux_olimpique.models;
 
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -27,6 +29,7 @@ public class CarteItem {
 	private Offert offert;
 	
 	@ManyToOne
+	@JsonBackReference
 	private Cart cart;
 	private int quantity;
 }
