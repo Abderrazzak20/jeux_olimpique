@@ -38,14 +38,13 @@ public class CarteController {
 		carteService.addOffertToCart(userId, offerid, quantity);
 	}
 
-	@DeleteMapping("/{userId}/") // elima un prodotto nel carrello
+	@DeleteMapping("items/{userId}/") // elima un prodotto nel carrello
 	public String deletecarteItem(@PathVariable Long userId, @RequestParam Long cartItemId) {
 		carteService.removeCartItems(userId, cartItemId);
 		return "produit elimine";
 	}
 
 	@DeleteMapping("{cartId}")
-
 	public String deleteCarte(@PathVariable Long cartId) {
 		carteService.removeCart(cartId);
 		return "cart supprime avec succes";
