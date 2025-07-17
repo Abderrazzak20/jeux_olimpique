@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -33,16 +34,19 @@ public class OffertController {
 		return offertService.getOffertById(id);
 	}
 
+	@PreAuthorize("hasRole('ADMIN')")
 	@PostMapping
 	public Offert createOffert(@RequestBody Offert offert) {
 		return offertService.createOffert(offert);
 	}
 	
+	@PreAuthorize("hasRole('ADMIN')")
 	@PutMapping("/{id}")
 	public Offert modifieOffert(@RequestBody Offert offert,@PathVariable Long id) {
 		return offertService.updateOffert(offert);
 	}
 	
+	@PreAuthorize("hasRole('ADMIN')")
 	@DeleteMapping("/{id}")
 	public void deletOffert(@PathVariable Long id) {
 		offertService.deleteOffertById(id);

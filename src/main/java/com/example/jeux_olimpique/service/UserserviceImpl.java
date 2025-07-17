@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.example.jeux_olimpique.models.User;
@@ -16,6 +17,8 @@ public class UserserviceImpl implements UserService {
 
 	@Autowired
 	private UserRepository userRepository;
+	@Autowired
+	private PasswordEncoder passwordEncoder;
 
 	@Autowired
 	Utilss utils;
@@ -27,6 +30,8 @@ public class UserserviceImpl implements UserService {
 		}
 		String newKey = utils.generateKey();
 		user.setAccountKey(newKey);
+		  String encodedPassword = passwordEncoder.encode(user.getPassword());
+	        user.setPassword(encodedPassword);
 		return userRepository.save(user);
 	}
 
