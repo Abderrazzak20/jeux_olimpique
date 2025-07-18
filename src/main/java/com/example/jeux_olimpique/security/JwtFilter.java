@@ -5,12 +5,17 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
+import io.jsonwebtoken.Jwts;
+
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 @Component
 public class JwtFilter extends OncePerRequestFilter {
@@ -40,14 +45,31 @@ public class JwtFilter extends OncePerRequestFilter {
 
         if (email != null && SecurityContextHolder.getContext().getAuthentication() == null) {
             var userDetails = userDetailsService.loadUserByUsername(email);
+
             if (jwtService.isTokenValid(token, userDetails.getUsername())) {
+                var claims = Jwts.parserBuilder()
+                        .setSigningKey(jwtService.getSignKey())
+                        .build()
+                        .parseClaimsJws(token)
+                        .getBody();
+
+                List<SimpleGrantedAuthority> authorities = new ArrayList<>();
+                var roles = (List<?>) claims.get("roles");
+                if (roles != null) {
+                    for (Object role : roles) {
+                        authorities.add(new SimpleGrantedAuthority(role.toString()));
+                    }
+                }
+
                 var authToken = new UsernamePasswordAuthenticationToken(
-                        userDetails, null, userDetails.getAuthorities()
+                        userDetails, null, authorities
                 );
                 authToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
                 SecurityContextHolder.getContext().setAuthentication(authToken);
             }
         }
+
+
 
         filterChain.doFilter(request, response);
     }

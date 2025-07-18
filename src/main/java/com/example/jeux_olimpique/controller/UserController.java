@@ -18,16 +18,11 @@ import com.example.jeux_olimpique.service.UserService;
 
 @RestController
 @RequestMapping("/api/users")
-public class UserController { // <-- Nota: la classe dovrebbe iniziare con la maiuscola
-
+public class UserController { 
     @Autowired
     private UserService userService;
 
-    @PostMapping
-    public User createUser(@RequestBody User user) {
-        return userService.createUser(user);
-    }
-
+  
     @GetMapping("/{id}")
     public Optional<User> getUserById(@PathVariable Long id) {
         return userService.getUserById(id);

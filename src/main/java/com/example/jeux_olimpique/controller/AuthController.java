@@ -3,7 +3,10 @@ package com.example.jeux_olimpique.controller;
 
 import com.example.jeux_olimpique.DTO.AuthRequest;
 import com.example.jeux_olimpique.DTO.AuthResponse;
+import com.example.jeux_olimpique.models.User;
 import com.example.jeux_olimpique.security.JwtService;
+import com.example.jeux_olimpique.service.AuthService;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -16,21 +19,18 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/auth")
 public class AuthController {
 
-    @Autowired
-    private AuthenticationManager authenticationManager;
-
-    @Autowired
-    private JwtService jwtService;
+	@Autowired
+  private AuthService authService;
 
     @PostMapping("/login")
     public ResponseEntity<AuthResponse> login(@RequestBody AuthRequest request) {
-        Authentication authentication = authenticationManager.authenticate(
-                new UsernamePasswordAuthenticationToken(request.getEmail(), request.getPassword())
-        );
-
-        SecurityContextHolder.getContext().setAuthentication(authentication);
-        String token = jwtService.generateToken(request.getEmail());
-
-        return ResponseEntity.ok(new AuthResponse(token));
+     return authService.login(request);
     }
+    
+    @PostMapping("/register")
+    public ResponseEntity<User> register(@RequestBody User user) {
+    	User createUser = authService.createUser(user);
+        return ResponseEntity.ok(createUser);
+    }
+
 }

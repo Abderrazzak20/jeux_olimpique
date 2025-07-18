@@ -2,6 +2,9 @@ package com.example.jeux_olimpique.security;
 
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.security.Keys;
+
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
 import java.security.Key;
@@ -14,13 +17,16 @@ public class JwtService {
 
     private final long EXPIRATION = 1000 * 60 * 60 * 24; // 24h
 
-    private Key getSignKey() {
+    public Key getSignKey() {
         return Keys.hmacShaKeyFor(SECRET_KEY.getBytes());
     }
 
-    public String generateToken(String email) {
+    public String generateToken(UserDetails userDetails) {
         return Jwts.builder()
-                .setSubject(email)
+                .setSubject(userDetails.getUsername()) // di solito email
+                .claim("roles", userDetails.getAuthorities().stream()
+                        .map(GrantedAuthority::getAuthority)
+                        .toList())
                 .setIssuedAt(new Date(System.currentTimeMillis()))
                 .setExpiration(new Date(System.currentTimeMillis() + EXPIRATION))
                 .signWith(getSignKey(), SignatureAlgorithm.HS256)
