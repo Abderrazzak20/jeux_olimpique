@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -33,12 +34,13 @@ public class CarteController {
 		return carteService.getCarteItems(userId);
 	}
 
-	@PostMapping("/{userId}/") // aggiungi un offerta al carrello
-	public void addOffertToCart(@PathVariable Long userId, @RequestParam Long offerid, @RequestParam int quantity) {
+	@PostMapping("/{userId}") // aggiungi un offerta al carrello
+	public String addOffertToCart(@PathVariable Long userId, @RequestParam Long offerid, @RequestParam Integer quantity) {
 		carteService.addOffertToCart(userId, offerid, quantity);
+		return "offert added to Cart";
 	}
 
-	@DeleteMapping("items/{userId}/") // elima un prodotto nel carrello
+	@DeleteMapping("/{userId}/items") // elima un prodotto nel carrello
 	public String deletecarteItem(@PathVariable Long userId, @RequestParam Long cartItemId) {
 		carteService.removeCartItems(userId, cartItemId);
 		return "produit elimine";
