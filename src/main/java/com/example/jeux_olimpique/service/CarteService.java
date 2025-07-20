@@ -53,8 +53,6 @@ public class CarteService {
 		Offert offert = offertRepository.findById(offerId)
 				.orElseThrow(()-> new RuntimeException("l'offert n'est pas disponible"));
 		
-		
-		
 		CarteItem items= new CarteItem();
 		items.setCart(cart);
 		items.setOffert(offert);
@@ -63,10 +61,13 @@ public class CarteService {
 		
 	}
 
-	public List<CarteItem> getCarteItems(Long userId) {
-		Cart cart = cartRepository.findById(userId)
+	public List<CarteItem> getCarteItems(Long userId) {			
+		User user = userRepository.findById(userId)
 				.orElseThrow(()-> new RuntimeException("cart inexistante"));
-				
+		Cart cart = cartRepository.findByUser(user);
+		if(cart==null) {
+			throw new RuntimeException("carrello inesistente");
+		}
 		return cart.getItems();
 	}
 

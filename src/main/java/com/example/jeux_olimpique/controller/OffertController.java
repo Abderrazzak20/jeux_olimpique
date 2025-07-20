@@ -36,20 +36,23 @@ public class OffertController {
 
 	@PreAuthorize("hasRole('ADMIN')")
 	@PostMapping
-	public Offert createOffert(@RequestBody Offert offert) {
-		return offertService.createOffert(offert);
+	public String createOffert(@RequestBody Offert offert) {
+		 offertService.createOffert(offert);
+		 return "Add offert with succes offert id:"+offert.getId();
 	}
 	
 	@PreAuthorize("hasRole('ADMIN')")
 	@PutMapping("/{id}")
-	public Offert modifieOffert(@RequestBody Offert offert,@PathVariable Long id) {
-		return offertService.updateOffert(offert);
+	public String modifieOffert(@RequestBody Offert offert,@PathVariable Long id) {
+		 offertService.updateOffert(offert);
+		 return "modifer avec succes offert id: "+id;
 	}
 	
 	@PreAuthorize("hasRole('ADMIN')")
 	@DeleteMapping("/{id}")
-	public void deletOffert(@PathVariable Long id) {
+	public String deletOffert(@PathVariable Long id) {
 		offertService.deleteOffertById(id);
+		return "Supprimer avec Succes offert id: "+id;
 	}
 
 }
