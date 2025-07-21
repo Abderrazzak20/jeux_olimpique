@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.example.jeux_olimpique.models.Offert;
 import com.example.jeux_olimpique.models.Reservation;
 import com.example.jeux_olimpique.service.ReservationService;
 import com.google.zxing.WriterException;
@@ -57,9 +56,7 @@ public class ReservationController {
 
     // Aggiorna una prenotazione (cambia offerta)
     @PutMapping("/{reservationId}")
-    public ResponseEntity<Reservation> updateReservation(
-            @PathVariable Long reservationId,
-            @RequestParam Long newOffertId) throws WriterException, IOException {
+    public ResponseEntity<Reservation> updateReservation( @PathVariable Long reservationId,@RequestParam Long newOffertId) throws WriterException, IOException {
         Reservation reservation = reservationService.updateReservation(reservationId, newOffertId);
         return ResponseEntity.ok(reservation);
     }
