@@ -56,6 +56,20 @@ public class UserserviceImplTest {
 		verify(userRepository).save(any(User.class));
 
 	}
+	
+	@Test
+	void createUser_emailAlreadyExists() {
+	    User user = new User();
+	    user.setEmail("test@example.com");
+
+	    when(userRepository.findByEmail("test@example.com")).thenReturn(Optional.of(user));
+
+	    RuntimeException exception = assertThrows(RuntimeException.class, () -> {
+	        userserviceImpl.createUser(user);
+	    });
+
+	    assertEquals("Email già in uso", exception.getMessage());
+	}
 
 	@Test
 	void getUserById_succes() {
@@ -117,5 +131,24 @@ public class UserserviceImplTest {
 		assertEquals("utente non esiste", exception.getMessage());
 
 	}
+	@Test
+	void deleteUser_existingUser_success() {
+	    when(userRepository.existsById(1L)).thenReturn(true);
 
+	    userserviceImpl.deleteUser(1L);
+
+	    verify(userRepository).deleteById(1L);
+	
+	}
+
+	@Test
+	void deleteUser_userNotFound() {
+	    when(userRepository.existsById(1L)).thenReturn(false);
+
+	    RuntimeException exception = assertThrows(RuntimeException.class, () -> {
+	        userserviceImpl.deleteUser(1L);
+	    });
+
+	    assertEquals("user not find", exception.getMessage());
+	}
 }
