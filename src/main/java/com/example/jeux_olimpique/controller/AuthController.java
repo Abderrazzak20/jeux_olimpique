@@ -32,5 +32,17 @@ public class AuthController {
     	User createUser = authService.createUser(user);
         return ResponseEntity.ok(createUser);
     }
+    
+    @ExceptionHandler(RuntimeException.class)
+    public ResponseEntity<String> handleRuntimeException(RuntimeException ex) {
+        if (ex.getMessage().contains("Invalid credentials")) {
+            return ResponseEntity.status(401).body(ex.getMessage());
+        }
+       
+        if (ex.getMessage().contains("User already exists")) {
+            return ResponseEntity.status(409).body(ex.getMessage());
+        }
+        return ResponseEntity.internalServerError().body("Errore del server");
+    }
 
 }

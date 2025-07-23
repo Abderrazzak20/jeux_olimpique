@@ -1,4 +1,4 @@
-package com.example.jeux_olimpique;
+package com.example.jeux_olimpique.Service;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
@@ -120,16 +120,6 @@ class CarteServiceTest {
 		assertEquals(2, items.size());
 	}
 
-	@Test
-    void getCarteItems_userNotFound_throwsException() {
-        when(userRepository.findById(1L)).thenReturn(Optional.empty());
-
-        RuntimeException ex = assertThrows(RuntimeException.class, () -> {
-            carteService.getCarteItems(1L);
-        });
-
-        assertEquals("cart inexistante", ex.getMessage());
-    }
 
 	@Test
 	void getCarteItems_cartIsNull_throwsException() {
@@ -199,13 +189,64 @@ class CarteServiceTest {
 
 	@Test
 	void removeCart_success() {
-	    Long cartId = 1L;
+		Long cartId = 1L;
 
-	    // Nessuna eccezione attesa: il metodo chiama direttamente deleteById
-	    carteService.removeCart(cartId);
+		// Nessuna eccezione attesa: il metodo chiama direttamente deleteById
+		carteService.removeCart(cartId);
 
-	    // Verifica che deleteById sia stato invocato con l'ID corretto
-	    verify(cartRepository).deleteById(cartId);
+		// Verifica che deleteById sia stato invocato con l'ID corretto
+		verify(cartRepository).deleteById(cartId);
 	}
+
+	@Test
+	void removeCart_existingCart_deletesSuccessfully() {
+		carteService.removeCart(1L);
+		verify(cartRepository).deleteById(1L);
+	}
+
+	@Test
+	void getCarteItems_cartNull_throwsException() {
+		User user = new User();
+		user.setId(1L);
+
+		when(userRepository.findById(1L)).thenReturn(Optional.of(user));
+		when(cartRepository.findByUser(user)).thenReturn(null);
+
+		RuntimeException ex = assertThrows(RuntimeException.class, () -> {
+			carteService.getCarteItems(1L);
+		});
+
+		assertEquals("carrello inesistente", ex.getMessage());
+	}
+
+	@Test
+	void removeCartItems_wrongUser_throwsException() {
+		CarteItem item = new CarteItem();
+		Cart cart = new Cart();
+		User user = new User();
+		user.setId(2L); // User diverso
+
+		cart.setUser(user);
+		item.setCart(cart);
+
+		when(carteItemRepository.findById(1L)).thenReturn(Optional.of(item));
+
+		RuntimeException ex = assertThrows(RuntimeException.class, () -> {
+			carteService.removeCartItems(1L, 1L); // userId diverso
+		});
+
+		assertEquals("element impossible a supperimer pk il est pas trouve", ex.getMessage());
+	}
+	@Test
+	void removeCart_cartNotFound_throwsException() {
+	    doThrow(new RuntimeException("cart non trovato")).when(cartRepository).deleteById(99L);
+
+	    RuntimeException ex = assertThrows(RuntimeException.class, () -> {
+	        carteService.removeCart(99L);
+	    });
+
+	    assertEquals("cart non trovato", ex.getMessage());
+	}
+
 
 }

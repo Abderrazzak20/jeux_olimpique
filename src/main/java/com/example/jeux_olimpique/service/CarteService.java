@@ -45,7 +45,10 @@ public class CarteService {
 
 		
 	public void addOffertToCart(Long userId ,Long offerId,int quantity) {
-		
+		if(quantity <=0) {
+			throw new RuntimeException("quanitie invalide");
+		}
+ 		
 		User user = userRepository.findById(userId)
 				.orElseThrow(()-> new RuntimeException("user il est pas trouve"));
 		Cart cart = getCartByUser(user);
@@ -89,5 +92,6 @@ public class CarteService {
 		cartRepository.deleteById(cartId);
 	}
 	
+
 
 }

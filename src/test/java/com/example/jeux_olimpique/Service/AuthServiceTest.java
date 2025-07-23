@@ -1,4 +1,4 @@
-package com.example.jeux_olimpique;
+package com.example.jeux_olimpique.Service;
 
 import com.example.jeux_olimpique.DTO.AuthRequest;
 import com.example.jeux_olimpique.DTO.AuthResponse;

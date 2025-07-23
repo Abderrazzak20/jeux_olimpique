@@ -1,4 +1,4 @@
-package com.example.jeux_olimpique;
+package com.example.jeux_olimpique.Service;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
