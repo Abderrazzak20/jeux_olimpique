@@ -1,0 +1,26 @@
+.main-header{
+  background-color: #002654; /* blu scuro Paris 2024 */
+  color: white;
+  padding: 10px 20px;
+}
+.header-content{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.logo{
+  height: 50px;
+}
+.navbar a {
+  color: white;
+  margin-left: 20px;
+  text-decoration: none;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.navbar a:hover {
+  text-decoration: underline;
+}
+

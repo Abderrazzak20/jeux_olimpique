@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "olympic_front": {
+    "olympic-tickets": {
       "projectType": "application",
       "schematics": {},
       "root": "",
@@ -19,6 +19,11 @@
             ],
             "tsConfig": "tsconfig.app.json",
             "assets": [
+              {
+                "glob": "**/*",
+                "input": "src/assets",
+                "output": "/assets"
+              },
               {
                 "glob": "**/*",
                 "input": "public"
@@ -56,10 +61,10 @@
           "builder": "@angular/build:dev-server",
           "configurations": {
             "production": {
-              "buildTarget": "olympic_front:build:production"
+              "buildTarget": "olympic-tickets:build:production"
             },
             "development": {
-              "buildTarget": "olympic_front:build:development"
+              "buildTarget": "olympic-tickets:build:development"
             }
           },
           "defaultConfiguration": "development"
