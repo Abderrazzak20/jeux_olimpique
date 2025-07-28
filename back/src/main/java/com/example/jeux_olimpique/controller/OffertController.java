@@ -17,6 +17,8 @@ import org.springframework.web.bind.annotation.RestController;
 import com.example.jeux_olimpique.models.Offert;
 import com.example.jeux_olimpique.service.OffertService;
 
+import jakarta.annotation.security.PermitAll;
+
 @RestController
 @RequestMapping("/api/offert")
 public class OffertController {
@@ -24,6 +26,7 @@ public class OffertController {
 	@Autowired
 	private OffertService offertService;
 
+	@PermitAll
 	@GetMapping
 	public List<Offert> getallOfferts() {
 		return offertService.getAllOffert();

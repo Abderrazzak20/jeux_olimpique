@@ -1,1 +1,26 @@
-<p>offert works!</p>
+<section class="offres">
+  <h1>Nos Offres Disponibles</h1>
+  <div class="cards">
+
+    <!-- Affichage pendant le chargement -->
+    <div *ngIf="isLoading" class="chargement">
+      <p>Chargement des offres en cours...</p>
+    </div>
+
+    <!-- Affichage si aucune offre disponible -->
+    <div *ngIf="!isLoading && offertlist.length === 0" class="aucune-offre">
+      <p>Aucune offre disponible pour le moment.</p>
+    </div>
+
+    <!-- Affichage des cartes d'offres -->
+    <div *ngIf="!isLoading && offertlist.length > 0" class="cards">
+      <div *ngFor="let offre of offertlist" class="offre-card">
+        <h2>{{ offre.name }}</h2>
+        <p>Prix : {{ offre.price }} €</p>
+        <p>Places disponibles : {{ offre.availableSeats }}</p>
+        <p>Capacité maximale : {{ offre.max_People }} personnes</p>
+        <button>Réserver</button>
+      </div>
+    </div>
+  </div>
+</section>
