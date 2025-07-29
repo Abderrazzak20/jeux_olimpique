@@ -1,0 +1,29 @@
+.reservation {
+  max-width: 500px;
+  margin: auto;
+  padding: 20px;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+}
+
+.reservation form div {
+  margin-bottom: 15px;
+}
+
+.reservation label {
+  display: block;
+  margin-bottom: 5px;
+}
+
+.reservation input {
+  width: 100%;
+  padding: 8px;
+}
+
+.reservation button {
+  padding: 10px 20px;
+  background-color: #1976d2;
+  color: white;
+  border: none;
+  border-radius: 4px;
+}

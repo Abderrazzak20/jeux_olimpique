@@ -5,4 +5,5 @@ export interface OffertModel {
   max_People: number;
   price: number;
   availableSeats: number;
+  description:string;
 }

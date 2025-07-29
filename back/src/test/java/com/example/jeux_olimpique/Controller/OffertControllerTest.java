@@ -50,8 +50,8 @@ class OffertControllerTest {
     @Test
     void getAllOfferts_returnsList() throws Exception {
         List<Offert> mockOfferts = List.of(
-                new Offert(1L, "Promo1", 10, 100, 5),
-                new Offert(2L, "Promo2", 20, 150, 10)
+                new Offert(1L, "Promo1", 10, 100, 5,"description"),
+                new Offert(2L, "Promo2", 20, 150, 10,"description")
         );
 
         Mockito.when(offertService.getAllOffert()).thenReturn(mockOfferts);
@@ -65,7 +65,7 @@ class OffertControllerTest {
 
     @Test
     void getOffertById_returnsOffert() throws Exception {
-        Offert offert = new Offert(1L, "Promo1", 10, 100, 5);
+        Offert offert = new Offert(1L, "Promo1", 10, 100, 5,"description");
         Mockito.when(offertService.getOffertById(1L)).thenReturn(Optional.of(offert));
 
         mockMvc.perform(get("/api/offert/1"))
@@ -76,7 +76,7 @@ class OffertControllerTest {
 
     @Test
     void createOffert_returnsSuccessMessage() throws Exception {
-        Offert offert = new Offert(1L, "Promo Created", 5, 50, 3);
+        Offert offert = new Offert(1L, "Promo Created", 5, 50, 3,"description");
         Mockito.when(offertService.createOffert(any())).thenReturn(offert);
 
         mockMvc.perform(post("/api/offert")
@@ -88,7 +88,7 @@ class OffertControllerTest {
 
     @Test
     void updateOffert_returnsSuccessMessage() throws Exception {
-        Offert updated = new Offert(1L, "Promo Updated", 6, 60, 4);
+        Offert updated = new Offert(1L, "Promo Updated", 6, 60, 4,"description");
         Mockito.when(offertService.updateOffert(any())).thenReturn(updated);
 
         mockMvc.perform(put("/api/offert/1")

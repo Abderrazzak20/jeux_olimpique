@@ -2,11 +2,12 @@ import { OfferteService } from './../../services/offerte-service';
 import { OffertModel } from './../../model/OffertModel';
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
+import { RouterLink } from '@angular/router';
 
 
 @Component({
   selector: 'app-offert',
-  imports: [CommonModule],
+  imports: [CommonModule,RouterLink],
   templateUrl: './offert.html',
   styleUrl: './offert.css'
 })

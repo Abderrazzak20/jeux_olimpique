@@ -19,7 +19,10 @@
         <p>Prix : {{ offre.price }} €</p>
         <p>Places disponibles : {{ offre.availableSeats }}</p>
         <p>Capacité maximale : {{ offre.max_People }} personnes</p>
-        <button>Réserver</button>
+        <p>Description : {{ offre.description }} </p>
+        <a [routerLink]="['/offert', offre.id]">
+          <button>Voir Détails</button>
+        </a>
       </div>
     </div>
   </div>

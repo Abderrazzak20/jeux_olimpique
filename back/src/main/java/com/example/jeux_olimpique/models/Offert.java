@@ -24,5 +24,6 @@ public class Offert {
 	private Integer max_People;
 	private Integer price;
 	private int availableSeats;
+	private String description;
 
 }

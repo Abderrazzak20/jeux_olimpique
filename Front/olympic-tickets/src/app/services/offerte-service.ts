@@ -9,10 +9,15 @@ import { OffertModel } from '../model/OffertModel';
 })
 export class OfferteService {
 
-  private ApiUrl ="http://localhost:8081/api/offert";
+  private ApiUrl = "http://localhost:8081/api/offert";
   constructor(private http: HttpClient) { }
 
   getOffert(): Observable<OffertModel[]> {
     return this.http.get<OffertModel[]>(this.ApiUrl);
+  }
+
+  getOffertById(id: number): Observable<OffertModel> {
+
+    return this.http.get<OffertModel>(this.ApiUrl + "/" + id);
   }
 }

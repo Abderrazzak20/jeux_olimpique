@@ -1,0 +1,25 @@
+<section class="reservation" *ngIf="offertM">
+  <h2>Réserver l'offre : {{ offertM.name }}</h2>
+
+  <form (ngSubmit)="submitReservation()" #reservationForm="ngForm">
+    <div>
+      <label for="name">Nom</label>
+      <input type="text" id="name" required [(ngModel)]="reservationData.name" name="name" />
+    </div>
+
+    <div>
+      <label for="seats">Nombre de places</label>
+      <input type="number" id="seats" min="1" [max]="offertM.availableSeats" required [(ngModel)]="reservationData.seats" name="seats" />
+    </div>
+
+    <button type="submit">Confirmer la réservation</button>
+  </form>
+</section>
+
+<div *ngIf="!offertM && !isLoading">
+  <p>Offre introuvable.</p>
+</div>
+
+<div *ngIf="isLoading">
+  <p>Chargement...</p>
+</div>
