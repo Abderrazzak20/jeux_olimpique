@@ -4,10 +4,11 @@ import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { OffertModel } from '../../model/OffertModel';
 import { FormsModule } from '@angular/forms';
+import { ReservationService } from '../../services/reservation-service';
 
 @Component({
   selector: 'app-reservation',
-  imports: [CommonModule,FormsModule],
+  imports: [CommonModule, FormsModule],
   templateUrl: './reservation.html',
   styleUrl: './reservation.css'
 })
@@ -19,7 +20,7 @@ export class Reservation implements OnInit {
     seats: 1
   }
 
-  constructor(private route: ActivatedRoute, private offertS: OfferteService) { }
+  constructor(private route: ActivatedRoute, private offertS: OfferteService, private reservationS: ReservationService) { }
 
   ngOnInit(): void {
     const id = Number(this.route.snapshot.paramMap.get("id"));
@@ -35,9 +36,24 @@ export class Reservation implements OnInit {
     })
   }
 
-  submitReservation(){
-    console.log("reservation envoye",this.reservationData);
-    alert("reservation confirme");
-    
+  submitReservation() {
+    if (!this.offertM) return;
+
+    this.reservationS.createReservation(2, this.offertM.id).subscribe({
+      next: (res) => {
+        console.log("Réservation confirmé", res);
+        alert("Réservation confirmé !");
+
+      },
+      error: (err) => {
+        console.error("Erreur de la réservation:", err);
+        alert("Erreur lors de la réservation");
+
+      }
+    })
+
+
+
+
   }
 }

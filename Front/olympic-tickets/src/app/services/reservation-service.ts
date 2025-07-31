@@ -10,11 +10,11 @@ export class ReservationService {
   constructor(private http: HttpClient) { }
 
   createReservation(userId: number, offertId: number): Observable<any> {
-    const param = new HttpParams();
-    param.set("userId", userId);
-    param.set("offertId", offertId);
+    const params = new HttpParams()
+    .set("userId", userId.toString())
+    .set("offertId", offertId.toString());
 
-    return this.http.post(this.baseUrl,param);
+    return this.http.post(`${this.baseUrl}`,null, { params });
   }
 
 }
