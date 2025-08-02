@@ -17,7 +17,7 @@ export class Reservation implements OnInit {
   isLoading: boolean = true;
   reservationData = {
     name: "",
-    seats: 1
+    seat: 1
   }
 
   constructor(private route: ActivatedRoute, private offertS: OfferteService, private reservationS: ReservationService) { }
@@ -39,10 +39,22 @@ export class Reservation implements OnInit {
   submitReservation() {
     if (!this.offertM) return;
 
-    this.reservationS.createReservation(2, this.offertM.id).subscribe({
+    // validazione frontend contro overbooking
+    if (this.reservationData.seat > this.offertM.availableSeats) {
+      alert(`Le nombre de places demandées dépasse le nombre de places disponibles (${this.offertM.availableSeats}).`);
+      return;
+    }
+
+    this.reservationS.createReservation(2, this.offertM.id,this.reservationData.seat).subscribe({
       next: (res) => {
         console.log("Réservation confirmé", res);
         alert("Réservation confirmé !");
+         // 🟢 Scala i posti disponibili localmente
+      if (this.offertM)
+        this.offertM.availableSeats -= this.reservationData.seat;
+
+      // 🧹 Reset del form
+      this.reservationData = { name: "", seat: 0 };
 
       },
       error: (err) => {

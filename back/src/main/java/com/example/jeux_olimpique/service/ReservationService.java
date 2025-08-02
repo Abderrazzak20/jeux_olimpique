@@ -30,7 +30,7 @@ public class ReservationService {
 	@Autowired
 	private Utilss utilss;
 
-	public Reservation createReservation(Long userId, Long offertId) throws WriterException, IOException {
+	public Reservation createReservation(Long userId, Long offertId,int seat) throws WriterException, IOException {
 
 		User user = userRepository.findById(userId).orElseThrow(() -> new RuntimeException("user il est pas present"));
 
@@ -41,7 +41,7 @@ public class ReservationService {
 			throw new RuntimeException("Aucune place disponible pour cette offre");
 
 		}
-		offert.setAvailableSeats(offert.getAvailableSeats() - 1);
+		offert.setAvailableSeats(offert.getAvailableSeats() - seat);
 		offertRepository.save(offert);
 
 		String finaleKey = utilss.generateKey();
@@ -55,6 +55,7 @@ public class ReservationService {
 		reservation.setQrCode(qrCode);
 		reservation.setTicketKey(accountKey);
 		reservation.setUser(user);
+		reservation.setSeats(seat);
 
 		return reservationRepository.save(reservation);
 	}

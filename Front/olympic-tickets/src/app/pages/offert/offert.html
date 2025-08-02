@@ -14,16 +14,26 @@
 
     <!-- Affichage des cartes d'offres -->
     <div *ngIf="!isLoading && offertlist.length > 0" class="cards">
-      <div *ngFor="let offre of offertlist" class="offre-card">
+      <div *ngFor="let offre of offertlist" class="offre-card" [class.disabled]="offre.availableSeats === 0">
+
         <h2>{{ offre.name }}</h2>
         <p>Prix : {{ offre.price }} €</p>
         <p>Places disponibles : {{ offre.availableSeats }}</p>
         <p>Capacité maximale : {{ offre.max_People }} personnes</p>
         <p>Description : {{ offre.description }} </p>
+
+        <p class="no-seats" *ngIf="offre.availableSeats === 0">
+          Offre terminée - plus de places disponibles
+        </p>
+
         <a [routerLink]="['/offert', offre.id]">
-          <button>Voir Détails</button>
+          <button [disabled]="offre.availableSeats === 0">Voir Détails</button>
         </a>
       </div>
+
+     
+
     </div>
   </div>
+
 </section>

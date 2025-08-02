@@ -32,6 +32,8 @@ public class Reservation {
     private User user;
     @ManyToOne
     private Offert offert;
+    @Column(nullable = false)
+    private int seats;
     
     private String ticketKey;
     private String finalKey;

@@ -26,9 +26,9 @@ public class ReservationController {
 	private ReservationService reservationService;
 
 	@PostMapping
-	public ResponseEntity<?> createReservation(@RequestParam Long userId, @RequestParam Long offertId) {
+	public ResponseEntity<?> createReservation(@RequestParam Long userId, @RequestParam Long offertId,@RequestParam int seat) {
 	    try {
-	        Reservation reservation = reservationService.createReservation(userId, offertId);
+	        Reservation reservation = reservationService.createReservation(userId, offertId,seat);
 	        return ResponseEntity.ok(reservation);
 	    } catch (RuntimeException | WriterException | IOException e) {
 	        return ResponseEntity.badRequest().body(e.getMessage());
