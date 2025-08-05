@@ -19,6 +19,7 @@ import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
 
+import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.ArgumentMatchers.anyLong;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
@@ -42,23 +43,25 @@ public class ReservationControllerTest {
         Reservation reservation = new Reservation();
         reservation.setId(1L);
 
-        Mockito.when(reservationService.createReservation(1L, 2L)).thenReturn(reservation);
+        Mockito.when(reservationService.createReservation(1L, 2L,5)).thenReturn(reservation);
 
         mockMvc.perform(post("/api/reservation")
                 .param("userId", "1")
-                .param("offertId", "2"))
+                .param("offertId", "2")
+                .param("seat", "5"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.id").value(1L));
     }
 
     @Test
     void testCreateReservationThrowsException() throws Exception {
-        Mockito.when(reservationService.createReservation(anyLong(), anyLong()))
+        Mockito.when(reservationService.createReservation(anyLong(), anyLong(),anyInt()))
                 .thenThrow(new RuntimeException("Errore durante la prenotazione"));
 
         mockMvc.perform(post("/api/reservation")
                 .param("userId", "1")
-                .param("offertId", "2"))
+                .param("offertId", "2")
+                .param("seat", "5"))
                 .andExpect(status().isBadRequest())
                 .andExpect(content().string("Errore durante la prenotazione"));
     }

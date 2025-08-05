@@ -1,0 +1,19 @@
+<section class="login-form">
+  <h2>Connexion</h2>
+
+  <form (ngSubmit)="onLogin()" #loginForm="ngForm">
+    <div>
+      <label>Email</label>
+      <input type="email" required [(ngModel)]="email" name="email" />
+    </div>
+
+    <div>
+      <label>Mot de passe</label>
+      <input type="password" required [(ngModel)]="password" name="password" />
+    </div>
+
+    <button type="submit">Se connecter</button>
+  </form>
+
+  <p *ngIf="errorMessage" class="error">{{ errorMessage }}</p>
+</section>

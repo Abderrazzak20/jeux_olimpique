@@ -5,9 +5,10 @@ import { Component, OnInit } from '@angular/core';
 import { RouterLink } from '@angular/router';
 
 
+
 @Component({
   selector: 'app-offert',
-  imports: [CommonModule,RouterLink],
+  imports: [CommonModule, RouterLink],
   templateUrl: './offert.html',
   styleUrl: './offert.css'
 })
@@ -17,9 +18,11 @@ export class Offerts implements OnInit {
 
   constructor(private OfferteService: OfferteService) { }
 
-ngOnInit(): void {
+  ngOnInit(): void {
+    console.log("Offerts ngOnInit: chiamo getOffert");
     this.OfferteService.getOffert().subscribe({
       next: (data) => {
+        console.log("Dati ricevuti:", data);
         this.offertlist = data;
         this.isLoading = false;
       },
@@ -29,5 +32,6 @@ ngOnInit(): void {
       }
     });
   }
+
 
 }

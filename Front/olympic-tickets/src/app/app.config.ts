@@ -2,13 +2,29 @@ import { ApplicationConfig, provideBrowserGlobalErrorListeners, provideZoneChang
 import { provideRouter } from '@angular/router';
 
 import { routes } from './app.routes';
-import { provideHttpClient } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, provideHttpClient, HttpInterceptor, withInterceptors } from '@angular/common/http';
+import { TokenInterceptor } from './tokenInterceptor';
 
 export const appConfig: ApplicationConfig = {
   providers: [
     provideBrowserGlobalErrorListeners(),
     provideZoneChangeDetection({ eventCoalescing: true }),
     provideRouter(routes),
-    provideHttpClient()
+    provideHttpClient(
+      withInterceptors([
+        (req, next) => {
+          const token = localStorage.getItem('token');
+          if (token) {
+            const cloned = req.clone({
+              headers: req.headers.set('Authorization', `Bearer ${token}`)
+            });
+            return next(cloned);
+          }
+          return next(req);
+        }
+      ])
+    )
+
+
   ]
 };

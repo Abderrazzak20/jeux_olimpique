@@ -38,8 +38,8 @@ public class SecurityConfig {
 				.cors(cors -> cors.configurationSource(configurationSource()))
 				
 				.sessionManagement(sm -> sm.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-				.authorizeHttpRequests(auth -> auth.requestMatchers("/auth/**", "/api/users/","api/offert/**","api/reservation/**").permitAll()//pour tester offert sans securite
-			
+				//.authorizeHttpRequests(auth -> auth.requestMatchers("/auth/**", "/api/users/","api/offert/**","api/reservation/**").permitAll()//pour tester offert sans securite
+				.authorizeHttpRequests(auth -> auth.requestMatchers("/auth/**").permitAll()
 						
 				.anyRequest().authenticated()
 )

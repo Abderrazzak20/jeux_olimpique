@@ -1,12 +1,19 @@
-<header class="main-header">
-  <div class="container header-content">
-    <img src="assets/logo/logo_jeux_olimpique.jpg" alt="Paris 2024 Logo" class="logo">
-    <nav class="navbar">
-      <a routerLink="/">Accueil</a>
-      <a routerLink="/offert">Offres</a>
-      <a routerLink="/cart">Carrello</a>
-     
-    </nav>
+<nav class="navbar">
+  <div class="nav-left">
+    <a routerLink="/" class="logo">JO 2025</a>
+    <a routerLink="/offert">Offres</a>
+    <a routerLink="/calendrier">Calendrier</a>
   </div>
 
-</header>
+  <div class="nav-right" *ngIf="isLoggedIn(); else guestLinks">
+    <span class="user-info">Bonjour, {{ getUserEmail() }}</span>
+    <button (click)="logout()">Se déconnecter</button>
+  </div>
+
+  <ng-template #guestLinks>
+    <div class="nav-right">
+      <a routerLink="/login">Connexion</a>
+      <a routerLink="/register">Créer un compte</a>
+    </div>
+  </ng-template>
+</nav>

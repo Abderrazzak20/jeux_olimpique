@@ -1,12 +1,42 @@
 import { Component } from '@angular/core';
-import { RouterModule } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
+import { AutherService } from '../../app/services/auther-service';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-navbar',
-  imports: [RouterModule],
+  imports: [RouterModule,CommonModule],
   templateUrl: './navbar.html',
   styleUrl: './navbar.css'
 })
 export class Navbar {
+  constructor(private router: Router, private authS: AutherService) { }
 
+  isLoggedIn(): boolean {
+    return this.authS.isLoggin();
+  }
+
+getUserEmail(): string | null {
+  const token = this.authS.getToken();
+  if (!token) return null;
+  try {
+    
+    const payload = JSON.parse(atob(token.split(".")[1]));
+    if (!payload.sub) return null;
+
+    const email: string = payload.sub;
+    const nome = email.split("@")[0]; 
+    return nome;
+
+  } catch (error) {
+    return null;
+  }
 }
+
+
+  logout(): void {
+    this.authS.logout();
+    this.router.navigate(["/login"]);
+  }
+}
+

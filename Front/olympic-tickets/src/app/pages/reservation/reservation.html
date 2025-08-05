@@ -9,18 +9,19 @@
 
     <div>
       <label for="seats">Nombre de places</label>
-      <input type="number" id="seat" min="1" [max]="offertM.availableSeats" required [(ngModel)]="reservationData.seat"
-        name="seat" />
+      <input
+        type="number"
+        id="seat"
+        min="1"
+        [max]="maxPrenotabili"
+        required
+        [(ngModel)]="reservationData.seat"
+        name="seat"
+      />
+      <small>Capacité maximale : {{ offertM.max_People }} personne{{ offertM.max_People > 1 ? 's' : '' }}</small>
     </div>
 
     <button type="submit">Confirmer la réservation</button>
   </form>
 </section>
 
-<div *ngIf="!offertM && !isLoading">
-  <p>Offre introuvable.</p>
-</div>
-
-<div *ngIf="isLoading">
-  <p>Chargement...</p>
-</div>

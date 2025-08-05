@@ -36,7 +36,6 @@ public class ReservationController {
 	}
 
 
-
 	// Ottieni tutte le prenotazioni di un utente
 	@GetMapping("/user/{userId}")
 	public List<Reservation> getReservationByUser(@PathVariable Long userId) {

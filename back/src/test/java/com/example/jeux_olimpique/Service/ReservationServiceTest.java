@@ -58,7 +58,7 @@ public class ReservationServiceTest {
         when(utilss.generateQRCode(any())).thenReturn("QR_CODE");
         when(reservationRepository.save(any())).thenAnswer(inv -> inv.getArgument(0));
 
-        Reservation result = reservationService.createReservation(1L, 2L);
+        Reservation result = reservationService.createReservation(1L, 2L,5);
 
         assertEquals("FINAL_KEY", result.getFinalKey());
         assertEquals("ACCOUNT_KEY", result.getTicketKey());
@@ -72,7 +72,7 @@ public class ReservationServiceTest {
         when(userRepository.findById(1L)).thenReturn(Optional.empty());
 
         RuntimeException ex = assertThrows(RuntimeException.class, () -> {
-            reservationService.createReservation(1L, 2L);
+            reservationService.createReservation(1L, 2L,5);
         });
 
         assertEquals("user il est pas present", ex.getMessage());
@@ -88,7 +88,7 @@ public class ReservationServiceTest {
         when(offertRepository.findById(2L)).thenReturn(Optional.of(offert));
 
         RuntimeException ex = assertThrows(RuntimeException.class, () -> {
-            reservationService.createReservation(1L, 2L);
+            reservationService.createReservation(1L, 2L,5);
         });
 
         assertEquals("Aucune place disponible pour cette offre", ex.getMessage());
@@ -161,7 +161,7 @@ public class ReservationServiceTest {
         when(offertRepository.findById(2L)).thenReturn(Optional.empty());
 
         RuntimeException ex = assertThrows(RuntimeException.class, () -> {
-            reservationService.createReservation(1L, 2L);
+            reservationService.createReservation(1L, 2L,5);
         });
 
         assertEquals("offert n'est pas diposnible", ex.getMessage());
