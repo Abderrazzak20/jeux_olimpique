@@ -47,7 +47,7 @@ export class CartService {
   updateQuantity(offertId: number, quantity: number) {
     const item = this.getItem();
     const index = item.findIndex(item => item.offert.id === offertId);
-    if (index > 1) {
+    if (index >= 0) {
       item[index].quantity = quantity;
       if (quantity <= 0) {
         item.splice(index, 1)

@@ -17,12 +17,12 @@ export const routes: Routes = [
   { path: 'register', component: Register },
   { path: 'offert/:id', component: OffertDetail,canActivate: [authGuard]  },
   { path: 'offert', component: Offerts,canActivate: [authGuard]  },
-  { path: 'reservation/:id', component: Reservation,canActivate: [authGuard]  },
+  { path: 'reservation', component: Reservation,canActivate: [authGuard]  },
   { path: 'cart', component: Cart,canActivate: [authGuard]  },
   { path: 'auth', component: Auth },
   { path: 'user', component: User },
   { path: 'admin', component: Admin },
-
+ { path: 'cart', component: Cart },
   { path: '**', redirectTo: '' }
   
 

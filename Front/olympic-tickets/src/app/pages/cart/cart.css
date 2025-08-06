@@ -1,0 +1,16 @@
+.cart-item {
+  border: 1px solid #ccc;
+  padding: 1rem;
+  margin-bottom: 1rem;
+
+}
+
+.cart-footer {
+  margin-top: 2rem;
+}
+
+.cart {
+  display: flex;
+gap: 3cm;
+
+}

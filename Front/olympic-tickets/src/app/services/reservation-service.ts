@@ -1,3 +1,4 @@
+import { User } from './../pages/user/user';
 import { Observable } from 'rxjs';
 import { HttpClient, HttpContext, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
@@ -18,4 +19,7 @@ export class ReservationService {
     return this.http.post(`${this.baseUrl}`,null, { params });
   }
 
+  getUserReservationId(userId:number):Observable<any[]>{
+    return this.http.get<any[]>(`${this.baseUrl}/user/${userId}`);
+  }
 }

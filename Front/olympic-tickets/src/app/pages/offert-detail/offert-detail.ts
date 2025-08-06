@@ -9,7 +9,7 @@ import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-offert-detail',
-  imports: [CommonModule, RouterLink,FormsModule],
+  imports: [CommonModule, RouterLink, FormsModule],
   templateUrl: './offert-detail.html',
   styleUrl: './offert-detail.css'
 })
@@ -39,9 +39,13 @@ export class OffertDetail implements OnInit {
     })
   }
   addToCart() {
-    if (this.offertM && this.quantity > 0) {
-      this.CartS.addToCart(this.offertM, this.quantity);
-      alert(`offre ajoute au panier (${this.quantity}places)`);
+    if (!this.offertM) return;
+    if (this.quantity < 1 || this.quantity > this.offertM.availableSeats) {
+      alert("quantity invalide");
+      return;
     }
+    this.CartS.addToCart(this.offertM, this.quantity);
+    alert(`offre ajoute au panier (${this.quantity}places)`);
   }
 }
+

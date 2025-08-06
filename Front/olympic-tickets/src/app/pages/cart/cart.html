@@ -1,1 +1,24 @@
-<p>cart works!</p>
+<h2>Votre panier</h2>
+
+<div *ngIf="cartItem.length === 0">
+  <p>Votre panier est vide.</p>
+</div>
+<div class="cart">
+  <div *ngFor="let item of cartItem" class="cart-item">
+    <h3>{{ item.offert.name }}</h3>
+    <p>Prix unitaire : {{ item.offert.price }} €</p>
+    <label>Quantité :
+      <input type="number" [max]="item.offert.availableSeats" [(ngModel)]="item.quantity"
+        (change)="updateQuantity(item, item.quantity)" min="1" />
+    </label>
+    <p>Sous-total : {{ item.offert.price * item.quantity }} €</p>
+    <button (click)="removeItem(item)">Retirer</button>
+  </div>
+</div>
+<hr *ngIf="cartItem.length > 0" />
+
+<div *ngIf="cartItem.length > 0" class="cart-footer">
+  <p><strong>Total : {{ total }} €</strong></p>
+  <button (click)="mockPayment()">Simuler le paiement</button>
+  <button (click)="clearCart()">Vider le panier</button>
+</div>

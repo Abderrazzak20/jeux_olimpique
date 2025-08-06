@@ -1,27 +1,14 @@
-<section class="reservation" [class.disabled]="offertM.availableSeats === 0" *ngIf="offertM">
-  <h2>Réserver l'offre : {{ offertM.name }}</h2>
+<h2>Mes Réservations</h2>
+<ul *ngIf="reservations.length > 0; else noReservation">
+  <li *ngFor="let res of reservations">
+    Offre: {{ res.offert.name }}<br>
+    Places réservées: {{ res.seats }}<br>
+    Statut: {{ res.status }}<br>
+    <img [src]="'data:image/png;base64,' + res.qrCode" width="150">
+    <hr>
+  </li>
+</ul>
 
-  <form (ngSubmit)="submitReservation()" #reservationForm="ngForm">
-    <div>
-      <label for="name">Nom</label>
-      <input type="text" id="name" required [(ngModel)]="reservationData.name" name="name" />
-    </div>
-
-    <div>
-      <label for="seats">Nombre de places</label>
-      <input
-        type="number"
-        id="seat"
-        min="1"
-        [max]="maxPrenotabili"
-        required
-        [(ngModel)]="reservationData.seat"
-        name="seat"
-      />
-      <small>Capacité maximale : {{ offertM.max_People }} personne{{ offertM.max_People > 1 ? 's' : '' }}</small>
-    </div>
-
-    <button type="submit">Confirmer la réservation</button>
-  </form>
-</section>
-
+<ng-template #noReservation>
+  <p>Aucune réservation trouvée.</p>
+</ng-template>
