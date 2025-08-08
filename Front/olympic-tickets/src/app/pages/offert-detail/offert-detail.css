@@ -45,3 +45,21 @@
 .reserve-button:hover {
   background-color: #2980b9;
 }
+
+/* Stile immagine offerta */
+.offre-image {
+  display: block;
+  max-width: 100%;
+  max-height: 400px;       /* altezza massima */
+  object-fit: cover;       /* taglia o scala mantenendo proporzioni */
+  margin: 0 auto 20px;
+  border-radius: 10px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+}
+
+/* Per schermi piccoli: immagine più piccola */
+@media (max-width: 480px) {
+  .offre-image {
+    max-height: 250px;
+  }
+}

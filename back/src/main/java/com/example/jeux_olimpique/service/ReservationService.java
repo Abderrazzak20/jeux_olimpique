@@ -30,32 +30,33 @@ public class ReservationService {
 	@Autowired
 	private Utilss utilss;
 
-	public Reservation createReservation(Long userId, Long offertId,int seat) throws WriterException, IOException {
+	public Reservation createReservation(Long userId, Long offertId, int seats) throws WriterException, IOException {
 
 		User user = userRepository.findById(userId).orElseThrow(() -> new RuntimeException("user il est pas present"));
 
 		Offert offert = offertRepository.findById(offertId)
 				.orElseThrow(() -> new RuntimeException("offert n'est pas diposnible"));
 
-		if (offert.getAvailableSeats() <= 0) {
+		if (offert.getAvailableSeats() < seats) {
 			throw new RuntimeException("Aucune place disponible pour cette offre");
 
 		}
-		offert.setAvailableSeats(offert.getAvailableSeats() - seat);
+		offert.setAvailableSeats(offert.getAvailableSeats() - seats);
 		offertRepository.save(offert);
 
-		String finaleKey = utilss.generateKey();
 		String accountKey = user.getAccountKey();
-		String data = userId + " " + accountKey + " " + finaleKey;
-		String qrCode = utilss.generateQRCode(data);
+		String ticketKey = utilss.generateKey();
+		String finalKey = accountKey + ":" + ticketKey;
+
+		String qrCode = utilss.generateQRCode(finalKey);
 
 		Reservation reservation = new Reservation();
-		reservation.setFinalKey(finaleKey);
+		reservation.setFinalKey(finalKey);
 		reservation.setOffert(offert);
 		reservation.setQrCode(qrCode);
 		reservation.setTicketKey(accountKey);
 		reservation.setUser(user);
-		reservation.setSeats(seat);
+		reservation.setSeats(seats);
 
 		return reservationRepository.save(reservation);
 	}
@@ -79,26 +80,29 @@ public class ReservationService {
 		Offert oldOffert = reservation.getOffert();
 		Offert newOffert = offertRepository.findById(newOffertId)
 				.orElseThrow(() -> new RuntimeException("Nouvelle offre non trouvée"));
-		
-		if (newOffert.getAvailableSeats()<=0) {
+
+		if (newOffert.getAvailableSeats() < reservation.getSeats()) {
 			throw new RuntimeException("Aucune place disponible dans la nouvelle offre");
-			
+
 		}
-		oldOffert.setAvailableSeats(oldOffert.getAvailableSeats()+1);
+		oldOffert.setAvailableSeats(oldOffert.getAvailableSeats() + reservation.getSeats());
 		offertRepository.save(oldOffert);
-		
-		newOffert.setAvailableSeats(newOffert.getAvailableSeats()-1);
+
+		newOffert.setAvailableSeats(newOffert.getAvailableSeats() - reservation.getSeats());
 		offertRepository.save(newOffert);
-		
+
 		reservation.setOffert(newOffert);
-		String finalKey = utilss.generateKey();
-		reservation.setFinalKey(finalKey);
+		
+		String ticketKey = utilss.generateKey();
+		
 
 		User user = reservation.getUser();
-		String firstKey = user.getAccountKey();
+		String accountKey = user.getAccountKey();
+		String finalKey = accountKey + ":" + ticketKey;
 
-		String data = reservationId + " " + firstKey + " " + finalKey;
-		String qrCode = utilss.generateQRCode(data);
+		reservation.setFinalKey(finalKey);
+		
+		String qrCode = utilss.generateQRCode(finalKey);
 		reservation.setQrCode(qrCode);
 
 		return reservationRepository.save(reservation);
@@ -111,7 +115,7 @@ public class ReservationService {
 				.orElseThrow(() -> new RuntimeException("Prenotazione non trovata"));
 
 		Offert offert = reservation.getOffert();
-		offert.setAvailableSeats(offert.getAvailableSeats() + 1);
+		offert.setAvailableSeats(offert.getAvailableSeats() + reservation.getSeats());
 		offertRepository.save(offert);
 
 		reservationRepository.deleteById(reservationId);

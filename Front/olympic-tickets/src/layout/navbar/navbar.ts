@@ -5,7 +5,7 @@ import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-navbar',
-  imports: [RouterModule,CommonModule],
+  imports: [RouterModule, CommonModule],
   templateUrl: './navbar.html',
   styleUrl: './navbar.css'
 })
@@ -15,23 +15,26 @@ export class Navbar {
   isLoggedIn(): boolean {
     return this.authS.isLoggin();
   }
-
-getUserEmail(): string | null {
-  const token = this.authS.getToken();
-  if (!token) return null;
-  try {
-    
-    const payload = JSON.parse(atob(token.split(".")[1]));
-    if (!payload.sub) return null;
-
-    const email: string = payload.sub;
-    const nome = email.split("@")[0]; 
-    return nome;
-
-  } catch (error) {
-    return null;
+  is_Admin(): boolean {
+    return this.authS.is_Admin();
   }
-}
+
+  getUserEmail(): string | null {
+    const token = this.authS.getToken();
+    if (!token) return null;
+    try {
+
+      const payload = JSON.parse(atob(token.split(".")[1]));
+      if (!payload.sub) return null;
+
+      const email: string = payload.sub;
+      const nome = email.split("@")[0];
+      return nome;
+
+    } catch (error) {
+      return null;
+    }
+  }
 
 
   logout(): void {

@@ -2,8 +2,12 @@
 export interface OffertModel {
   id: number;
   name: string;
-  max_People: number;
   price: number;
+  max_People: number;
   availableSeats: number;
-  description:string;
+  description: string;
+  location?: string;
+  date?: string;
+  imageUrl?: string;
+ 
 }

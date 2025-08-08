@@ -1,53 +1,119 @@
-.chargement, .aucune-offre {
+.offres {
+  max-width: 1000px;
+  margin: 40px auto;
+  padding: 0 20px;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.offres h1 {
   text-align: center;
-  font-style: italic;
-  margin: 20px;
+  font-size: 32px;
+  color: #2c3e50;
+  margin-bottom: 30px;
 }
 
 .cards {
   display: flex;
   flex-wrap: wrap;
-  gap: 2cm;
+  gap: 20px;
   justify-content: center;
 }
 
 .offre-card {
-  border: 1px solid #ccc;
-  padding: 15px;
-  border-radius: 8px;
-  width: 250px;
-  box-shadow: 2px 2px 10px rgba(0,0,0,0.1);
+  background-color: #fff;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  border-radius: 12px;
+  padding: 20px;
+  width: 280px;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  transition: transform 0.2s ease;
 }
-h1{
-  text-align: center;
-}
-.offre-card {
-  border: 1px solid #ccc;
-  padding: 1rem;
-  border-radius: 8px;
-  margin-bottom: 1rem;
-  transition: all 0.3s ease;
+
+.offre-card:hover:not(.disabled) {
+  transform: scale(1.03);
+  box-shadow: 0 6px 15px rgba(0,0,0,0.15);
 }
 
 .offre-card.disabled {
-  background-color: #fce4e4;
-  border: 1px solid #f44336;
-  opacity: 0.7;
+  opacity: 0.6;
   pointer-events: none;
 }
 
-.offre-card.disabled h2,
-.offre-card.disabled p {
-  color: #b71c1c;
+.offre-card h2 {
+  font-size: 22px;
+  color: #34495e;
+  margin-bottom: 12px;
+  text-align: center;
 }
 
-.offre-card button:disabled {
-  background-color: #ccc;
-  cursor: not-allowed;
+.offre-card p {
+  font-size: 16px;
+  color: #555;
+  margin: 6px 0;
+  text-align: center;
+}
+
+.image-container {
+  width: 100%;
+  margin: 15px 0;
+  overflow: hidden;
+  border-radius: 10px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+}
+
+.image-container img {
+  width: 100%;
+  height: 180px;
+  object-fit: cover;
+  display: block;
+  border-radius: 10px;
 }
 
 .no-seats {
-  color: red;
+  color: #c0392b;
   font-weight: bold;
-  margin-top: 0.5rem;
+  margin-top: 15px;
+  text-align: center;
+}
+
+button {
+  margin-top: 20px;
+  padding: 10px 20px;
+  font-size: 16px;
+  border: none;
+  border-radius: 8px;
+  background-color: #3498db;
+  color: #fff;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+button:disabled {
+  background-color: #95a5a6;
+  cursor: not-allowed;
+}
+
+button:hover:not(:disabled) {
+  background-color: #2980b9;
+}
+
+/* Loading and empty messages styling */
+.chargement, .aucune-offre {
+  text-align: center;
+  font-size: 18px;
+  color: #7f8c8d;
+  margin: 40px 0;
+}
+
+/* Responsive */
+@media (max-width: 700px) {
+  .offre-card {
+    width: 100%;
+  }
+  .image-container img {
+    height: 150px;
+  }
 }

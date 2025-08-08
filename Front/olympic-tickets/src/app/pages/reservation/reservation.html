@@ -1,14 +1,24 @@
-<h2>Mes Réservations</h2>
-<ul *ngIf="reservations.length > 0; else noReservation">
-  <li *ngFor="let res of reservations">
-    Offre: {{ res.offert.name }}<br>
-    Places réservées: {{ res.seats }}<br>
-    Statut: {{ res.status }}<br>
-    <img [src]="'data:image/png;base64,' + res.qrCode" width="150">
-    <hr>
-  </li>
-</ul>
+<div class="mes-reservations">
+  <h2>Mes Réservations</h2>
 
-<ng-template #noReservation>
-  <p>Aucune réservation trouvée.</p>
-</ng-template>
+  <div *ngIf="isLoading">Chargement...</div>
+
+  <ul *ngIf="!isLoading && reservations.length > 0; else noReservation">
+    <li *ngFor="let res of reservations" class="reservation-card">
+      <div class="info">
+        <p><strong>Offre:</strong> {{ res.offert?.name }}</p>
+        <p><strong>Lieu:</strong> {{ res.offert?.location }}</p>
+        <p><strong>Date:</strong> {{ res.offert?.date | date:'dd/MM/yyyy HH:mm' }}</p>
+        <p><strong>Places réservées:</strong> {{ res.seats }}</p>
+        <p><strong>Statut:</strong> {{ res.status || res.Status }}</p>
+      </div>
+      <div class="qr" *ngIf="res.qrCode">
+        <img [src]="'data:image/png;base64,' + res.qrCode" alt="QR Code">
+      </div>
+    </li>
+  </ul>
+
+  <ng-template #noReservation>
+    <p class="no-reservation">Aucune réservation trouvée.</p>
+  </ng-template>
+</div>

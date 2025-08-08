@@ -41,6 +41,9 @@ public class ReservationController {
 	public List<Reservation> getReservationByUser(@PathVariable Long userId) {
 
 		List<Reservation> listReservationByUser = reservationService.getReservationByUser(userId);
+		listReservationByUser.forEach(r -> {
+		        System.out.println(r.getOffert()); // controlla se qui è null o ha dati
+		    });
 		return listReservationByUser;
 	}
 

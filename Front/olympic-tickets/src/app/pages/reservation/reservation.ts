@@ -1,3 +1,4 @@
+import { Offerts } from './../offert/offert';
 import { AutherService } from './../../services/auther-service';
 import { ReservationService } from './../../services/reservation-service';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -20,12 +21,15 @@ export class Reservation implements OnInit {
   ngOnInit(): void {
     const userId = this.AutherS.getUserId();
     if (!userId) {
-      alert("vouz deveVous devez être connecté.");
+      alert("vouz devez être connecté.");
       this.router.navigate(["/login"]);
       return;
     }
+    this.isLoading = true;
     this.ReservatioS.getUserReservationId(userId).subscribe({
       next: (data) => {
+        console.log("tutto qui",data);
+        
         this.reservations = data;
         this.isLoading = false;
       },

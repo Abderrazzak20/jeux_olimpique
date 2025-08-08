@@ -1,11 +1,12 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Observable, tap } from 'rxjs';
 import { jwtDecode, JwtPayload } from 'jwt-decode';
 
 interface tokenPaylod {
   sub: string;
   roles: string[];
+  is_admin: true,
   id: number;
   iat: number;
   exp: number;
@@ -28,7 +29,13 @@ export class AutherService {
 
 
   register(user: any): Observable<any> {
-    return this.http.post(`${this.baseUrl}/register`, user);
+    return this.http.post<{ token: string }>(`${this.baseUrl}/register`, user).pipe(
+      tap(response => {
+        if (response.token) {
+          localStorage.setItem('token', response.token); // salva token
+        }
+      })
+    );
   }
 
   saveToken(token: string) {
@@ -70,4 +77,26 @@ export class AutherService {
 
     }
   }
+  is_Admin(): boolean {
+    const token = this.getToken();
+    if (!token) return false;
+    try {
+      const payload = JSON.parse(atob(token.split(".")[1]));
+      // Usa isAdmin o verifica se nel roles c'è ADMIN
+      if (payload.is_admin ==true) {
+        console.log("dove seiiii",payload);
+        
+        return true;
+      }
+      if (payload.roles && Array.isArray(payload.roles)) {
+         console.log("non ci  seiiii",payload);
+        return payload.roles.includes('ADMIN');
+
+      }
+      return false;
+    } catch {
+      return false;
+    }
+  }
+
 }

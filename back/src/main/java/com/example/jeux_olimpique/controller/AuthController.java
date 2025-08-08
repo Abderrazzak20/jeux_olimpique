@@ -28,8 +28,8 @@ public class AuthController {
     }
     
     @PostMapping("/register")
-    public ResponseEntity<User> register(@RequestBody User user) {
-    	User createUser = authService.createUser(user);
+    public ResponseEntity<AuthResponse> register(@RequestBody User user) {
+    	AuthResponse createUser = authService.register(user);
         return ResponseEntity.ok(createUser);
     }
     

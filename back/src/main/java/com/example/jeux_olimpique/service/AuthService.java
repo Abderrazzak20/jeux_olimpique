@@ -41,7 +41,10 @@ public class AuthService {
 	        return ResponseEntity.ok(new AuthResponse(token));
 	    }
 	    
-	    public User createUser(@RequestBody User user) {
-	        return userService.createUser(user);
+	   
+	    public AuthResponse register(User user) {
+	        User newUser = userService.createUser(user); // salva l'utente
+	        String token = jwtService.generateTokenRegister(newUser); // usa metodo JWT diretto
+	        return new AuthResponse(token); // ritorna token
 	    }
 }

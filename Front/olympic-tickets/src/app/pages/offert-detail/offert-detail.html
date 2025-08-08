@@ -1,18 +1,17 @@
-<!-- Affichage pendant le chargement -->
-<div *ngIf="isLoading" class="chargement">
-  <p>Chargement de l'offre...</p>
-</div>
-
-<!-- Affichage de l'offre si elle existe -->
 <section *ngIf="!isLoading && offertM" class="offre-detail">
   <h2 class="offre-detail-title">Détails de l'offre : {{ offertM.name }}</h2>
+
+  <!-- Immagine dell'offerta -->
+  <img *ngIf="offertM.imageUrl" 
+       [src]="offertM.imageUrl" 
+       alt="{{ offertM.name }}" 
+       class="offre-image" />
 
   <p><strong>Prix :</strong> {{ offertM.price }} €</p>
   <p><strong>Places disponibles :</strong> {{ offertM.availableSeats }}</p>
   <p><strong>Capacité maximale :</strong> {{ offertM.max_People }} personnes</p>
   <p><strong>Description :</strong> {{ offertM.description }}</p>
 
-  <!-- 👉 Sélection de la quantité à ajouter au panier -->
   <div class="ajout-panier">
     <label>Quantité :
       <input type="number"
@@ -24,11 +23,4 @@
     <button (click)="addToCart()">Ajouter au panier</button>
   </div>
 
-  <!-- 👉 Bouton de réservation -->
-  <button class="reserve-button" [routerLink]="['/reservation', offertM.id]">Réserver</button>
 </section>
-
-<!-- Affichage si aucune offre trouvée -->
-<div *ngIf="!isLoading && !offertM" class="aucune-offre">
-  <p>Offre introuvable.</p>
-</div>

@@ -1,29 +1,28 @@
-.reservation {
-  max-width: 500px;
-  margin: auto;
+.mes-reservations {
   padding: 20px;
+}
+
+.reservation-card {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
   border: 1px solid #ddd;
-  border-radius: 10px;
-}
-
-.reservation form div {
+  border-radius: 8px;
+  padding: 12px;
   margin-bottom: 15px;
+  background: #f9f9f9;
 }
 
-.reservation label {
-  display: block;
-  margin-bottom: 5px;
+.reservation-card .info {
+  flex: 1;
 }
 
-.reservation input {
-  width: 100%;
-  padding: 8px;
+.reservation-card .qr img {
+  width: 150px;
+  height: 150px;
 }
 
-.reservation button {
-  padding: 10px 20px;
-  background-color: #1976d2;
-  color: white;
-  border: none;
-  border-radius: 4px;
+.no-reservation {
+  font-style: italic;
+  color: #666;
 }

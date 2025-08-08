@@ -1,5 +1,7 @@
 package com.example.jeux_olimpique.models;
 
+import java.time.LocalDateTime;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -16,14 +18,18 @@ import lombok.Setter;
 @AllArgsConstructor
 
 public class Offert {
-	@jakarta.persistence.Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+	@jakarta.persistence.Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "offertId")
-    private Long Id;
-	
+	private Long Id;
+
 	private String name;
+	private String location;
 	private Integer max_People;
+	private LocalDateTime date;
 	private Integer price;
 	private int availableSeats;
 	private String description;
+	private String imageUrl;
 
 }
