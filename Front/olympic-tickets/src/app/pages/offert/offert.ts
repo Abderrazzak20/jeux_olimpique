@@ -2,9 +2,8 @@ import { OfferteService } from './../../services/offerte-service';
 import { OffertModel } from './../../model/OffertModel';
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
-import { RouterLink } from '@angular/router';
-
-
+import { Router, RouterLink } from '@angular/router';
+import { AutherService } from '../../services/auther-service';
 
 @Component({
   selector: 'app-offert',
@@ -15,10 +14,14 @@ import { RouterLink } from '@angular/router';
 export class Offerts implements OnInit {
   offertlist: OffertModel[] = [];
   isLoading: boolean = true;
+  isAdmin: boolean = false;
 
-  constructor(private OfferteService: OfferteService) { }
+  constructor(private OfferteService: OfferteService, private authS: AutherService, private routes: Router) { }
+
 
   ngOnInit(): void {
+    this.isAdmin = this.authS.is_Admin();
+
     console.log("Offerts ngOnInit: chiamo getOffert");
     this.OfferteService.getOffert().subscribe({
       next: (data) => {
@@ -33,5 +36,12 @@ export class Offerts implements OnInit {
     });
   }
 
+  onCreateOffer(): void {
+    this.routes.navigate(["/offert/create"]);
+  }
+
+  onEditfOffert(id: number): void {
+    this.routes.navigate(["/offert/edit",id]);
+  }
 
 }

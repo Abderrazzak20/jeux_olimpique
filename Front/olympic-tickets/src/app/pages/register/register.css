@@ -50,3 +50,11 @@ button:hover:not(:disabled) {
   margin-top: 10px;
   font-size: 0.9em;
 }
+
+.checkboxAdmin {
+  display: flex;
+  align-items: center; 
+  gap: 8px; 
+  margin-top: 15px; /* stesso margine delle altre label */
+
+}

@@ -20,4 +20,12 @@ export class OfferteService {
 
     return this.http.get<OffertModel>(this.ApiUrl + "/" + id);
   }
+
+  createOffert(offert: OffertModel): Observable<any> {
+    return this.http.post(`${this.ApiUrl}`, offert);
+  }
+
+  offertUpdate(id: number, offertData: any) {
+    return this.http.put(`${this.ApiUrl}/${id}`, offertData);
+  }
 }

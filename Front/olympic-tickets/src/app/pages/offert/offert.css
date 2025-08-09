@@ -21,7 +21,7 @@
 
 .offre-card {
   background-color: #fff;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
   border-radius: 12px;
   padding: 20px;
   width: 280px;
@@ -34,7 +34,7 @@
 
 .offre-card:hover:not(.disabled) {
   transform: scale(1.03);
-  box-shadow: 0 6px 15px rgba(0,0,0,0.15);
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.15);
 }
 
 .offre-card.disabled {
@@ -61,7 +61,7 @@
   margin: 15px 0;
   overflow: hidden;
   border-radius: 10px;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
 }
 
 .image-container img {
@@ -100,8 +100,10 @@ button:hover:not(:disabled) {
   background-color: #2980b9;
 }
 
+
 /* Loading and empty messages styling */
-.chargement, .aucune-offre {
+.chargement,
+.aucune-offre {
   text-align: center;
   font-size: 18px;
   color: #7f8c8d;
@@ -113,7 +115,27 @@ button:hover:not(:disabled) {
   .offre-card {
     width: 100%;
   }
+
   .image-container img {
     height: 150px;
   }
+}
+
+.btnCreateOffert {
+  background-color: orange;
+  display: flex;
+  justify-self: center;
+}
+.btnCreateOffert:hover:not(:disabled){
+background-color: red;
+}
+.btnCreateOffert{
+    background-color:orange;
+}
+
+.btnEditOffert{
+   background-color: #33CC77;
+}
+.btnEditOffert:hover:not(:disabled){
+background-color: green;
 }

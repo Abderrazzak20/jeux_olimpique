@@ -1,0 +1,81 @@
+.create-offer {
+  max-width: 600px;
+  margin: 40px auto;
+  padding: 25px;
+  background: #ffffff;
+  border-radius: 10px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  font-family: Arial, sans-serif;
+}
+
+.create-offer h1 {
+  text-align: center;
+  margin-bottom: 25px;
+  color: #2c3e50;
+}
+
+.create-offer label {
+  display: block;
+  margin: 12px 0 5px;
+  font-weight: bold;
+  color: #34495e;
+}
+
+.create-offer input,
+.create-offer textarea {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 8px;
+  border: 1px solid #bdc3c7;
+  border-radius: 6px;
+  font-size: 14px;
+  transition: border-color 0.2s ease;
+}
+
+.create-offer input:focus,
+.create-offer textarea:focus {
+  border-color: #3498db;
+  outline: none;
+}
+
+.create-offer textarea {
+  min-height: 100px;
+  resize: vertical;
+}
+
+.create-offer button {
+  display: block;
+  width: 100%;
+  padding: 12px;
+  background: #3498db;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+.create-offer button:hover {
+  background: #2980b9;
+}
+
+.create-offer button:disabled {
+  background: #95a5a6;
+  cursor: not-allowed;
+}
+
+.create-offer .error {
+  color: #e74c3c;
+  font-size: 14px;
+  margin-top: 5px;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .create-offer {
+    margin: 20px;
+    padding: 20px;
+  }
+}

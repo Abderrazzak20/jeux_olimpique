@@ -24,7 +24,8 @@ export class Register {
       username: ['', Validators.required],
       name: ['', Validators.required],
       email: ['', [Validators.required, Validators.email]],
-      password: ['', [Validators.required, Validators.minLength(6)]]
+      password: ['', [Validators.required, Validators.minLength(6)]],
+      admin:[false]
     })
   }
 
@@ -34,6 +35,8 @@ export class Register {
     const user = this.registerForm.value;
     this.authS.register(user).subscribe({
       next: () => {
+        console.log("scemooooo",user);
+        
         this.router.navigate(['/home'])
       },
       error: (err) => {
@@ -41,4 +44,9 @@ export class Register {
       }
     })
   }
+
+  isCurrentUserAdmin(): boolean {
+    return this.authS.is_Admin();
+  }
+  
 }

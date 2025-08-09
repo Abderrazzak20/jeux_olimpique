@@ -2,6 +2,8 @@ package com.example.jeux_olimpique.models;
 
 import java.time.LocalDateTime;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -26,6 +28,7 @@ public class Offert {
 	private String name;
 	private String location;
 	private Integer max_People;
+	
 	private LocalDateTime date;
 	private Integer price;
 	private int availableSeats;

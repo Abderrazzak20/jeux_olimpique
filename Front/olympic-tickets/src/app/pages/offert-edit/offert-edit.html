@@ -1,0 +1,51 @@
+<section class="edit-offer">
+  <h1>Modifier l'offre</h1>
+
+  <form [formGroup]="editForm" (ngSubmit)="onSubmit()">
+    <label>Nom de l'offre</label>
+    <input formControlName="name" type="text" />
+    <div *ngIf="editForm.get('name')?.invalid && editForm.get('name')?.touched">
+      Le nom est obligatoire.
+    </div>
+
+    <label>Prix (€)</label>
+    <input formControlName="price" type="number" />
+    <div *ngIf="editForm.get('price')?.invalid && editForm.get('price')?.touched">
+      Entrez un prix valide (≥ 0).
+    </div>
+
+    <label>Places disponibles</label>
+    <input formControlName="availableSeats" type="number" />
+    <div *ngIf="editForm.get('availableSeats')?.invalid && editForm.get('availableSeats')?.touched">
+      Entrez un nombre valide (≥ 0).
+    </div>
+
+    <label>Capacité maximale</label>
+    <input formControlName="max_People" type="number" />
+    <div *ngIf="editForm.get('max_People')?.invalid && editForm.get('max_People')?.touched">
+      Entrez au moins 1 personne.
+    </div>
+
+    <label>Description</label>
+    <textarea formControlName="description"></textarea>
+    <div *ngIf="editForm.get('description')?.invalid && editForm.get('description')?.touched">
+      La description est obligatoire.
+    </div>
+
+    <label>Lieu</label>
+    <input formControlName="location" type="text" />
+
+    <label>Date</label>
+    <input formControlName="date" type="date" />
+    <div *ngIf="editForm.get('date')?.invalid && editForm.get('date')?.touched">
+      La date est obligatoire.
+    </div>
+
+    <label>URL de l'image</label>
+    <input formControlName="imageUrl" type="text" />
+
+    <button type="submit" [disabled]="editForm.invalid">Modifier l'offre</button>
+
+    <div *ngIf="errorMessage" class="error">{{ errorMessage }}</div>
+  </form>
+</section>

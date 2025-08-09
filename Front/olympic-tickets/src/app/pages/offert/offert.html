@@ -1,5 +1,6 @@
 <section class="offres">
   <h1>Nos Offres Disponibles</h1>
+    <button class="btnCreateOffert" *ngIf="isAdmin" (click)="onCreateOffer()">nouvelle offert</button>
   <div class="cards">
 
 
@@ -37,7 +38,9 @@
         <a [routerLink]="['/offert', offre.id]">
           <button [disabled]="offre.availableSeats === 0">Voir Détails</button>
         </a>
+        <button class="btnEditOffert" (click)="onEditfOffert(offre.id)">modifier</button>
       </div>
     </div>
+  
   </div>
 </section>

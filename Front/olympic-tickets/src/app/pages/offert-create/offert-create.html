@@ -1,0 +1,52 @@
+<section class="create-offer">
+  <h1>Créer une nouvelle offre</h1>
+
+  <form [formGroup]="createForm" (ngSubmit)="onSubmit()">
+
+    <label>Nom de l'offre</label>
+    <input formControlName="name" type="text" />
+    <div *ngIf="createForm.get('name')?.invalid && createForm.get('name')?.touched">
+      Le nom est obligatoire.
+    </div>
+
+    <label>Prix (€)</label>
+    <input formControlName="price" type="number" />
+    <div *ngIf="createForm.get('price')?.invalid && createForm.get('price')?.touched">
+      Entrez un prix valide (≥ 0).
+    </div>
+
+    <label>Places disponibles</label>
+    <input formControlName="availableSeats" type="number" />
+    <div *ngIf="createForm.get('availableSeats')?.invalid && createForm.get('availableSeats')?.touched">
+      Entrez un nombre valide (≥ 0).
+    </div>
+
+    <label>Capacité maximale</label>
+    <input formControlName="max_People" type="number" />
+    <div *ngIf="createForm.get('max_People')?.invalid && createForm.get('max_People')?.touched">
+      Entrez au moins 1 personne.
+    </div>
+
+    <label>Description</label>
+    <textarea formControlName="description"></textarea>
+    <div *ngIf="createForm.get('description')?.invalid && createForm.get('description')?.touched">
+      La description est obligatoire.
+    </div>
+
+    <label>Lieu</label>
+    <input formControlName="location" type="text" />
+
+    <label>Date</label>
+    <input formControlName="date" type="datetime-local" />
+    <div *ngIf="createForm.get('date')?.invalid && createForm.get('date')?.touched">
+      La date est obligatoire.
+    </div>
+
+    <label>URL de l'image</label>
+    <input formControlName="imageUrl" type="text" />
+
+    <button type="submit" [disabled]="createForm.invalid">Créer l'offre</button>
+
+    <div *ngIf="errorMessage" class="error">{{ errorMessage }}</div>
+  </form>
+</section>
