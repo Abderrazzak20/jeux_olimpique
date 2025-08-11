@@ -1,0 +1,150 @@
+/* Container principale */
+.edit-offer {
+  max-width: 700px;
+  margin: 50px auto;
+  padding: 30px;
+  background: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* Titolo */
+.edit-offer h1 {
+  text-align: center;
+  font-size: 28px;
+  color: #2c3e50;
+  margin-bottom: 25px;
+}
+
+/* Form e etichette */
+.edit-offer form {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.edit-offer label {
+  font-weight: 600;
+  color: #34495e;
+  margin-bottom: 5px;
+}
+
+/* Campi di input */
+.edit-offer input,
+.edit-offer textarea {
+  width: 100%;
+  padding: 10px 12px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  font-size: 16px;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.edit-offer input:focus,
+.edit-offer textarea:focus {
+  border-color: #0072CE;
+  /* Blu olimpico */
+  box-shadow: 0 0 5px rgba(0, 114, 206, 0.4);
+  outline: none;
+}
+
+/* Textarea dimensione */
+.edit-offer textarea {
+  resize: vertical;
+  min-height: 100px;
+}
+
+/* Messaggi di errore */
+.edit-offer div.ng-invalid.ng-touched,
+.edit-offer .error {
+  color: #E4002B;
+  /* Rosso olimpico */
+  font-size: 14px;
+  margin-top: -8px;
+  margin-bottom: 8px;
+}
+
+/* Pulsante submit */
+.edit-offer button[type="submit"] {
+  background-color: #00843D;
+  /* Verde olimpico */
+  color: white;
+  padding: 12px 20px;
+  font-size: 16px;
+  font-weight: bold;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.edit-offer button[type="submit"]:hover:not(:disabled) {
+  background-color: #006B31;
+}
+
+.edit-offer button[type="submit"]:disabled {
+  background-color: #95a5a6;
+  cursor: not-allowed;
+}
+
+/* Responsive */
+@media (max-width: 600px) {
+  .edit-offer {
+    padding: 20px;
+  }
+}
+
+/* Pulsante principale (Modifica) */
+.edit-offer button[type="submit"] {
+  background-color: #00843D;
+  /* Verde olimpico */
+  color: white;
+  padding: 12px 20px;
+  font-size: 16px;
+  font-weight: bold;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.edit-offer button[type="submit"]:hover:not(:disabled) {
+  background-color: #006B31;
+}
+
+.edit-offer button[type="submit"]:disabled {
+  background-color: #95a5a6;
+  cursor: not-allowed;
+}
+
+/* Pulsante secondario (Retour en arrière) */
+.btnBack {
+  background-color: #E4002B;
+  /* Rosso olimpico */
+  color: white;
+  padding: 12px 20px;
+  font-size: 16px;
+  font-weight: bold;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.btnBack:hover {
+  background-color: #B30021;
+}
+
+/* Posizionamento pulsanti uno accanto all'altro */
+.form-buttons {
+  display: flex;
+  gap: 10px;
+  margin-top: 20px;
+}
+
+.btnPageEdit {
+  display: flex;
+  place-content: space-between;
+
+}

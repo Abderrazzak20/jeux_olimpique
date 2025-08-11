@@ -9,5 +9,6 @@ export interface OffertModel {
   location?: string;
   date?: string;
   imageUrl?: string;
+  deleted:boolean;
  
 }

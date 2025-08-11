@@ -2,12 +2,12 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { OfferteService } from '../../services/offerte-service';
-import { iif } from 'rxjs';
 import { CommonModule } from '@angular/common';
+import {  RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-offert-edit',
-  imports: [CommonModule,ReactiveFormsModule],
+  imports: [CommonModule,ReactiveFormsModule,RouterModule],
   templateUrl: './offert-edit.html',
   styleUrl: './offert-edit.css'
 })
@@ -35,6 +35,8 @@ export class OffertEdit implements OnInit {
   }
   ngOnInit(): void {
     this.offertId = + this.route.snapshot.paramMap.get("id")!;
+    console.log("ecco qui id:",this.offertId);
+    
     this.offertS.getOffertById(this.offertId).subscribe({
       next: (data) => {
         this.editForm.patchValue(data);

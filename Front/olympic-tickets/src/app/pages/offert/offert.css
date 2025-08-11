@@ -96,10 +96,9 @@ button:disabled {
   cursor: not-allowed;
 }
 
-button:hover:not(:disabled) {
+.btnVoirDetail:hover {
   background-color: #2980b9;
 }
-
 
 /* Loading and empty messages styling */
 .chargement,
@@ -126,16 +125,58 @@ button:hover:not(:disabled) {
   display: flex;
   justify-self: center;
 }
-.btnCreateOffert:hover:not(:disabled){
-background-color: red;
-}
-.btnCreateOffert{
-    background-color:orange;
+
+.btnCreateOffert:hover:not(:disabled) {
+  background-color: red;
 }
 
-.btnEditOffert{
-   background-color: #33CC77;
+.btnEditOffert {
+  background-color: #33CC77;
 }
-.btnEditOffert:hover:not(:disabled){
-background-color: green;
+
+.btnEditOffert:hover:not(:disabled) {
+  background-color: green;
+}
+
+.btnRemoveOffert {
+  background-color: #cc0000; /* rosso vivo */
+  color: white;
+  border: none;
+  padding: 10px 18px;
+  margin-left: 10px;
+  border-radius: 8px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.btnRemoveOffert:hover {
+  background-color: #ff4d4d; /* rosso più scuro */
+  transform: scale(1.05);
+ 
+}
+.badge-deleted {
+  display: inline-block;
+  background-color: #d9534f; /* rosso acceso */
+  color: white;
+  font-weight: bold;
+  font-size: 0.85rem;
+  padding: 0.2em 0.5em;
+  border-radius: 0.25em;
+  margin-left: 10px;
+  vertical-align: middle;
+  text-transform: uppercase;
+  box-shadow: 0 0 5px rgba(217, 83, 79, 0.6);
+}
+.btnRestoreOffert {
+  background-color: #5cb85c; /* verde */
+  color: white;
+  border: none;
+  padding: 5px 10px;
+  border-radius: 4px;
+  cursor: pointer;
+  margin-top: 10px;
+}
+.btnRestoreOffert:hover {
+  background-color: #4cae4c;
 }

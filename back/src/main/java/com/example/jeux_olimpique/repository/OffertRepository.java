@@ -1,5 +1,7 @@
 package com.example.jeux_olimpique.repository;
 
+import java.util.List;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import com.example.jeux_olimpique.models.Cart;
@@ -7,6 +9,6 @@ import com.example.jeux_olimpique.models.Offert;
 import com.example.jeux_olimpique.models.User;
 
 public interface OffertRepository extends JpaRepository<Offert, Long> {
-	//Cart cartFindByUser(User user);
+	  List<Offert> findByDeletedFalse();
 
 }

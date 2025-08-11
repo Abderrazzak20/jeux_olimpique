@@ -44,8 +44,10 @@
 
     <label>URL de l'image</label>
     <input formControlName="imageUrl" type="text" />
-
-    <button type="submit" [disabled]="createForm.invalid">Créer l'offre</button>
+    <div class="btnffert">
+      <button type="button" class="btnBack" routerLink="/offert">Retour en arrière</button>
+      <button type="submit" class="btnNewOffert" [disabled]="createForm.invalid">Créer l'offre</button>
+    </div>
 
     <div *ngIf="errorMessage" class="error">{{ errorMessage }}</div>
   </form>

@@ -1,28 +1,105 @@
 .mes-reservations {
-  padding: 20px;
+  max-width: 720px;
+  margin: 40px auto;
+  padding: 20px 25px;
+  background-color: #f7f9fa;
+  border-radius: 15px;
+  box-shadow: 0 6px 20px rgba(0,0,0,0.08);
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  color: #2c3e50;
+}
+
+.mes-reservations h2 {
+  text-align: center;
+  font-size: 2rem;
+  margin-bottom: 30px;
+  color: #d62828; /* Rosso olimpico acceso */
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+}
+
+.mes-reservations ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
 }
 
 .reservation-card {
   display: flex;
   justify-content: space-between;
+  background: white;
+  padding: 22px 28px;
+  border-radius: 12px;
+  margin-bottom: 18px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  cursor: pointer;
   align-items: center;
-  border: 1px solid #ddd;
-  border-radius: 8px;
-  padding: 12px;
-  margin-bottom: 15px;
-  background: #f9f9f9;
 }
 
-.reservation-card .info {
-  flex: 1;
+.reservation-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+}
+
+.reservation-card .info p {
+  margin: 6px 0;
+  font-size: 1.05rem;
+}
+
+.reservation-card .info p strong {
+  color: #b22222;
 }
 
 .reservation-card .qr img {
-  width: 150px;
-  height: 150px;
+  width: 90px;
+  height: 90px;
+  border-radius: 10px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  object-fit: contain;
 }
 
 .no-reservation {
+  text-align: center;
   font-style: italic;
-  color: #666;
+  font-size: 1.2rem;
+  color: #7f8c8d;
+  margin-top: 40px;
+}
+
+/* Loading style */
+.mes-reservations > div {
+  text-align: center;
+  font-size: 1.3rem;
+  color: #d62828;
+  font-weight: 600;
+}
+
+/* Animazione leggera all'entrata */
+@keyframes fadeSlideUp {
+  0% {
+    opacity: 0;
+    transform: translateY(15px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.reservation-card {
+  animation: fadeSlideUp 0.5s ease forwards;
+}
+
+/* Responsive per mobile */
+@media (max-width: 600px) {
+  .reservation-card {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  .reservation-card .qr {
+    margin-top: 15px;
+    align-self: center;
+  }
 }

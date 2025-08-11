@@ -2,14 +2,14 @@ import { CartService } from './../../services/cart-service';
 import { OfferteService } from './../../services/offerte-service';
 import { Component, OnInit } from '@angular/core';
 import { OffertModel } from '../../model/OffertModel';
-import { ActivatedRoute, RouterLink } from '@angular/router';
+import { ActivatedRoute, RouterLink, RouterModule } from '@angular/router';
 import { Offerts } from '../offert/offert';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-offert-detail',
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule,RouterModule],
   templateUrl: './offert-detail.html',
   styleUrl: './offert-detail.css'
 })

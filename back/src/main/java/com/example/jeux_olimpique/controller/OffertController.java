@@ -30,39 +30,64 @@ public class OffertController {
 	private OffertService offertService;
 
 	@PermitAll
-	@GetMapping
+	@GetMapping("/active")
 	public List<Offert> getallOfferts() {
-		return offertService.getAllOffert();
+		return offertService.getActiveOfferts();
 	}
-	
+
+	@PreAuthorize("hasRole('ADMIN')")
+	@GetMapping("/all")
+	public List<Offert> getAllOffertsAdmin() {
+		return offertService.getAllOffertsAdmin();
+	}
+
 	@GetMapping("/{id}")
 	public Optional<Offert> getOffertById(@PathVariable Long id) {
 		return offertService.getOffertById(id);
 	}
-	
+
 	@PreAuthorize("hasRole('ADMIN')")
 	@PostMapping
 	public ResponseEntity<Map<String, Object>> createOffert(@RequestBody Offert offert) {
-	    offertService.createOffert(offert);
+		offertService.createOffert(offert);
+		Map<String, Object> response = new HashMap<>();
+		response.put("message", "Offre créée avec succès");
+		response.put("id", offert.getId());
+		return ResponseEntity.ok(response);
+	}
+
+	@PreAuthorize("hasRole('ADMIN')")
+	@PutMapping("/{id}")
+	public ResponseEntity<Map<String, Object>> modifieOffert(@RequestBody Offert offert, @PathVariable Long id) {
+		offert.setId(id);
+		offertService.updateOffert(offert);
+
+		Map<String, Object> res = new HashMap<>();
+		res.put("message\", \"modifer avec succes offert id:", id);
+		res.put("id", id);
+		return ResponseEntity.ok(res);
+	}
+
+	@PreAuthorize("hasRole('ADMIN')")
+	@DeleteMapping("/{id}")
+	public ResponseEntity<Map<String, Object>> deletOffert(@PathVariable Long id) {
+		offertService.deleteOffertById(id);
+
+		Map<String, Object> res = new HashMap<>();
+		res.put("message\",Supprimer avec Succes offert id: ", id);
+		res.put("id", id);
+		return ResponseEntity.ok(res);
+	}
+	
+	@PreAuthorize("hasRole('ADMIN')")
+	@PutMapping("/restore/{id}")
+	public ResponseEntity<Map<String, Object>> restoreOffert(@PathVariable Long id) {
+	    Offert offert = offertService.restoreOffertById(id);
 	    Map<String, Object> response = new HashMap<>();
-	    response.put("message", "Offre créée avec succès");
+	    response.put("message", "Offre restaurée avec succès");
 	    response.put("id", offert.getId());
 	    return ResponseEntity.ok(response);
 	}
 
-	
-	@PreAuthorize("hasRole('ADMIN')")
-	@PutMapping("/{id}")
-	public String modifieOffert(@RequestBody Offert offert,@PathVariable Long id) {
-		 offertService.updateOffert(offert);
-		 return "modifer avec succes offert id: "+id;
-	}
-	
-	@PreAuthorize("hasRole('ADMIN')")
-	@DeleteMapping("/{id}")
-	public String deletOffert(@PathVariable Long id) {
-		offertService.deleteOffertById(id);
-		return "Supprimer avec Succes offert id: "+id;
-	}
 
 }

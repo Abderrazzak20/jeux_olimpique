@@ -12,9 +12,14 @@ export class OfferteService {
   private ApiUrl = "http://localhost:8081/api/offert";
   constructor(private http: HttpClient) { }
 
-  getOffert(): Observable<OffertModel[]> {
-    return this.http.get<OffertModel[]>(this.ApiUrl);
+  getActiveOffert(): Observable<OffertModel[]> {
+    return this.http.get<OffertModel[]>(`${this.ApiUrl}/active`);
   }
+
+  getAllOffert(): Observable<OffertModel[]> {
+    return this.http.get<OffertModel[]>(`${this.ApiUrl}/all`);
+  }
+
 
   getOffertById(id: number): Observable<OffertModel> {
 
@@ -28,4 +33,12 @@ export class OfferteService {
   offertUpdate(id: number, offertData: any) {
     return this.http.put(`${this.ApiUrl}/${id}`, offertData);
   }
+
+  deleteOffert(id: number): Observable<void> {
+    return this.http.delete<void>(`${this.ApiUrl}/${id}`);
+  }
+  restoreOffert(id: number): Observable<any> {
+    return this.http.put(`${this.ApiUrl}/restore/${id}`, {})
+  }
+
 }

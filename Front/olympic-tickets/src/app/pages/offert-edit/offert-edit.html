@@ -36,16 +36,18 @@
     <input formControlName="location" type="text" />
 
     <label>Date</label>
-    <input formControlName="date" type="date" />
+    <input formControlName="date" type="datetime-local" />
     <div *ngIf="editForm.get('date')?.invalid && editForm.get('date')?.touched">
       La date est obligatoire.
     </div>
 
     <label>URL de l'image</label>
     <input formControlName="imageUrl" type="text" />
+    <div class="btnPageEdit">
+      <button type="button" class="btnBack" routerLink="/offert">Retour en arrière</button>
+      <button type="submit" [disabled]="editForm.invalid">Modifier l'offre</button>
 
-    <button type="submit" [disabled]="editForm.invalid">Modifier l'offre</button>
-
+    </div>
     <div *ngIf="errorMessage" class="error">{{ errorMessage }}</div>
   </form>
 </section>

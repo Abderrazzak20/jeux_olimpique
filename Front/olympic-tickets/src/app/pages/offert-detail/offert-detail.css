@@ -1,65 +1,106 @@
-.offert-detail-container {
-  max-width: 700px;
-  margin: 40px auto;
-  padding: 30px;
+.offre-detail {
+  max-width: 600px;
+  margin: 30px auto;
+  padding: 25px;
+  background: #f8f9fa;
   border-radius: 12px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-  background-color: #ffffff;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-}
-
-.offert-detail-title {
-  font-size: 28px;
-  font-weight: bold;
-  margin-bottom: 20px;
   color: #2c3e50;
+}
+
+.offre-detail-title {
+  font-size: 1.8rem;
+  margin-bottom: 20px;
+  color: #e74c3c; /* rosso olimpico */
   text-align: center;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
 }
 
-.offert-detail-info {
-  font-size: 18px;
-  margin-bottom: 12px;
-  color: #34495e;
-}
-
-.offert-detail-price {
-  font-size: 22px;
-  color: #e67e22;
-  font-weight: bold;
-  margin-top: 20px;
-}
-
-.reserve-button {
-  display: block;
-  margin: 30px auto 0;
-  padding: 12px 30px;
-  font-size: 16px;
-  color: #fff;
-  background-color: #3498db;
-  border: none;
-  border-radius: 8px;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-}
-
-.reserve-button:hover {
-  background-color: #2980b9;
-}
-
-/* Stile immagine offerta */
 .offre-image {
   display: block;
   max-width: 100%;
-  max-height: 400px;       /* altezza massima */
-  object-fit: cover;       /* taglia o scala mantenendo proporzioni */
+  height: auto;
   margin: 0 auto 20px;
   border-radius: 10px;
   box-shadow: 0 2px 8px rgba(0,0,0,0.15);
 }
 
-/* Per schermi piccoli: immagine più piccola */
-@media (max-width: 480px) {
-  .offre-image {
-    max-height: 250px;
-  }
+.offre-detail p {
+  font-size: 1.1rem;
+  margin: 8px 0;
+  line-height: 1.5;
+}
+
+.offre-detail strong {
+  color: #c0392b;
+}
+
+.ajout-panier {
+  margin-top: 25px;
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.ajout-panier label {
+  font-weight: 600;
+  font-size: 1rem;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.ajout-panier input[type="number"] {
+  width: 70px;
+  padding: 6px 10px;
+  border: 2px solid #e74c3c;
+  border-radius: 6px;
+  font-size: 1rem;
+  outline-offset: 2px;
+  transition: border-color 0.3s ease;
+}
+
+.ajout-panier input[type="number"]:focus {
+  border-color: #c0392b;
+}
+
+.ajout-panier button {
+  background-color: #e74c3c;
+  color: #fff;
+  border: none;
+  padding: 10px 18px;
+  font-weight: 700;
+  font-size: 1rem;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.ajout-panier button:hover {
+  background-color: #c0392b;
+}
+
+.btnBack {
+  margin-top: 30px;
+  display: block;
+  background-color: transparent;
+  border: 2px solid #e74c3c;
+  color: #e74c3c;
+  padding: 10px 18px;
+  font-weight: 600;
+  border-radius: 8px;
+  cursor: pointer;
+  width: 100%;
+  max-width: 200px;
+  text-align: center;
+  transition: all 0.3s ease;
+  text-decoration: none;
+}
+
+.btnBack:hover {
+  background-color: #e74c3c;
+  color: white;
 }

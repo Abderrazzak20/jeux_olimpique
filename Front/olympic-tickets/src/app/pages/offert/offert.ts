@@ -21,27 +21,84 @@ export class Offerts implements OnInit {
 
   ngOnInit(): void {
     this.isAdmin = this.authS.is_Admin();
+    this.loadOfferts();
+  }
 
-    console.log("Offerts ngOnInit: chiamo getOffert");
-    this.OfferteService.getOffert().subscribe({
-      next: (data) => {
-        console.log("Dati ricevuti:", data);
+  private loadOfferts(): void {
+    if (this.isAdmin) {
+      this.loadAllOfferts();
+    } else {
+      this.loadActiveOfferts();
+    }
+  }
+
+  private loadAllOfferts(): void {
+    this.OfferteService.getAllOffert().subscribe({
+      next: data => {
         this.offertlist = data;
         this.isLoading = false;
       },
-      error: (err) => {
+      error: err => {
         console.error("Erreur lors du chargement des offres :", err);
         this.isLoading = false;
       }
     });
   }
 
+  private loadActiveOfferts(): void {
+    this.OfferteService.getActiveOffert().subscribe({
+      next: data => {
+        this.offertlist = data;
+        this.isLoading = false;
+      },
+      error: err => {
+        console.error("Erreur lors du chargement des offres :", err);
+        this.isLoading = false;
+      }
+    });
+  }
+
+
+
   onCreateOffer(): void {
     this.routes.navigate(["/offert/create"]);
   }
 
   onEditfOffert(id: number): void {
-    this.routes.navigate(["/offert/edit",id]);
+    this.routes.navigate(["/offert/edit", id]);
   }
+
+
+  onRemoveOffert(id: number): void {
+    if (confirm("Êtes-vous sûr de vouloir supprimer cette offre ?")) {
+      this.OfferteService.deleteOffert(id).subscribe({
+        next: () => {
+          this.offertlist = this.offertlist.filter(offre => offre.id !== id);
+          alert("Offre supprimée avec succès");
+        },
+        error: (err) => {
+          console.error("Erreur lors de la suppression de l'offre :", err);
+          alert("Impossible de supprimer l'offre. Réessayez plus tard.");
+        }
+      })
+    }
+  }
+onRestoreOffert(id: number): void {
+  if (confirm("Êtes-vous sûr de vouloir réintégrer cette offre ?")) {
+    this.OfferteService.restoreOffert(id).subscribe({
+      next: () => {
+        alert("Offre réintégrée avec succès");
+        // Aggiorna la lista ricaricandola oppure modifica localmente l'elemento
+        this.ngOnInit(); // oppure aggiorna solo quell’offerta in elenco
+      },
+      error: (err) => {
+        console.error("Erreur lors de la réintégration de l'offre :", err);
+        alert("Impossible de réintégrer l'offre. Réessayez plus tard.");
+      }
+    });
+  }
+}
+
+
 
 }

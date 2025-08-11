@@ -7,9 +7,10 @@ import org.springframework.stereotype.Service;
 
 import com.example.jeux_olimpique.models.Offert;
 
-
 public interface OffertService {
-	public List<Offert> getAllOffert();
+	public List<Offert> getAllOffertsAdmin();
+
+	public List<Offert> getActiveOfferts();
 
 	public Optional<Offert> getOffertById(Long id);
 
@@ -18,4 +19,7 @@ public interface OffertService {
 	public Offert updateOffert(Offert offert);
 
 	public void deleteOffertById(Long id);
+	
+	public Offert restoreOffertById(Long id);
+
 }

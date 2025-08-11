@@ -2,10 +2,7 @@
   <h2 class="offre-detail-title">Détails de l'offre : {{ offertM.name }}</h2>
 
   <!-- Immagine dell'offerta -->
-  <img *ngIf="offertM.imageUrl" 
-       [src]="offertM.imageUrl" 
-       alt="{{ offertM.name }}" 
-       class="offre-image" />
+  <img *ngIf="offertM.imageUrl" [src]="offertM.imageUrl" alt="{{ offertM.name }}" class="offre-image" />
 
   <p><strong>Prix :</strong> {{ offertM.price }} €</p>
   <p><strong>Places disponibles :</strong> {{ offertM.availableSeats }}</p>
@@ -14,13 +11,10 @@
 
   <div class="ajout-panier">
     <label>Quantité :
-      <input type="number"
-             [(ngModel)]="quantity"
-             [min]="1"
-             [max]="offertM.availableSeats"
-             required />
+      <input type="number" [(ngModel)]="quantity" [min]="1" [max]="offertM.availableSeats" required />
     </label>
     <button (click)="addToCart()">Ajouter au panier</button>
   </div>
+   <button type="button" class="btnBack" routerLink="/offert">Retour en arrière</button>
 
 </section>

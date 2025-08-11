@@ -16,7 +16,7 @@ import lombok.Setter;
 @Entity
 @Getter
 @Setter
-@NoArgsConstructor
+@NoArgsConstructor 
 @AllArgsConstructor
 
 public class Offert {
@@ -34,5 +34,6 @@ public class Offert {
 	private int availableSeats;
 	private String description;
 	private String imageUrl;
+    private boolean deleted = false; 
 
 }

@@ -19,8 +19,12 @@ public class OffertServiceImpl implements OffertService {
 	@Autowired
 	private ReservationRepository reservationRepository;
 
-	public List<Offert> getAllOffert() {
+	public List<Offert> getAllOffertsAdmin() {
 		return offertRepository.findAll();
+	}
+
+	public List<Offert> getActiveOfferts() {
+		return offertRepository.findByDeletedFalse();
 	}
 
 	public Optional<Offert> getOffertById(Long id) {
@@ -42,13 +46,21 @@ public class OffertServiceImpl implements OffertService {
 	}
 
 	public void deleteOffertById(Long id) {
-		if (!offertRepository.existsById(id)) {
-			throw new RuntimeException("offert is not find");
+		Offert offert = offertRepository.findById(id).orElseThrow(() -> new RuntimeException("offert is not find"));
+
+		offert.setDeleted(true);
+		offertRepository.save(offert);
+	}
+
+	public Offert restoreOffertById(Long id) {
+		Offert offert = offertRepository.findById(id)
+		.orElseThrow(() -> new RuntimeException("Offert non trouvé"));
+		if (!offert.isDeleted()) {
+			throw new RuntimeException("offre non supprime");
 		}
-		if (!reservationRepository.findByOffertId(id).isEmpty()) {
-			throw new RuntimeException("impossible de supprimer : l'offre a déjà des réservations associées.");
-		}
-		offertRepository.deleteById(id);
+		offert.setDeleted(false);
+		return offertRepository.save(offert);
+
 	}
 
 }
