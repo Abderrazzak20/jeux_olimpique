@@ -5,6 +5,7 @@ import java.util.Optional;
 
 import org.springframework.stereotype.Service;
 
+import com.example.jeux_olimpique.DTO.SalesDTO;
 import com.example.jeux_olimpique.models.Offert;
 
 public interface OffertService {
@@ -19,7 +20,9 @@ public interface OffertService {
 	public Offert updateOffert(Offert offert);
 
 	public void deleteOffertById(Long id);
-	
+
 	public Offert restoreOffertById(Long id);
+
+	public List<SalesDTO> getSalesPerOffer();
 
 }

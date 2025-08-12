@@ -67,3 +67,62 @@
   border-color: #ffd700;
   color: #ffd700;
 }
+/* Cacher bouton burger sur grands écrans */
+.burger {
+  display: none;
+  font-size: 1.8rem;
+  background: none;
+  border: none;
+  color: white;
+  cursor: pointer;
+  margin-left: 10px;
+}
+
+/* Conteneur liens nav caché sur mobile par défaut */
+.nav-links {
+  display: flex;
+  align-items: center;
+}
+
+/* Responsive : mobile */
+@media (max-width: 768px) {
+  .nav-left {
+    display: flex;
+    align-items: center;
+  }
+
+  /* Afficher bouton burger */
+  .burger {
+    display: block;
+  }
+
+  /* Cacher liens nav sur mobile tant que menu fermé */
+  .nav-links {
+    display: none;
+    flex-direction: column;
+    background-color: #002654;
+    position: absolute;
+    top: 60px; /* ajuster selon ta navbar */
+    left: 0;
+    width: 100%;
+    padding: 10px 0;
+    z-index: 1000;
+  }
+
+  /* Quand menu ouvert, afficher les liens */
+  .nav-links.open {
+    display: flex;
+  }
+
+  /* Style liens nav en mode mobile */
+  .nav-links a {
+    padding: 10px 20px;
+    margin: 0;
+    border-top: 1px solid #004080;
+  }
+
+  /* Ajuster nav-right pour mobile */
+  .nav-right {
+    display: none; /* tu peux l'afficher dans menu mobile si tu veux */
+  }
+}

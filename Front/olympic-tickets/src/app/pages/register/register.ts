@@ -44,9 +44,5 @@ export class Register {
       }
     })
   }
-
-  isCurrentUserAdmin(): boolean {
-    return this.authS.is_Admin();
-  }
   
 }

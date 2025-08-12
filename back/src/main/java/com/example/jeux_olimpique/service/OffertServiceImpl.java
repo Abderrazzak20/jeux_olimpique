@@ -6,6 +6,7 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.example.jeux_olimpique.DTO.SalesDTO;
 import com.example.jeux_olimpique.models.Offert;
 import com.example.jeux_olimpique.repository.OffertRepository;
 import com.example.jeux_olimpique.repository.ReservationRepository;
@@ -62,5 +63,9 @@ public class OffertServiceImpl implements OffertService {
 		return offertRepository.save(offert);
 
 	}
+	public List<SalesDTO> getSalesPerOffer() {
+	    return offertRepository.findSalesPerOffer();
+	}
+
 
 }

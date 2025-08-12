@@ -22,12 +22,6 @@
   <div *ngIf="registerForm.get('password')?.invalid && registerForm.get('password')?.touched">
     Minimo 6 caratteri
   </div>
-   <label class="checkboxAdmin" *ngIf="isCurrentUserAdmin()">
-     È Admin
-    <input type="checkbox" formControlName="admin" />
-   
-  </label>
-
   <button type="submit" [disabled]="registerForm.invalid">Submit</button>
 
   <div *ngIf="errorMessage" class="error">{{ errorMessage }}</div>

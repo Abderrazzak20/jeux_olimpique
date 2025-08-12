@@ -1,16 +1,27 @@
 <nav class="navbar">
   <div class="nav-left">
     <a routerLink="/" class="logo">JO 2025</a>
-    <a routerLink="/offert">Offres</a>
-    <a routerLink="/cart">Panier</a>
-    <a routerLink="/reservation">Mes Reservation</a>
-    <a *ngIf="is_Admin()" routerLink="/admin">Admin Panel</a>
+
+    <!-- Bouton burger pour mobile -->
+    <button class="burger" (click)="toggleMenu()">
+      &#9776;
+    </button>
+
+    <div class="nav-links" [class.open]="menuOpen">
+      <a routerLink="/offert">Offres</a>
+      <a routerLink="/cart">Panier</a>
+      <a routerLink="/reservation">Mes Reservation</a>
+      <a *ngIf="is_Admin()">Admin Panel</a>
+      <a routerLink="/offert/ventes">Panel Ventes</a>
+    </div>
   </div>
+
   <div class="nav-right" *ngIf="isLoggedIn(); else guestLinks">
     <span class="user-info">Bonjour, {{ getUserEmail() }}</span>
     <button (click)="logout()">Se déconnecter</button>
     <a *ngIf="is_Admin()" routerLink="/register">Créer un compte</a>
   </div>
+
   <ng-template #guestLinks>
     <div class="nav-right">
       <a routerLink="/login">Connexion</a>

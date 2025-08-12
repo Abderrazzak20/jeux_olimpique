@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import java.util.HashMap;
 
+import com.example.jeux_olimpique.DTO.SalesDTO;
 import com.example.jeux_olimpique.models.Offert;
 import com.example.jeux_olimpique.service.OffertService;
 
@@ -88,6 +89,14 @@ public class OffertController {
 	    response.put("id", offert.getId());
 	    return ResponseEntity.ok(response);
 	}
+	
+	@PreAuthorize("hasRole('ADMIN')")
+	@GetMapping("/sales")
+	public ResponseEntity<List<SalesDTO>> getSalesPerOffer() {
+	    List<SalesDTO> salesList = offertService.getSalesPerOffer();
+	    return ResponseEntity.ok(salesList);
+	}
+
 
 
 }

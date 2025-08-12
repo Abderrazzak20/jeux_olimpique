@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { OffertModel } from '../model/OffertModel';
+import { SalesDTO } from '../model/SalesDTO';
 
 
 @Injectable({
@@ -41,4 +42,7 @@ export class OfferteService {
     return this.http.put(`${this.ApiUrl}/restore/${id}`, {})
   }
 
+  getSalesOffert(): Observable<SalesDTO[]> {
+    return this.http.get<SalesDTO[]>(`${this.ApiUrl}/sales`);
+  }
 }

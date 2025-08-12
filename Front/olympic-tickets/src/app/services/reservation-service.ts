@@ -1,4 +1,3 @@
-import { User } from './../pages/user/user';
 import { Observable } from 'rxjs';
 import { HttpClient, HttpContext, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';

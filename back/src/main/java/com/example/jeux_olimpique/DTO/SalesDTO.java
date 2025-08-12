@@ -1,0 +1,16 @@
+package com.example.jeux_olimpique.DTO;
+
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
+public class SalesDTO {
+	private Long offertId;
+	private String offertName;
+	private Long totalSeatsSold;
+}

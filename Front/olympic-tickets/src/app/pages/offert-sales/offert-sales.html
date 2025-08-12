@@ -1,0 +1,29 @@
+<div class="container mt-4">
+  <h2>Ventes par Offre</h2>
+
+  <div *ngIf="errroMessage" class="alert alert-danger">
+    {{ errroMessage }}
+  </div>
+
+  <table class="table table-striped" *ngIf="listeVentes && listeVentes.length > 0; else pasDeDonnees">
+    <thead>
+      <tr>
+        <th>ID Offre</th>
+        <th>Nom de l'Offre</th>
+        <th>Total des Places Vendues</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let vente of listeVentes">
+        <td>{{ vente.offertId }}</td>
+        <td>{{ vente.offertName }}</td>
+        <td>{{ vente.totalSeatsSold }}</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <ng-template #pasDeDonnees>
+    <p>Aucune vente disponible.</p>
+  </ng-template>
+</div>
+
