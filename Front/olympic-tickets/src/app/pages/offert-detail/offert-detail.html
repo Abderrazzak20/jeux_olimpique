@@ -1,20 +1,22 @@
 <section *ngIf="!isLoading && offertM" class="offre-detail">
   <h2 class="offre-detail-title">Détails de l'offre : {{ offertM.name }}</h2>
 
-  <!-- Immagine dell'offerta -->
   <img *ngIf="offertM.imageUrl" [src]="offertM.imageUrl" alt="{{ offertM.name }}" class="offre-image" />
 
   <p><strong>Prix :</strong> {{ offertM.price }} €</p>
   <p><strong>Places disponibles :</strong> {{ offertM.availableSeats }}</p>
-  <p><strong>Capacité maximale :</strong> {{ offertM.max_People }} personnes</p>
+  <p><strong>Nombre de personnes par billet :</strong> {{ offertM.max_People }}</p>
   <p><strong>Description :</strong> {{ offertM.description }}</p>
 
-  <div class="ajout-panier">
-    <label>Quantité :
-      <input type="number" [(ngModel)]="quantity" [min]="1" [max]="offertM.availableSeats" required />
-    </label>
-    <button (click)="addToCart()">Ajouter au panier</button>
-  </div>
-   <button type="button" class="btnBack" routerLink="/offert">Retour en arrière</button>
+  <p *ngIf="offertM.location"><strong>Lieu :</strong> {{ offertM.location }}</p>
+  <p *ngIf="offertM.date"><strong>Date :</strong> {{ offertM.date | date:'dd/MM/yyyy' }}</p>
 
+  <div class="ajout-panier">
+    <p>Chaque billet accepte jusqu'à {{ offertM.max_People }} personnes.</p>
+    <button (click)="addToCart()" routerLink="/cart">Ajouter au panier</button>
+  </div>
+
+  <button type="button" class="btnBack" routerLink="/offert">
+    Retour en arrière
+  </button>
 </section>

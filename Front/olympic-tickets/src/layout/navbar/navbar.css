@@ -1,23 +1,13 @@
-.main-header {
-  background-color: #002654; /* Blu scuro Paris 2024 */
-  color: white;
-  padding: 10px 20px;
-}
-
-.header-content {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-}
-
+/* Navbar base */
 .navbar {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 10px 0;
+  padding: 10px 20px;
   background-color: #002654;
   color: white;
   font-family: Arial, sans-serif;
+  position: relative;
 }
 
 .nav-left,
@@ -36,7 +26,7 @@
 
 .navbar a:hover {
   text-decoration: underline;
-  color: #ffd700; /* Oro olimpico */
+  color: #ffd700;
 }
 
 .logo {
@@ -67,7 +57,8 @@
   border-color: #ffd700;
   color: #ffd700;
 }
-/* Cacher bouton burger sur grands écrans */
+
+/* Burger menu */
 .burger {
   display: none;
   font-size: 1.8rem;
@@ -78,51 +69,83 @@
   margin-left: 10px;
 }
 
-/* Conteneur liens nav caché sur mobile par défaut */
+/* Links nav */
 .nav-links {
   display: flex;
   align-items: center;
+  gap: 15px;
 }
 
-/* Responsive : mobile */
-@media (max-width: 768px) {
-  .nav-left {
-    display: flex;
-    align-items: center;
-  }
+/* Solo mobile: mostra solo nome */
+.mobile-name {
+  display: none;
+  margin-left: 15px;
+}
 
-  /* Afficher bouton burger */
+.mobile-only {
+  display: none;
+}
+
+/* Responsive mobile */
+@media (max-width: 768px) {
   .burger {
     display: block;
   }
 
-  /* Cacher liens nav sur mobile tant que menu fermé */
   .nav-links {
     display: none;
     flex-direction: column;
     background-color: #002654;
     position: absolute;
-    top: 60px; /* ajuster selon ta navbar */
+    top: 60px;
     left: 0;
     width: 100%;
     padding: 10px 0;
     z-index: 1000;
   }
 
-  /* Quand menu ouvert, afficher les liens */
   .nav-links.open {
     display: flex;
   }
 
-  /* Style liens nav en mode mobile */
-  .nav-links a {
+  .nav-links a,
+  .nav-links button.mobile-only {
     padding: 10px 20px;
     margin: 0;
     border-top: 1px solid #004080;
   }
 
-  /* Ajuster nav-right pour mobile */
+  /* Mostra solo il nome dell'utente accanto al logo */
+  .mobile-name {
+    display: inline-block;
+  }
+
+  /* Nascondi nav-right desktop */
+  .desktop-only {
+    display: none;
+  }
+
+  .mobile-only {
+    display: block; /* Mostra logout e create account solo nel menu */
+  }
+
+  /* Nascondi nav-right fuori dal burger */
   .nav-right {
-    display: none; /* tu peux l'afficher dans menu mobile si tu veux */
+    display: none;
   }
 }
+/* Label admin accanto al logo */
+.admin-label {
+  font-weight: bold;
+  margin-left: 10px;
+  color: #ffd700;
+  display: inline-block;
+}
+
+/* Su mobile, rimane accanto al logo */
+@media (max-width: 768px) {
+  .admin-label {
+    font-size: 0.9em;
+  }
+}
+

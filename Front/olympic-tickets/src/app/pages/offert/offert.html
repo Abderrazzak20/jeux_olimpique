@@ -1,61 +1,81 @@
 <section class="offres">
   <h1>Nos Offres Disponibles</h1>
-  <button class="btnCreateOffert" *ngIf="isAdmin" (click)="onCreateOffer()">nouvelle offert</button>
-  <div class="cards">
 
-    <div *ngIf="isLoading" class="chargement">
-      <p>Chargement des offres en cours...</p>
-    </div>
+  <!-- Bottone per creare nuove offerte solo per admin -->
+  <button class="btnCreateOffert" *ngIf="isAdmin" (click)="onCreateOffer()">
+    Nouvelle offre
+  </button>
 
-    <div *ngIf="!isLoading && offertlist.length === 0" class="aucune-offre">
-      <p>Aucune offre disponible pour le moment.</p>
-    </div>
+  <!-- Loading -->
+  <div *ngIf="isLoading" class="chargement">
+    <p>Chargement des offres en cours...</p>
+  </div>
 
-    <div *ngIf="!isLoading && offertlist.length > 0" class="cards">
-      <div *ngFor="let offre of offertlist" class="offre-card"
-        [class.disabled]="offre.availableSeats === 0 && !isAdmin">
+  <!-- Nessuna offerta disponibile -->
+  <div *ngIf="!isLoading && offertlist.length === 0" class="aucune-offre">
+    <p>Aucune offre disponible pour le moment.</p>
+  </div>
 
-        <h2>
-          {{ offre.name }}
-          <span *ngIf="isAdmin && offre.deleted" class="badge-deleted">Offre supprimée</span>
-        </h2>
+  <!-- Lista offerte -->
+  <div *ngIf="!isLoading && offertlist.length > 0" class="cards">
+    <div *ngFor="let offre of offertlist" 
+         class="offre-card"
+         [class.disabled]="offre.availableSeats === 0 && !isAdmin"
+         [class.deleted]="offre.deleted">
 
-        <div *ngIf="offre.imageUrl" class="image-container">
-          <img [src]="offre.imageUrl" alt="Image de l'offre" />
-        </div>
+      <!-- Titolo e badge cancellata -->
+      <h2>
+        {{ offre.name }}
+        <span *ngIf="offre.deleted" class="badge-deleted">Offre supprimée</span>
+      </h2>
 
-        <p>Prix : {{ offre.price }} €</p>
-        <p>Places disponibles : {{ offre.availableSeats }}</p>
-        <p>Capacité maximale : {{ offre.max_People }} personnes</p>
-        <p>Description : {{ offre.description }}</p>
+      <!-- Immagine -->
+      <div *ngIf="offre.imageUrl" class="image-container">
+        <img [src]="offre.imageUrl" alt="Image de l'offre" />
+      </div>
 
-        <p *ngIf="offre.location">Lieu : {{ offre.location }}</p>
-        <p *ngIf="offre.date">Date : {{ offre.date | date:'dd/MM/yyyy' }}</p>
+      <!-- Informazioni base -->
+      <p>Prix : {{ offre.price }} €</p>
+      <p>Places disponibles : {{ offre.availableSeats }}</p>
 
-        <p class="no-seats" *ngIf="offre.availableSeats === 0">
-          Offre terminée - plus de places disponibles
-        </p>
+      <!-- Messaggio se esaurita -->
+      <p class="no-seats" *ngIf="offre.availableSeats === 0 && !offre.deleted">
+        Offre terminée
+      </p>
 
-        <a [routerLink]="['/offert', offre.id]">
-          <button class="btnVoirDetail" [disabled]="offre.availableSeats === 0 && !isAdmin">Voir Détails</button>
-        </a>
+      <!-- Pulsante dettagli -->
+      <a [routerLink]="['/offert', offre.id]">
+        <button [disabled]="(offre.availableSeats === 0 && !isAdmin) || offre.deleted">
+          Voir Détails
+        </button>
+      </a>
 
-        <button class="btnEditOffert" (click)="onEditfOffert(offre.id) "*ngIf="isAdmin"
-          [disabled]="offre.availableSeats === 0 && !isAdmin">
-          modifier
+      <!-- Pulsanti admin -->
+      <div *ngIf="isAdmin" class="admin-buttons">
+
+        <!-- Modifica solo se non cancellata -->
+        <button class="btnEditOffert" 
+                (click)="onEditfOffert(offre.id)" 
+                *ngIf="!offre.deleted">
+          Modifier
         </button>
 
-        <button class="btnRemoveOffert" (click)="onRemoveOffert(offre.id)" *ngIf="isAdmin"
-          [disabled]="offre.availableSeats === 0 && !isAdmin">
-          supprimer
+        <!-- Rimuovi se non cancellata -->
+        <button class="btnRemoveOffert" 
+                (click)="onRemoveOffert(offre.id)" 
+                *ngIf="!offre.deleted">
+          Supprimer
         </button>
-        <button *ngIf="isAdmin && offre.deleted" class="btnRestoreOffert" (click)="onRestoreOffert(offre.id)">
+
+        <!-- Reinserisci se cancellata -->
+        <button class="btnRestoreOffert" 
+                (click)="onRestoreOffert(offre.id)" 
+                *ngIf="offre.deleted">
           Réintégrer l'offre
         </button>
 
-
       </div>
-    </div>
 
+    </div>
   </div>
 </section>

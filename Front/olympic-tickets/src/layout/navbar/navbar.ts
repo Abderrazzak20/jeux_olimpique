@@ -40,7 +40,7 @@ export class Navbar {
 
   logout(): void {
     this.authS.logout();
-    this.router.navigate(["/login"]);
+   
   }
 
   toggleMenu(){

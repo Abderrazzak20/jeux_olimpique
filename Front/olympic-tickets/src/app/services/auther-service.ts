@@ -1,7 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable, tap } from 'rxjs';
+import { Observable, retry, tap } from 'rxjs';
 import { jwtDecode, JwtPayload } from 'jwt-decode';
+import { Router } from '@angular/router';
 
 interface tokenPaylod {
   sub: string;
@@ -19,7 +20,7 @@ export class AutherService {
 
 
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, private router: Router) { }
   login(email: string, password: string): Observable<{ token: string }> {
     return this.http.post<{ token: string }>(`${this.baseUrl}/login`, {
       email,
@@ -47,6 +48,7 @@ export class AutherService {
 
   logout() {
     localStorage.removeItem('token');
+     this.router.navigate(["/login"]);
   }
 
   isLoggin(): boolean {
@@ -83,19 +85,34 @@ export class AutherService {
     try {
       const payload = JSON.parse(atob(token.split(".")[1]));
       // Usa isAdmin o verifica se nel roles c'è ADMIN
-      if (payload.is_admin ==true) {
-        console.log("dove seiiii",payload);
-        
+      if (payload.is_admin == true) {
+        console.log("dove seiiii", payload);
+
         return true;
       }
       if (payload.roles && Array.isArray(payload.roles)) {
-         console.log("non ci  seiiii",payload);
+        console.log("non ci  seiiii", payload);
         return payload.roles.includes('ADMIN');
 
       }
       return false;
     } catch {
       return false;
+    }
+  }
+
+  isTokenExpired(token?: string | null): boolean {
+    if (!token) {
+      token = this.getToken();
+      if (!token) return true;
+    }
+    try {
+      const decode: any = jwtDecode(token);
+      const maintenant = Math.floor(Date.now() / 1000);
+      return decode.exp < maintenant;
+    } catch (error) {
+      console.error("Erreur lors de decodage de token", error);
+      return true;
     }
   }
 

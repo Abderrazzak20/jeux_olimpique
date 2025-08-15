@@ -73,31 +73,39 @@ export class Offerts implements OnInit {
     if (confirm("Êtes-vous sûr de vouloir supprimer cette offre ?")) {
       this.OfferteService.deleteOffert(id).subscribe({
         next: () => {
-          this.offertlist = this.offertlist.filter(offre => offre.id !== id);
+          // Aggiorna localmente la proprietà deleted
+          const offre = this.offertlist.find(o => o.id === id);
+          if (offre) {
+            offre.deleted = true;
+          }
           alert("Offre supprimée avec succès");
         },
         error: (err) => {
           console.error("Erreur lors de la suppression de l'offre :", err);
           alert("Impossible de supprimer l'offre. Réessayez plus tard.");
         }
-      })
+      });
     }
   }
-onRestoreOffert(id: number): void {
-  if (confirm("Êtes-vous sûr de vouloir réintégrer cette offre ?")) {
-    this.OfferteService.restoreOffert(id).subscribe({
-      next: () => {
-        alert("Offre réintégrée avec succès");
-        // Aggiorna la lista ricaricandola oppure modifica localmente l'elemento
-        this.ngOnInit(); // oppure aggiorna solo quell’offerta in elenco
-      },
-      error: (err) => {
-        console.error("Erreur lors de la réintégration de l'offre :", err);
-        alert("Impossible de réintégrer l'offre. Réessayez plus tard.");
-      }
-    });
+
+  onRestoreOffert(id: number): void {
+    if (confirm("Êtes-vous sûr de vouloir réintégrer cette offre ?")) {
+      this.OfferteService.restoreOffert(id).subscribe({
+        next: () => {
+          const offre = this.offertlist.find(o => o.id === id);
+          if (offre) {
+            offre.deleted = false;
+          }
+          alert("Offre réintégrée avec succès");
+        },
+        error: (err) => {
+          console.error("Erreur lors de la réintégration de l'offre :", err);
+          alert("Impossible de réintégrer l'offre. Réessayez plus tard.");
+        }
+      });
+    }
   }
-}
+
 
 
 

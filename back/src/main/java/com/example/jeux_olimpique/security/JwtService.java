@@ -20,9 +20,9 @@ import java.util.List;
 @Service
 public class JwtService {
 
-	private final String SECRET_KEY = "superclesecretequidoitetreassezlonguepourleJWT1234567890";
+	private final String SECRET_KEY = "xG7h!kVbWpTz@98A2sLq#R1fP0eD5uYjC6nM$ZlS4oQ3wXbVtKpH";
 
-	private final long EXPIRATION = 1000 * 60 * 60 * 24; // 24h
+	private final long EXPIRATION = 1000 * 60 * 2; 
 
 	private final UserRepository userRepository;
 
