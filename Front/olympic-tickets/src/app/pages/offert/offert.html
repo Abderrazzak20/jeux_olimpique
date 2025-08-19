@@ -18,10 +18,8 @@
 
   <!-- Lista offerte -->
   <div *ngIf="!isLoading && offertlist.length > 0" class="cards">
-    <div *ngFor="let offre of offertlist" 
-         class="offre-card"
-         [class.disabled]="offre.availableSeats === 0 && !isAdmin"
-         [class.deleted]="offre.deleted">
+    <div *ngFor="let offre of offertlist" class="offre-card" [class.disabled]="offre.availableSeats === 0 && !isAdmin"
+      [class.deleted]="offre.deleted">
 
       <!-- Titolo e badge cancellata -->
       <h2>
@@ -45,7 +43,7 @@
 
       <!-- Pulsante dettagli -->
       <a [routerLink]="['/offert', offre.id]">
-        <button [disabled]="(offre.availableSeats === 0 && !isAdmin) || offre.deleted">
+        <button [disabled]="(offre.availableSeats === 0 && !isAdmin) ">
           Voir Détails
         </button>
       </a>
@@ -54,23 +52,17 @@
       <div *ngIf="isAdmin" class="admin-buttons">
 
         <!-- Modifica solo se non cancellata -->
-        <button class="btnEditOffert" 
-                (click)="onEditfOffert(offre.id)" 
-                *ngIf="!offre.deleted">
+        <button class="btnEditOffert" (click)="onEditfOffert(offre.id)" *ngIf="!offre.deleted && isAdmin">
           Modifier
         </button>
 
         <!-- Rimuovi se non cancellata -->
-        <button class="btnRemoveOffert" 
-                (click)="onRemoveOffert(offre.id)" 
-                *ngIf="!offre.deleted">
+        <button class="btnRemoveOffert" (click)="onRemoveOffert(offre.id)" *ngIf="!offre.deleted">
           Supprimer
         </button>
 
         <!-- Reinserisci se cancellata -->
-        <button class="btnRestoreOffert" 
-                (click)="onRestoreOffert(offre.id)" 
-                *ngIf="offre.deleted">
+        <button class="btnRestoreOffert" (click)="onRestoreOffert(offre.id)" *ngIf="offre.deleted">
           Réintégrer l'offre
         </button>
 

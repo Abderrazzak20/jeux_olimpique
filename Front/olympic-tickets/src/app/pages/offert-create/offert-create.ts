@@ -6,7 +6,7 @@ import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-offert-create',
-  imports: [CommonModule,ReactiveFormsModule,RouterModule],
+  imports: [CommonModule, ReactiveFormsModule, RouterModule],
   templateUrl: './offert-create.html',
   styleUrl: './offert-create.css'
 })
@@ -21,9 +21,9 @@ export class OffertCreate {
   ) {
     this.createForm = fb.group({
       name: ["", Validators.required],
-      price: ["", Validators.required, Validators.min(0)],
-      availableSeats: ["", Validators.required, Validators.min(1)],
-      max_People: ["", Validators.required, Validators.min(1)],
+      price: ["", [Validators.required, Validators.min(0)]],
+      availableSeats: ["", [Validators.required, Validators.min(1)]],
+      max_People: ["", [Validators.required, Validators.min(1)]],
       description: ["", Validators.required],
       location: ["", Validators.required],
       date: ["", Validators.required],

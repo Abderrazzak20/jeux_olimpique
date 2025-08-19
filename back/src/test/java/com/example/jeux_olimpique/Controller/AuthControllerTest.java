@@ -59,11 +59,13 @@ class AuthControllerTest {
 		user.setEmail("test@example.com");
 		user.setPassword("pass");
 
-		when(authService.createUser(any())).thenReturn(user);
+		AuthResponse authResponse = new AuthResponse("jwt"); 
+
+		when(authService.register(any())).thenReturn(authResponse);
 
 		mockMvc.perform(post("/auth/register").contentType(MediaType.APPLICATION_JSON)
 				.content(objectMapper.writeValueAsString(user))).andExpect(status().isOk())
-				.andExpect(jsonPath("$.email").value("test@example.com"));
+				.andExpect(jsonPath("$.token").value("jwt"));
 	}
 
 	@Test
@@ -82,7 +84,7 @@ class AuthControllerTest {
 		User user = new User();
 		user.setEmail("existing@example.com");
 
-		when(authService.createUser(any())).thenThrow(new RuntimeException("User already exists"));
+		when(authService.register(any())).thenThrow(new RuntimeException("User already exists"));
 
 		mockMvc.perform(post("/auth/register").contentType(MediaType.APPLICATION_JSON)
 				.content(objectMapper.writeValueAsString(user))).andExpect(status().isConflict())

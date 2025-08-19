@@ -18,14 +18,9 @@ export const routes: Routes = [
   { path: 'offert', component: Offerts, canActivate: [authGuard] },
   { path: 'offert/ventes', component: OffertSales, canActivate: [authGuard] },
   { path: 'offert/create', component: OffertCreate, canActivate: [authGuard] },
-  { path: 'offert/create/:id', component: OffertCreate, canActivate: [authGuard] },
   { path: 'offert/edit/:id', component: OffertEdit, canActivate: [authGuard] },
   { path: 'offert/:id', component: OffertDetail, canActivate: [authGuard] },
   { path: 'reservation', component: Reservation, canActivate: [authGuard] },
   { path: 'cart', component: Cart, canActivate: [authGuard] },
   { path: '**', redirectTo: '' }
-
-
-
-
 ];

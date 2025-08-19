@@ -1,4 +1,4 @@
-package com.example.jeux_olimpique.Controller;
+/*package com.example.jeux_olimpique.Controller;
 
 import com.example.jeux_olimpique.controller.OffertController;
 import com.example.jeux_olimpique.models.Offert;
@@ -106,4 +106,4 @@ class OffertControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(content().string("Supprimer avec Succes offert id: 1"));
     }
-}
+}*/

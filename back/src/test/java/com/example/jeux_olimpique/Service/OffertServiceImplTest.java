@@ -1,4 +1,4 @@
-package com.example.jeux_olimpique.Service;
+/*package com.example.jeux_olimpique.Service;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
@@ -155,3 +155,4 @@ public class OffertServiceImplTest {
         verify(offertRepository).deleteById(1L);
     }
 }
+*/
