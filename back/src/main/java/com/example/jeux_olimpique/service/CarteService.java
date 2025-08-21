@@ -23,7 +23,7 @@ public class CarteService {
 	private CarteItemRepository carteItemRepository;
 	@Autowired
 	private OffertRepository offertRepository;
-	
+
 	@Autowired
 	private UserRepository userRepository;
 
@@ -43,55 +43,49 @@ public class CarteService {
 		return cartRepository.findAll();
 	}
 
-		
-	public void addOffertToCart(Long userId ,Long offerId,int quantity) {
-		if(quantity <=0) {
-			throw new RuntimeException("quanitie invalide");
+	public void addOffertToCart(Long userId, Long offerId, int quantity) {
+		if (quantity <= 0) {
+			throw new RuntimeException("quantité invalide");
 		}
- 		
-		User user = userRepository.findById(userId)
-				.orElseThrow(()-> new RuntimeException("user il est pas trouve"));
+
+		User user = userRepository.findById(userId).orElseThrow(() -> new RuntimeException("utilisateur non trouvé"));
 		Cart cart = getCartByUser(user);
-		
+
 		Offert offert = offertRepository.findById(offerId)
-				.orElseThrow(()-> new RuntimeException("l'offert n'est pas disponible"));
-		
-		CarteItem items= new CarteItem();
+				.orElseThrow(() -> new RuntimeException("offre non disponible"));
+
+		CarteItem items = new CarteItem();
 		items.setCart(cart);
 		items.setOffert(offert);
 		items.setQuantity(quantity);
 		carteItemRepository.save(items);
-		
+
 	}
 
-	public List<CarteItem> getCarteItems(Long userId) {			
-		User user = userRepository.findById(userId)
-				.orElseThrow(()-> new RuntimeException("cart inexistante"));
+	public List<CarteItem> getCarteItems(Long userId) {
+		User user = userRepository.findById(userId).orElseThrow(() -> new RuntimeException("panier inexistant"));
 		Cart cart = cartRepository.findByUser(user);
-		if(cart==null) {
-			throw new RuntimeException("carrello inesistente");
+		if (cart == null) {
+			throw new RuntimeException("panier inexistant");
 		}
 		return cart.getItems();
 	}
 
 	public void removeCartItems(Long userId, Long cartItemId) {
 		CarteItem item = carteItemRepository.findById(cartItemId)
-				.orElseThrow(() -> new RuntimeException("item pas trouvé"));
-		
-		
+				.orElseThrow(() -> new RuntimeException("article non trouvé"));
+
 		if (item.getCart().getUser().getId().equals(userId)) {
 			carteItemRepository.delete(item);
-			
+
 		} else {
-			throw new RuntimeException("element impossible a supperimer pk il est pas trouve");
+			throw new RuntimeException("impossible de supprimer l'article, utilisateur incorrect");
 		}
 
 	}
-	
+
 	public void removeCart(Long cartId) {
 		cartRepository.deleteById(cartId);
 	}
-	
-
 
 }

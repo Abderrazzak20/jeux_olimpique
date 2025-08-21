@@ -33,35 +33,37 @@ public class ReservationControllerTest {
 
     @MockBean
     private ReservationService reservationService;
-    @MockBean
-    private JwtService jwtService; // MOCK della dipendenza mancante
 
     @MockBean
-    private JwtFilter jwtFilter; // MOCK del filtro se incluso nei config
+    private JwtService jwtService;
+
+    @MockBean
+    private JwtFilter jwtFilter;
+
     @Test
     void testCreateReservation() throws Exception {
         Reservation reservation = new Reservation();
         reservation.setId(1L);
 
-        Mockito.when(reservationService.createReservation(1L, 2L,5)).thenReturn(reservation);
+        Mockito.when(reservationService.createReservation(1L, 2L, 5)).thenReturn(reservation);
 
         mockMvc.perform(post("/api/reservation")
-                .param("userId", "1")
-                .param("offertId", "2")
-                .param("seat", "5"))
+                        .param("userId", "1")
+                        .param("offertId", "2")
+                        .param("seat", "5"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.id").value(1L));
     }
 
     @Test
     void testCreateReservationThrowsException() throws Exception {
-        Mockito.when(reservationService.createReservation(anyLong(), anyLong(),anyInt()))
+        Mockito.when(reservationService.createReservation(anyLong(), anyLong(), anyInt()))
                 .thenThrow(new RuntimeException("Errore durante la prenotazione"));
 
         mockMvc.perform(post("/api/reservation")
-                .param("userId", "1")
-                .param("offertId", "2")
-                .param("seat", "5"))
+                        .param("userId", "1")
+                        .param("offertId", "2")
+                        .param("seat", "5"))
                 .andExpect(status().isBadRequest())
                 .andExpect(content().string("Errore durante la prenotazione"));
     }
@@ -78,7 +80,9 @@ public class ReservationControllerTest {
 
         mockMvc.perform(get("/api/reservation/user/1"))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.size()").value(2));
+                .andExpect(jsonPath("$.length()").value(2))
+                .andExpect(jsonPath("$[0].id").value(1L))
+                .andExpect(jsonPath("$[1].id").value(2L));
     }
 
     @Test
@@ -102,7 +106,7 @@ public class ReservationControllerTest {
         Mockito.when(reservationService.updateReservation(5L, 20L)).thenReturn(updated);
 
         mockMvc.perform(put("/api/reservation/5")
-                .param("newOffertId", "20"))
+                        .param("newOffertId", "20"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.id").value(5L));
     }

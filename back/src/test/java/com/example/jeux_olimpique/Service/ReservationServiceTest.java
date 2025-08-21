@@ -54,15 +54,20 @@ public class ReservationServiceTest {
 
         when(userRepository.findById(1L)).thenReturn(Optional.of(user));
         when(offertRepository.findById(2L)).thenReturn(Optional.of(offert));
-        when(utilss.generateKey()).thenReturn("FINAL_KEY");
+        when(utilss.generateKey()).thenReturn("TICKET_KEY");
         when(utilss.generateQRCode(any())).thenReturn("QR_CODE");
         when(reservationRepository.save(any())).thenAnswer(inv -> inv.getArgument(0));
 
-        Reservation result = reservationService.createReservation(1L, 2L,5);
+        Reservation result = reservationService.createReservation(1L, 2L, 5);
 
-        assertEquals("FINAL_KEY", result.getFinalKey());
+        // 🔹 Corretto: finalKey = accountKey + ":" + ticketKey
+        assertEquals("ACCOUNT_KEY:TICKET_KEY", result.getFinalKey()); 
         assertEquals("ACCOUNT_KEY", result.getTicketKey());
         assertEquals("QR_CODE", result.getQrCode());
+
+        // 🔹 Verifica anche l'aggiornamento posti
+        assertEquals(5, offert.getAvailableSeats());
+
         verify(offertRepository).save(offert);
         verify(reservationRepository).save(any());
     }
@@ -72,7 +77,7 @@ public class ReservationServiceTest {
         when(userRepository.findById(1L)).thenReturn(Optional.empty());
 
         RuntimeException ex = assertThrows(RuntimeException.class, () -> {
-            reservationService.createReservation(1L, 2L,5);
+            reservationService.createReservation(1L, 2L, 5);
         });
 
         assertEquals("user il est pas present", ex.getMessage());
@@ -88,7 +93,7 @@ public class ReservationServiceTest {
         when(offertRepository.findById(2L)).thenReturn(Optional.of(offert));
 
         RuntimeException ex = assertThrows(RuntimeException.class, () -> {
-            reservationService.createReservation(1L, 2L,5);
+            reservationService.createReservation(1L, 2L, 5);
         });
 
         assertEquals("Aucune place disponible pour cette offre", ex.getMessage());
@@ -117,6 +122,7 @@ public class ReservationServiceTest {
         reservation.setId(10L);
         reservation.setUser(user);
         reservation.setOffert(oldOffert);
+        reservation.setSeats(2); // 🔹 aggiunto seats per simulare
 
         when(reservationRepository.findById(10L)).thenReturn(Optional.of(reservation));
         when(offertRepository.findById(5L)).thenReturn(Optional.of(newOffert));
@@ -126,11 +132,16 @@ public class ReservationServiceTest {
 
         Reservation updated = reservationService.updateReservation(10L, 5L);
 
-        assertEquals("NEW_KEY", updated.getFinalKey());
+        // 🔹 Corretto: finalKey = accountKey + ":" + ticketKey
+        assertEquals("ACCOUNT_KEY:NEW_KEY", updated.getFinalKey());
         assertEquals("NEW_QR", updated.getQrCode());
         assertEquals(newOffert, updated.getOffert());
+
+        // 🔹 Verifica aggiornamento posti
+        assertEquals(5, oldOffert.getAvailableSeats()); // 3 + 2 liberati
+        assertEquals(2, newOffert.getAvailableSeats()); // 4 - 2 occupati
     }
-    
+
     @Test
     void updateReservation_reservationNotFound() {
         when(reservationRepository.findById(1L)).thenReturn(Optional.empty());
@@ -141,7 +152,7 @@ public class ReservationServiceTest {
 
         assertEquals("desole on a pas trouve votre reservation", ex.getMessage());
     }
-    
+
     @Test
     void getReservationByOffert_success() {
         when(reservationRepository.findByOffertId(2L))
@@ -153,7 +164,6 @@ public class ReservationServiceTest {
         verify(reservationRepository).findByOffertId(2L);
     }
 
-    
     @Test
     void createReservation_offertNotFound() {
         User user = new User();
@@ -161,7 +171,7 @@ public class ReservationServiceTest {
         when(offertRepository.findById(2L)).thenReturn(Optional.empty());
 
         RuntimeException ex = assertThrows(RuntimeException.class, () -> {
-            reservationService.createReservation(1L, 2L,5);
+            reservationService.createReservation(1L, 2L, 5);
         });
 
         assertEquals("offert n'est pas diposnible", ex.getMessage());
@@ -172,6 +182,7 @@ public class ReservationServiceTest {
         Reservation reservation = new Reservation();
         reservation.setOffert(new Offert());
         reservation.setUser(new User());
+        reservation.setSeats(1);
 
         when(reservationRepository.findById(1L)).thenReturn(Optional.of(reservation));
         when(offertRepository.findById(2L)).thenReturn(Optional.empty());
@@ -195,6 +206,7 @@ public class ReservationServiceTest {
 
         reservation.setUser(user);
         reservation.setOffert(oldOffert);
+        reservation.setSeats(1);
 
         when(reservationRepository.findById(1L)).thenReturn(Optional.of(reservation));
         when(offertRepository.findById(2L)).thenReturn(Optional.of(newOffert));
@@ -217,7 +229,6 @@ public class ReservationServiceTest {
         assertEquals("Prenotazione non trovata", ex.getMessage());
     }
 
-
     @Test
     void deleteReservation_success() {
         Offert offert = new Offert();
@@ -226,10 +237,14 @@ public class ReservationServiceTest {
         Reservation reservation = new Reservation();
         reservation.setId(1L);
         reservation.setOffert(offert);
+        reservation.setSeats(1);
 
         when(reservationRepository.findById(1L)).thenReturn(Optional.of(reservation));
 
         String result = reservationService.deleteReservation(1L);
+
+        // 🔹 Verifica che i posti siano stati liberati
+        assertEquals(2, offert.getAvailableSeats());
 
         verify(offertRepository).save(offert);
         verify(reservationRepository).deleteById(1L);
@@ -246,6 +261,7 @@ public class ReservationServiceTest {
 
         assertEquals(ReservationStatus.PAID, result.getStatus());
     }
+
     @Test
     void confirmPayment_notFound() {
         when(reservationRepository.findById(1L)).thenReturn(Optional.empty());
@@ -256,5 +272,4 @@ public class ReservationServiceTest {
 
         assertEquals("riservation introuvable", ex.getMessage());
     }
-
 }
