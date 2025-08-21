@@ -26,7 +26,7 @@ COPY --from=build /app/dist/olympic-tickets /usr/share/nginx/html
 # COPY nginx.conf /etc/nginx/conf.d/default.conf
 
 # Espone la porta 82
-EXPOSE 8082
+EXPOSE 8080
 
 # Avvia Nginx
 CMD ["nginx", "-g", "daemon off;"]
