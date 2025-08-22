@@ -1,32 +1,30 @@
 # Stage 1: Build
 FROM node:22.12-alpine AS build
 
-# Imposta la cartella di lavoro
 WORKDIR /app
 
-# Copia package.json e package-lock.json
 COPY package*.json ./
 
-# Installa le dipendenze
 RUN npm ci
 
-# Copia tutto il resto del progetto
 COPY . .
 
-# Costruisci l'app Angular
+# Build Angular (production di default)
 RUN npm run build
 
 # Stage 2: Serve con Nginx
 FROM nginx:alpine
 
-# Copia la build Angular nella cartella di Nginx
-COPY --from=build /app/dist/olympic-tickets /usr/share/nginx/html
+# Copia la build Angular (attenzione: cartella browser!)
+COPY --from=build /app/dist/olympic-tickets/browser /usr/share/nginx/html
 
-# Copia il template di Nginx (invece del file statico)
+# Copia il template nginx
 COPY nginx.conf /etc/nginx/conf.d/default.conf.template
 
-# Espone la porta dinamica di Railway
+# Imposta porta di default (utile in locale o se Railway non setta)
+ENV PORT=8080
+
 EXPOSE $PORT
 
-# Avvia Nginx sostituendo $PORT dinamicamente
+# Avvia Nginx sostituendo la variabile PORT
 CMD envsubst '$PORT' < /etc/nginx/conf.d/default.conf.template > /etc/nginx/conf.d/default.conf && nginx -g 'daemon off;'
