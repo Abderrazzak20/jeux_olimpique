@@ -20,7 +20,8 @@ RUN npm run build
 FROM nginx:alpine
 
 # Copia la build Angular nella cartella di Nginx
-COPY --from=build /app/dist/olympic-tickets /usr/share/nginx/html
+COPY --from=build /app/dist/olympic-tickets/browser /usr/share/nginx/html
+
 
 # Copia il template di Nginx (invece del file statico)
 COPY nginx.conf /etc/nginx/conf.d/default.conf.template
