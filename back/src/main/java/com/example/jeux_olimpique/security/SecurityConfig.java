@@ -70,6 +70,7 @@ public class SecurityConfig {
 	public CorsConfigurationSource configurationSource() {
 		CorsConfiguration configuration = new CorsConfiguration();
 		configuration.addAllowedOrigin("http://localhost:4200");
+		configuration.addAllowedOrigin("https://jeux-olimpique.up.railway.app/login");
 		configuration.addAllowedMethod("*");
 		configuration.addAllowedHeader("*");
 		configuration.setAllowCredentials(true);
