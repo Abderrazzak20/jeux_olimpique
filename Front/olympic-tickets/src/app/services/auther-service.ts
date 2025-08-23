@@ -16,7 +16,7 @@ interface tokenPaylod {
   providedIn: 'root'
 })
 export class AutherService {
-  private baseUrl = "http://localhost:8081/auth";
+  private baseUrl = "https://jeux-olimpique.up.railway.app/auth";
 
 
 
