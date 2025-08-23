@@ -6,7 +6,8 @@ import { Injectable } from '@angular/core';
   providedIn: 'root'
 })
 export class ReservationService {
-  private baseUrl = "http://localhost:8081/api/reservation";
+  private baseUrl = "https://jeuxolimpique-jo2025back.up.railway.app/api/reservation";
+  
   constructor(private http: HttpClient) { }
 
   createReservation(userId: number, offertId: number, seat: number): Observable<any> {

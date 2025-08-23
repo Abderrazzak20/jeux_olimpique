@@ -10,7 +10,8 @@ import { SalesDTO } from '../model/SalesDTO';
 })
 export class OfferteService {
 
-  private ApiUrl = "http://localhost:8081/api/offert";
+  private ApiUrl = "https://jeuxolimpique-jo2025back.up.railway.app/api/offert";
+  
   constructor(private http: HttpClient) { }
 
   getActiveOffert(): Observable<OffertModel[]> {
