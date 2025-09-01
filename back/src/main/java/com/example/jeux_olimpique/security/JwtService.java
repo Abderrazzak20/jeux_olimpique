@@ -49,7 +49,7 @@ public class JwtService {
 	public String generateTokenRegister(User user) {
 		List<String> roles = new ArrayList<>();
 		roles.add("roles");
-		return Jwts.builder().setSubject(user.getEmail()).claim("roles", roles) // o usa user.getRoles() se li hai
+		return Jwts.builder().setSubject(user.getEmail()).claim("roles", roles) 
 				.claim("id", user.getId()).setIssuedAt(new Date(System.currentTimeMillis()))
 				.claim("is_admin", user.isAdmin())
 				.setExpiration(new Date(System.currentTimeMillis() + EXPIRATION))

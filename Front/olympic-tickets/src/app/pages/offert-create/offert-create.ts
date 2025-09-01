@@ -35,6 +35,7 @@ export class OffertCreate {
   onSubmit(): void {
     if (this.createForm.invalid) {
       this.errorMessage = "il faut remplir tous les champs";
+      return;
     }
     this.offertSe.createOffert(this.createForm.value).subscribe({
       next: () => {

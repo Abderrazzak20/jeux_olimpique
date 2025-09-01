@@ -12,7 +12,7 @@ import { CommonModule } from '@angular/common';
 export class Navbar {
   constructor(private router: Router, private authS: AutherService) { }
 
-  menuOpen:boolean=false;
+  menuOpen: boolean = false;
   isLoggedIn(): boolean {
     return this.authS.isLoggin();
   }
@@ -37,14 +37,12 @@ export class Navbar {
     }
   }
 
-
   logout(): void {
     this.authS.logout();
-   
   }
 
-  toggleMenu(){
-    this.menuOpen=!this.menuOpen;
+  toggleMenu() {
+    this.menuOpen = !this.menuOpen;
   }
 }
 
