@@ -31,35 +31,42 @@ public class ReservationService {
 	private Utilss utilss;
 
 	public Reservation createReservation(Long userId, Long offertId, int seats) throws WriterException, IOException {
-		String baseUrl="https://jeux-olimpique.up.railway.app/reservation/validate";
-		User user = userRepository.findById(userId).orElseThrow(() -> new RuntimeException("user il est pas present"));
+	    
+	    String baseUrl = "https://jeuxolimpique-jo2025back.up.railway.app/api/reservation/validate";
 
-		Offert offert = offertRepository.findById(offertId)
-				.orElseThrow(() -> new RuntimeException("offert n'est pas diposnible"));
+	  
+	    User user = userRepository.findById(userId)
+	            .orElseThrow(() -> new RuntimeException("Utilisateur non trouvé"));
 
-		if (offert.getAvailableSeats() < seats) {
-			throw new RuntimeException("Aucune place disponible pour cette offre");
+	    Offert offert = offertRepository.findById(offertId)
+	            .orElseThrow(() -> new RuntimeException("Offre non disponible"));
 
-		}
-		offert.setAvailableSeats(offert.getAvailableSeats() - seats);
-		offertRepository.save(offert);
+	    if (offert.getAvailableSeats() < seats) {
+	        throw new RuntimeException("Aucune place disponible pour cette offre");
+	    }
+	    offert.setAvailableSeats(offert.getAvailableSeats() - seats);
+	    offertRepository.save(offert);
 
-		String accountKey = user.getAccountKey();
-		String ticketKey = utilss.generateKey();
-		String finalKey = accountKey + ":" + ticketKey;
-		String validateUrl = baseUrl + "?finalKey=" + finalKey;
-		String qrCode = utilss.generateQRCode(validateUrl);
-		Reservation reservation = new Reservation();
-		reservation.setFinalKey(finalKey);
-		reservation.setOffert(offert);
-		reservation.setQrCode(qrCode);
-		reservation.setTicketKey(ticketKey);
-		reservation.setUser(user);
-		reservation.setSeats(seats);
-		reservation.setStatus(ReservationStatus.PENDING);
+	    String accountKey = user.getAccountKey();
+	    String ticketKey = utilss.generateKey();
+	    String finalKey = accountKey + ":" + ticketKey;
 
-		return reservationRepository.save(reservation);
+	    String validateUrl = baseUrl + "?finalKey=" + finalKey;
+
+	    String qrCode = utilss.generateQRCode(validateUrl);
+
+	    Reservation reservation = new Reservation();
+	    reservation.setUser(user);
+	    reservation.setOffert(offert);
+	    reservation.setSeats(seats);
+	    reservation.setTicketKey(ticketKey);
+	    reservation.setFinalKey(finalKey);
+	    reservation.setQrCode(qrCode);
+	    reservation.setStatus(ReservationStatus.PENDING);
+
+	    return reservationRepository.save(reservation);
 	}
+
 
 	public List<Reservation> getReservationByUser(Long userId) {
 		return reservationRepository.findByUserId(userId);
