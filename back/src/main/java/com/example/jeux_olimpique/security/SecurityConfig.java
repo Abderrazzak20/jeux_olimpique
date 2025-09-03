@@ -17,53 +17,64 @@ import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
-
 @Configuration
 @EnableMethodSecurity
 public class SecurityConfig {
 
 	private final JwtFilter jwtFilter;
 	private final CustomUserDetailsService userDetailsService;
-	
-	public SecurityConfig(JwtFilter jwtFilter ,CustomUserDetailsService userDetailsService ) {
-		this.jwtFilter=jwtFilter;
-		this.userDetailsService=userDetailsService;
+
+	public SecurityConfig(JwtFilter jwtFilter, CustomUserDetailsService userDetailsService) {
+		this.jwtFilter = jwtFilter;
+		this.userDetailsService = userDetailsService;
 	}
-	
-	@Bean
-	public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception{
-		
-		return http
-				.csrf(csrf->csrf.disable())
-				.cors(cors -> cors.configurationSource(configurationSource()))
-				
+
+	/*@Bean
+	public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+
+		return http.csrf(csrf -> csrf.disable()).cors(cors -> cors.configurationSource(configurationSource()))
+
 				.sessionManagement(sm -> sm.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-				//.authorizeHttpRequests(auth -> auth.requestMatchers("/auth/**", "/api/users/","api/offert/**","api/reservation/**").permitAll()//pour tester offert sans securite
-				.authorizeHttpRequests(auth -> auth.requestMatchers("/auth/**","/api/reservation/**").permitAll()
-						
-			.anyRequest().authenticated()
-)
-				
+				// .authorizeHttpRequests(auth -> auth.requestMatchers("/auth/**",
+				// "/api/users/","api/offert/**","api/reservation/**").permitAll()//pour tester
+				// offert sans securite
+				.authorizeHttpRequests(auth -> auth.requestMatchers("/auth/**", "/api/reservation/**").permitAll()
+
+						.anyRequest().authenticated())
+
 				.authenticationProvider(authenticationProvider())
-				.addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class)
-				.build();
-	} 
+				.addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class).build();
+	}*/
+	@Bean
+	public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+	    http
+	        .csrf(csrf -> csrf.disable())
+	        .cors(cors -> cors.configurationSource(configurationSource()))
+	        .sessionManagement(sm -> sm.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+	        .authorizeHttpRequests(auth -> auth.anyRequest().permitAll()); // tutto permesso
+
+	    return http.build();
+	}
+
+
 	@Bean
 	public AuthenticationProvider authenticationProvider() {
-		DaoAuthenticationProvider provider= new DaoAuthenticationProvider();
+		DaoAuthenticationProvider provider = new DaoAuthenticationProvider();
 		provider.setUserDetailsService(userDetailsService);
 		provider.setPasswordEncoder(passwordEncoder());
 		return provider;
 	}
-	
+
 	@Bean
 	public AuthenticationManager authenticationManager(AuthenticationConfiguration config) throws Exception {
-		return config.getAuthenticationManager();	
+		return config.getAuthenticationManager();
 	}
+
 	@Bean
 	public PasswordEncoder passwordEncoder() {
 		return new BCryptPasswordEncoder();
-	} 
+	}
+
 	@Bean
 	public CorsConfigurationSource configurationSource() {
 		CorsConfiguration configuration = new CorsConfiguration();
@@ -72,8 +83,8 @@ public class SecurityConfig {
 		configuration.addAllowedMethod("*");
 		configuration.addAllowedHeader("*");
 		configuration.setAllowCredentials(true);
-		
-		UrlBasedCorsConfigurationSource source= new UrlBasedCorsConfigurationSource();
+
+		UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
 		source.registerCorsConfiguration("/**", configuration);
 		return source;
 	}
