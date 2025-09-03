@@ -134,23 +134,28 @@ public class ReservationService {
 	}
 
 	public boolean validateTicket(String finalKey) {
-		Reservation reservation = reservationRepository.findByFinalKey(finalKey);
-		if (reservation == null) {
-			return false;
-		}
+	    // Recherche de la réservation correspondant à la clé finale
+	    Reservation reservation = reservationRepository.findByFinalKey(finalKey);
+	    if (reservation == null) {
+	        // Aucun billet correspondant trouvé
+	        return false;
+	    }
 
-		if (reservation.getStatus() == ReservationStatus.USED) {
-			return false;
-		}
+	    // Si le billet a déjà été utilisé
+	    if (reservation.getStatus() == ReservationStatus.USED) {
+	        return false;
+	    }
 
-		if (reservation.getStatus() == ReservationStatus.PAID) {
-			reservation.setStatus(ReservationStatus.USED);
-			reservationRepository.save(reservation);
-			return true;
-		}
+	    // On considère le billet valide si son statut est PENDING ou PAID
+	    if (reservation.getStatus() == ReservationStatus.PENDING || reservation.getStatus() == ReservationStatus.PAID) {
+	        reservation.setStatus(ReservationStatus.USED);
+	        reservationRepository.save(reservation);
+	        return true;
+	    }
 
-		return false;
+	    return false;
 	}
+
 
 	public String cancelReservation(Long reservationId) {
 		Reservation reservation = reservationRepository.findById(reservationId)
