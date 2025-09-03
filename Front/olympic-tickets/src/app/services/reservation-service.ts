@@ -27,4 +27,5 @@ export class ReservationService {
     const params = new HttpParams().set('finalKey', finalKey);
     return this.http.post(`${this.baseUrl}/validate`, null, { params });
   }
+  
 }

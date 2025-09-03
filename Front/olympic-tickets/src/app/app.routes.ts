@@ -10,6 +10,8 @@ import { authGuard } from './guards/auth-guard';
 import { OffertCreate } from './pages/offert-create/offert-create';
 import { OffertEdit } from './pages/offert-edit/offert-edit';
 import { OffertSales } from './pages/offert-sales/offert-sales';
+import { ValidateTicketComponent } from './pages/validate-ticket/validate-ticket';
+
 
 export const routes: Routes = [
   { path: '', component: Home },
@@ -21,6 +23,7 @@ export const routes: Routes = [
   { path: 'offert/edit/:id', component: OffertEdit, canActivate: [authGuard] },
   { path: 'offert/:id', component: OffertDetail, canActivate: [authGuard] },
   { path: 'reservation', component: Reservation, canActivate: [authGuard] },
+  {path: 'reservation/validate', component: ValidateTicketComponent},
   { path: 'cart', component: Cart, canActivate: [authGuard] },
   { path: '**', redirectTo: '' }
 ];
