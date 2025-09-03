@@ -41,7 +41,7 @@ public class SecurityConfig {
 				//.authorizeHttpRequests(auth -> auth.requestMatchers("/auth/**", "/api/users/","api/offert/**","api/reservation/**").permitAll()//pour tester offert sans securite
 				.authorizeHttpRequests(auth -> auth.requestMatchers("/auth/**","/api/reservation/validate/**").permitAll()
 						
-			//	.anyRequest().authenticated()
+			.anyRequest().authenticated()
 )
 				
 				.authenticationProvider(authenticationProvider())
