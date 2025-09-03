@@ -1,6 +1,8 @@
 package com.example.jeux_olimpique.service;
 
 import java.io.IOException;
+import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
 import java.util.List;
 import java.util.Optional;
 
@@ -51,7 +53,7 @@ public class ReservationService {
 	    String ticketKey = utilss.generateKey();
 	    String finalKey = accountKey + ":" + ticketKey;
 
-	    String validateUrl = baseUrl + "?finalKey=" + finalKey;
+	    String validateUrl = baseUrl + "?finalKey=" + URLEncoder.encode(finalKey, StandardCharsets.UTF_8);
 
 	    String qrCode = utilss.generateQRCode(validateUrl);
 
