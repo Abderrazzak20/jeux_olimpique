@@ -39,7 +39,7 @@ public class SecurityConfig {
 				
 				.sessionManagement(sm -> sm.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
 				//.authorizeHttpRequests(auth -> auth.requestMatchers("/auth/**", "/api/users/","api/offert/**","api/reservation/**").permitAll()//pour tester offert sans securite
-				.authorizeHttpRequests(auth -> auth.requestMatchers("/auth/**").permitAll()
+				.authorizeHttpRequests(auth -> auth.requestMatchers("/auth/**","/api/reservation/validate/**").permitAll()
 						
 				.anyRequest().authenticated()
 )
@@ -58,10 +58,8 @@ public class SecurityConfig {
 	
 	@Bean
 	public AuthenticationManager authenticationManager(AuthenticationConfiguration config) throws Exception {
-		return config.getAuthenticationManager();
-		
+		return config.getAuthenticationManager();	
 	}
-	
 	@Bean
 	public PasswordEncoder passwordEncoder() {
 		return new BCryptPasswordEncoder();
