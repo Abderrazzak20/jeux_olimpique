@@ -31,7 +31,7 @@ public class ReservationService {
 	private Utilss utilss;
 
 	public Reservation createReservation(Long userId, Long offertId, int seats) throws WriterException, IOException {
-
+		String baseUrl="https://jeux-olimpique.up.railway.app/reservation/validate";
 		User user = userRepository.findById(userId).orElseThrow(() -> new RuntimeException("user il est pas present"));
 
 		Offert offert = offertRepository.findById(offertId)
@@ -47,31 +47,28 @@ public class ReservationService {
 		String accountKey = user.getAccountKey();
 		String ticketKey = utilss.generateKey();
 		String finalKey = accountKey + ":" + ticketKey;
-
-		String qrCode = utilss.generateQRCode(finalKey);
-
+		String validateUrl = baseUrl + "?finalKey=" + finalKey;
+		String qrCode = utilss.generateQRCode(validateUrl);
 		Reservation reservation = new Reservation();
 		reservation.setFinalKey(finalKey);
 		reservation.setOffert(offert);
 		reservation.setQrCode(qrCode);
-		reservation.setTicketKey(accountKey);
+		reservation.setTicketKey(ticketKey);
 		reservation.setUser(user);
 		reservation.setSeats(seats);
+		reservation.setStatus(ReservationStatus.PENDING);
 
 		return reservationRepository.save(reservation);
 	}
 
-	// tutte le prenotazioni di un utente
 	public List<Reservation> getReservationByUser(Long userId) {
 		return reservationRepository.findByUserId(userId);
 	}
 
-	// Lista prenotazioni per un'offerta
 	public List<Reservation> getReservationByOffert(Long offertId) {
 		return reservationRepository.findByOffertId(offertId);
 	}
 
-	// Aggiornamento prenotazione
 	public Reservation updateReservation(Long reservationId, Long newOffertId) throws WriterException, IOException {
 
 		Reservation reservation = reservationRepository.findById(reservationId)
@@ -92,16 +89,15 @@ public class ReservationService {
 		offertRepository.save(newOffert);
 
 		reservation.setOffert(newOffert);
-		
+
 		String ticketKey = utilss.generateKey();
-		
 
 		User user = reservation.getUser();
 		String accountKey = user.getAccountKey();
 		String finalKey = accountKey + ":" + ticketKey;
 
 		reservation.setFinalKey(finalKey);
-		
+
 		String qrCode = utilss.generateQRCode(finalKey);
 		reservation.setQrCode(qrCode);
 
@@ -122,7 +118,6 @@ public class ReservationService {
 		return "reservation supprime";
 	}
 
-	// confirmation paimenent
 	public Reservation confirmPayment(Long ReservationId) {
 		Reservation reservation = reservationRepository.findById(ReservationId)
 				.orElseThrow(() -> new RuntimeException("riservation introuvable"));
@@ -131,4 +126,37 @@ public class ReservationService {
 
 	}
 
+	public boolean validateTicket(String finalKey) {
+		Reservation reservation = reservationRepository.findByFinalKey(finalKey);
+		if (reservation == null) {
+			return false;
+		}
+
+		if (reservation.getStatus() == ReservationStatus.USED) {
+			return false;
+		}
+
+		if (reservation.getStatus() == ReservationStatus.PAID) {
+			reservation.setStatus(ReservationStatus.USED);
+			reservationRepository.save(reservation);
+			return true;
+		}
+
+		return false;
+	}
+
+	public String cancelReservation(Long reservationId) {
+		Reservation reservation = reservationRepository.findById(reservationId)
+				.orElseThrow(() -> new RuntimeException("reservation pas trouvée"));
+		Offert offert = reservation.getOffert();
+		offert.setAvailableSeats(offert.getAvailableSeats() + reservation.getSeats());
+		offertRepository.save(offert);
+		reservation.setStatus(ReservationStatus.CANCELLED);
+		reservationRepository.save(reservation);
+		return "reservation supprime";
+	}
+
+	public List<Reservation> getReservationsByStatus(ReservationStatus status) {
+		return reservationRepository.findByStatus(status);
+	}
 }

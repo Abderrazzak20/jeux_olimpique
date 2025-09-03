@@ -36,7 +36,7 @@ describe('Cart', () => {
     mockCartService.getItem.and.returnValue([mockItem]);
 
     await TestBed.configureTestingModule({
-      imports: [Cart], // standalone component va qui
+      imports: [Cart],
       providers: [
         { provide: CartService, useValue: mockCartService },
         { provide: ReservationService, useValue: mockReservationService },

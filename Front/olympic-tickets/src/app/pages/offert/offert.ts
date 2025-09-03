@@ -73,7 +73,6 @@ export class Offerts implements OnInit {
     if (confirm("Êtes-vous sûr de vouloir supprimer cette offre ?")) {
       this.OfferteService.deleteOffert(id).subscribe({
         next: () => {
-          // Aggiorna localmente la proprietà deleted
           const offre = this.offertlist.find(o => o.id === id);
           if (offre) {
             offre.deleted = true;

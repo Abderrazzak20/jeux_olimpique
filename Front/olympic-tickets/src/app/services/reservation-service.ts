@@ -7,19 +7,24 @@ import { Injectable } from '@angular/core';
 })
 export class ReservationService {
   private baseUrl = "https://jeuxolimpique-jo2025back.up.railway.app/api/reservation";
-  
+
   constructor(private http: HttpClient) { }
 
   createReservation(userId: number, offertId: number, seat: number): Observable<any> {
     const params = new HttpParams()
-    .set("userId", userId)
-    .set("offertId", offertId)
-    .set("seat",seat);
+      .set("userId", userId)
+      .set("offertId", offertId)
+      .set("seat", seat);
 
-    return this.http.post(`${this.baseUrl}`,null, { params });
+    return this.http.post(`${this.baseUrl}`, null, { params });
   }
 
-  getUserReservationId(userId:number):Observable<any[]>{
+  getUserReservationId(userId: number): Observable<any[]> {
     return this.http.get<any[]>(`${this.baseUrl}/user/${userId}`);
+  }
+
+  validateTicket(finalKey: string): Observable<any> {
+    const params = new HttpParams().set('finalKey', finalKey);
+    return this.http.post(`${this.baseUrl}/validate`, null, { params });
   }
 }

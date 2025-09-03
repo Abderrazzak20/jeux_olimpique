@@ -63,7 +63,6 @@ describe('OffertEdit', () => {
 
     mockOffertService.offertUpdate.and.returnValue(of({}));
 
-    // Il form patchValue con tutti i campi tranne id e deleted
     component.editForm.patchValue({
       name: mockOffert.name,
       price: mockOffert.price,

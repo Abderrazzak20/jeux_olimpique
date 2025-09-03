@@ -40,5 +40,5 @@ public class Reservation {
     @Column(length = 2048)
     private String qrCode;
     @Enumerated(EnumType.STRING)
-    private ReservationStatus Status;
+    private ReservationStatus status;
 }

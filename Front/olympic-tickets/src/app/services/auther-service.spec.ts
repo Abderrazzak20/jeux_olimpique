@@ -10,10 +10,9 @@ describe('AutherService', () => {
   let httpmock: HttpTestingController;
   let routerSpy: jasmine.SpyObj<Router>;
 
-  // fonction utilitaire pour créer un faux JWT
   function createFakeToken(payload: any): string {
     const base64 = btoa(JSON.stringify(payload));
-    return `aaa.${base64}.bbb`; // header.payload.signature
+    return `aaa.${base64}.bbb`; 
   }
 
   beforeEach(() => {

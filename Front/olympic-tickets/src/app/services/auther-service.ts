@@ -33,7 +33,7 @@ export class AutherService {
     return this.http.post<{ token: string }>(`${this.baseUrl}/register`, user).pipe(
       tap(response => {
         if (response.token) {
-          localStorage.setItem('token', response.token); // salva token
+          localStorage.setItem('token', response.token); 
         }
       })
     );
@@ -84,7 +84,6 @@ export class AutherService {
     if (!token) return false;
     try {
       const payload = JSON.parse(atob(token.split(".")[1]));
-      // Usa isAdmin o verifica se nel roles c'è ADMIN
       if (payload.is_admin == true) {
         console.log("dove seiiii", payload);
 
