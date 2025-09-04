@@ -73,7 +73,7 @@ public class ReservationController {
 		return ResponseEntity.ok(reservation);
 	}
 
-	@PostMapping("/validate")
+	/*@PostMapping("/validate")
 	public ResponseEntity<String> validateTicket(@RequestParam String finalKey) {
 		boolean valid = reservationService.validateTicket(finalKey);
 		if (valid) {
@@ -81,7 +81,7 @@ public class ReservationController {
 		} else {
 			return ResponseEntity.badRequest().body("Billet non valide ou déjà utilisé");
 		}
-	}
+	}*/
 	@GetMapping("/validate")
 	public ResponseEntity<String> validateTicketGet(@RequestParam String finalKey) {
 	    boolean valid = reservationService.validateTicket(finalKey);
