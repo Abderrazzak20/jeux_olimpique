@@ -33,9 +33,10 @@ public class ReservationService {
 	private Utilss utilss;
 
 	public Reservation createReservation(Long userId, Long offertId, int seats) throws WriterException, IOException {
-
+	    
 	    String baseUrl = "https://jeuxolimpique-jo2025back.up.railway.app/api/reservation/validate";
 
+	  
 	    User user = userRepository.findById(userId)
 	            .orElseThrow(() -> new RuntimeException("Utilisateur non trouvé"));
 
@@ -50,24 +51,15 @@ public class ReservationService {
 
 	    String accountKey = user.getAccountKey();
 	    String ticketKey = utilss.generateKey();
-
-
-	    String finalKey = accountKey + ":" + ticketKey;
-
-	 
-	    String encodedKey = URLEncoder.encode(finalKey, StandardCharsets.UTF_8);
-
-	  
-	    String validateUrl = baseUrl + "?finalKey=" + encodedKey;
-
+	    String finalKey = accountKey + "-" + ticketKey;
+	    String validateUrl = baseUrl + "?finalKey=" + finalKey;
 	    String qrCode = utilss.generateQRCode(validateUrl);
-
 	    Reservation reservation = new Reservation();
 	    reservation.setUser(user);
 	    reservation.setOffert(offert);
 	    reservation.setSeats(seats);
 	    reservation.setTicketKey(ticketKey);
-	    reservation.setFinalKey(finalKey); 
+	    reservation.setFinalKey(finalKey);
 	    reservation.setQrCode(qrCode);
 	    reservation.setStatus(ReservationStatus.PENDING);
 
