@@ -34,6 +34,14 @@ public class JwtFilter extends OncePerRequestFilter {
                                     FilterChain filterChain)
             throws ServletException, IOException {
 
+        String path = request.getRequestURI();
+
+        // SALTA il filtro per endpoint pubblici
+        if (path.startsWith("/auth/") || path.startsWith("/api/reservation/validate/")) {
+            filterChain.doFilter(request, response);
+            return;
+        }
+
         String authHeader = request.getHeader("Authorization");
         String token = null;
         String email = null;
@@ -68,8 +76,6 @@ public class JwtFilter extends OncePerRequestFilter {
                 SecurityContextHolder.getContext().setAuthentication(authToken);
             }
         }
-
-
 
         filterChain.doFilter(request, response);
     }
