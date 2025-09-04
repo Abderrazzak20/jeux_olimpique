@@ -37,7 +37,7 @@ public class JwtFilter extends OncePerRequestFilter {
         String path = request.getRequestURI();
 
         // SALTA il filtro per endpoint pubblici
-        if (path.startsWith("/auth/") || path.startsWith("/api/reservation/validate/")) {
+        if (path.startsWith("/api/reservation/validate/**") || path.startsWith("/auth/")) {
             filterChain.doFilter(request, response);
             return;
         }
