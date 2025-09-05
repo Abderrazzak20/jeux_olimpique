@@ -73,24 +73,6 @@ public class ReservationController {
 		return ResponseEntity.ok(reservation);
 	}
 
-	/*@PostMapping("/validate")
-	public ResponseEntity<String> validateTicket(@RequestParam String finalKey) {
-		boolean valid = reservationService.validateTicket(finalKey);
-		if (valid) {
-			return ResponseEntity.ok("Billet valide et utilisé");
-		} else {
-			return ResponseEntity.badRequest().body("Billet non valide ou déjà utilisé");
-		}
-	}
-	@GetMapping("/validate")
-	public ResponseEntity<String> validateTicketPath(@RequestParam String finalKey) {
-	    boolean valid = reservationService.validateTicket(finalKey);
-	    if (valid) {
-	        return ResponseEntity.ok("Billet valide ✅");
-	    } else {
-	        return ResponseEntity.badRequest().body("Billet non valide ou déjà utilisé ❌");
-	    }
-	}*/
 	@GetMapping("/validate-ticket")
 	public ResponseEntity<String> validateTicketPublic(@RequestParam String finalKey) {
 	    try {
