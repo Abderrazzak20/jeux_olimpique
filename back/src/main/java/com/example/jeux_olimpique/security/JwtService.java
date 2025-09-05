@@ -41,7 +41,7 @@ public class JwtService {
 		return Jwts.builder().setSubject(userDetails.getUsername()) // di solito email
 				.claim("roles", userDetails.getAuthorities().stream().map(GrantedAuthority::getAuthority).toList())
 				.claim("id", user.getId()).setIssuedAt(new Date(System.currentTimeMillis()))
-				.claim("is_admin", user.isAdmin())
+				.claim("is_admin", user.is_admin())
 				.setExpiration(new Date(System.currentTimeMillis() + EXPIRATION))
 				.signWith(getSignKey(), SignatureAlgorithm.HS256).compact();
 	}
@@ -51,7 +51,7 @@ public class JwtService {
 		roles.add("roles");
 		return Jwts.builder().setSubject(user.getEmail()).claim("roles", roles) 
 				.claim("id", user.getId()).setIssuedAt(new Date(System.currentTimeMillis()))
-				.claim("is_admin", user.isAdmin())
+				.claim("is_admin", user.is_admin())
 				.setExpiration(new Date(System.currentTimeMillis() + EXPIRATION))
 				.signWith(getSignKey(), SignatureAlgorithm.HS256).compact();
 	}

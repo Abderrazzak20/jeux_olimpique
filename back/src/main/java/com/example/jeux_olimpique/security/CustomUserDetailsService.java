@@ -29,7 +29,7 @@ public class CustomUserDetailsService implements UserDetailsService {
         // Costruisci ruoli/authorities
         List<GrantedAuthority> authorities = new ArrayList<>();
 
-        if (user.isAdmin()) { // se hai il booleano
+        if (user.is_admin()) { // se hai il booleano
             authorities.add(new SimpleGrantedAuthority("ROLE_ADMIN"));
         }
 
