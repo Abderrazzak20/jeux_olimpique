@@ -26,10 +26,10 @@ public class CustomUserDetailsService implements UserDetailsService {
         User user = userRepository.findByEmail(email)
             .orElseThrow(() -> new UsernameNotFoundException("Utilisateur introuvable: " + email));
 
-        // Costruisci ruoli/authorities
+      
         List<GrantedAuthority> authorities = new ArrayList<>();
 
-        if (user.is_admin()) { // se hai il booleano
+        if (user.isAdmin()) { 
             authorities.add(new SimpleGrantedAuthority("ROLE_ADMIN"));
         }
 

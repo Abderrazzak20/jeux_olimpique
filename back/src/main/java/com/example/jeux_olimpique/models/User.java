@@ -25,7 +25,7 @@ public class User {
 	private String password;
 	private String email;
 	private String accountKey;
-	private boolean is_admin;
+	private boolean isAdmin;
 
 }
 
