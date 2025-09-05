@@ -61,7 +61,7 @@ public class ReservationService {
 	    reservation.setTicketKey(ticketKey);
 	    reservation.setFinalKey(finalKey);
 	    reservation.setQrCode(qrCode);
-	    reservation.setStatus(ReservationStatus.PENDING);
+	    reservation.setStatus(ReservationStatus.EN_ATTENTE);
 
 	    return reservationRepository.save(reservation);
 	}
@@ -127,7 +127,7 @@ public class ReservationService {
 	public Reservation confirmPayment(Long ReservationId) {
 		Reservation reservation = reservationRepository.findById(ReservationId)
 				.orElseThrow(() -> new RuntimeException("riservation introuvable"));
-		reservation.setStatus(ReservationStatus.PAID);
+		reservation.setStatus(ReservationStatus.VALIDE);
 		return reservationRepository.save(reservation);
 
 	}
@@ -137,29 +137,16 @@ public class ReservationService {
 	    if (reservation == null) {
 	        return false;
 	    }
-	    if (reservation.getStatus() == ReservationStatus.USED) {
+	    if (reservation.getStatus() == ReservationStatus.UTILISE) {
 	        return false;
 	    }
-	    if (reservation.getStatus() == ReservationStatus.PENDING || reservation.getStatus() == ReservationStatus.PAID) {
+	    if (reservation.getStatus() == ReservationStatus.VALIDE){
 	        System.out.println("✅ Ticket valido, avrei impostato lo status a USED");
-	        // reservation.setStatus(ReservationStatus.USED);
-	        // reservationRepository.save(reservation);
+	        reservation.setStatus(ReservationStatus.UTILISE);
+	        reservationRepository.save(reservation);
 	        return true;
 	    }
 	    return false;
-	}
-
-
-
-	public String cancelReservation(Long reservationId) {
-		Reservation reservation = reservationRepository.findById(reservationId)
-				.orElseThrow(() -> new RuntimeException("reservation pas trouvée"));
-		Offert offert = reservation.getOffert();
-		offert.setAvailableSeats(offert.getAvailableSeats() + reservation.getSeats());
-		offertRepository.save(offert);
-		reservation.setStatus(ReservationStatus.CANCELLED);
-		reservationRepository.save(reservation);
-		return "reservation supprime";
 	}
 
 	public List<Reservation> getReservationsByStatus(ReservationStatus status) {

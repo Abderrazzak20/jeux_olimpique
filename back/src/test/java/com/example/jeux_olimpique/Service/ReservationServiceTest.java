@@ -132,14 +132,14 @@ public class ReservationServiceTest {
 
         Reservation updated = reservationService.updateReservation(10L, 5L);
 
-        // 🔹 Corretto: finalKey = accountKey + ":" + ticketKey
+        
         assertEquals("ACCOUNT_KEY:NEW_KEY", updated.getFinalKey());
         assertEquals("NEW_QR", updated.getQrCode());
         assertEquals(newOffert, updated.getOffert());
 
-        // 🔹 Verifica aggiornamento posti
-        assertEquals(5, oldOffert.getAvailableSeats()); // 3 + 2 liberati
-        assertEquals(2, newOffert.getAvailableSeats()); // 4 - 2 occupati
+       
+        assertEquals(5, oldOffert.getAvailableSeats()); 
+        assertEquals(2, newOffert.getAvailableSeats()); 
     }
 
     @Test
@@ -242,8 +242,6 @@ public class ReservationServiceTest {
         when(reservationRepository.findById(1L)).thenReturn(Optional.of(reservation));
 
         String result = reservationService.deleteReservation(1L);
-
-        // 🔹 Verifica che i posti siano stati liberati
         assertEquals(2, offert.getAvailableSeats());
 
         verify(offertRepository).save(offert);
@@ -259,7 +257,7 @@ public class ReservationServiceTest {
 
         Reservation result = reservationService.confirmPayment(1L);
 
-        assertEquals(ReservationStatus.PAID, result.getStatus());
+        assertEquals(ReservationStatus.VALIDE, result.getStatus());
     }
 
     @Test

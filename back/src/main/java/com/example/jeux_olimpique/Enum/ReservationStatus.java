@@ -1,5 +1,5 @@
 package com.example.jeux_olimpique.Enum;
 
 public enum ReservationStatus {
-	PENDING, PAID, USED, CANCELLED
+	 EN_ATTENTE,VALIDE, UTILISE, EXPIRE   
 }

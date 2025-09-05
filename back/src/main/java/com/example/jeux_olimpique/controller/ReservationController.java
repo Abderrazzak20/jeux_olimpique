@@ -60,13 +60,6 @@ public class ReservationController {
 		Reservation reservation = reservationService.updateReservation(reservationId, newOffertId);
 		return ResponseEntity.ok(reservation);
 	}
-
-	@DeleteMapping("/{reservationId}")
-	public ResponseEntity<String> deleteReservation(@PathVariable Long reservationId) {
-		String message = reservationService.deleteReservation(reservationId);
-		return ResponseEntity.ok(message);
-	}
-
 	@PostMapping("/{reservationId}/pay")
 	public ResponseEntity<Reservation> confirmPayment(@PathVariable Long reservationId) {
 		Reservation reservation = reservationService.confirmPayment(reservationId);
@@ -87,8 +80,6 @@ public class ReservationController {
 	    }
 	}
 
-
-	
 
 	@GetMapping("/status")
 	public List<Reservation> getReservationByStatus(@RequestParam ReservationStatus status) {
