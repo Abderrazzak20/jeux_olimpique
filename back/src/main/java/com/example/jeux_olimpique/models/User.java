@@ -25,6 +25,7 @@ public class User {
 	private String password;
 	private String email;
 	private String accountKey;
+	@Column(name = "is_admin")
 	private boolean isAdmin;
 
 }
