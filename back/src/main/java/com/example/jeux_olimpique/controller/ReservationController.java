@@ -91,7 +91,20 @@ public class ReservationController {
 	        return ResponseEntity.badRequest().body("Billet non valide ou déjà utilisé ❌");
 	    }
 	}
-	
+	@GetMapping("/validate-ticket")
+	public ResponseEntity<String> validateTicketPublic(@RequestParam String finalKey) {
+	    try {
+	        boolean valid = reservationService.validateTicket(finalKey);
+	        if (valid) {
+	            return ResponseEntity.ok("✅ Billet valido e utilizzato");
+	        } else {
+	            return ResponseEntity.badRequest().body("❌ Billet non valido o già utilizzato");
+	        }
+	    } catch (Exception e) {
+	        return ResponseEntity.status(500).body("Errore interno: " + e.getMessage());
+	    }
+	}
+
 
 	
 
