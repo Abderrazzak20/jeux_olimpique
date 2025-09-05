@@ -34,7 +34,7 @@ public class ReservationService {
 
 	public Reservation createReservation(Long userId, Long offertId, int seats) throws WriterException, IOException {
 	    
-	    String baseUrl = "https://jeuxolimpique-jo2025back.up.railway.app/api/reservation/validate";
+	    String baseUrl = "https://jeuxolimpique-jo2025back.up.railway.app/api/reservation/validate-ticket";
 
 	  
 	    User user = userRepository.findById(userId)

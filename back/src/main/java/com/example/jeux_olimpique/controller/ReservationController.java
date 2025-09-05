@@ -81,7 +81,7 @@ public class ReservationController {
 		} else {
 			return ResponseEntity.badRequest().body("Billet non valide ou déjà utilisé");
 		}
-	}*/
+	}
 	@GetMapping("/validate")
 	public ResponseEntity<String> validateTicketPath(@RequestParam String finalKey) {
 	    boolean valid = reservationService.validateTicket(finalKey);
@@ -90,7 +90,7 @@ public class ReservationController {
 	    } else {
 	        return ResponseEntity.badRequest().body("Billet non valide ou déjà utilisé ❌");
 	    }
-	}
+	}*/
 	@GetMapping("/validate-ticket")
 	public ResponseEntity<String> validateTicketPublic(@RequestParam String finalKey) {
 	    try {
