@@ -51,8 +51,8 @@ public class ReservationService {
 
 	    String accountKey = user.getAccountKey();
 	    String ticketKey = utilss.generateKey();
-	    //String finalKey = accountKey + "-" + ticketKey;
-	    String finalKey = "1";
+	    String finalKey = accountKey + "-" + ticketKey;
+	   
 	    String validateUrl = baseUrl + "?finalKey=" + finalKey;
 	    String qrCode = utilss.generateQRCode(validateUrl);
 	    Reservation reservation = new Reservation();
