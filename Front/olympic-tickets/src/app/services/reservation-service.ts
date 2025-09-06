@@ -7,7 +7,7 @@ import { Injectable } from '@angular/core';
 })
 export class ReservationService {
   private baseUrl = "https://jeuxolimpique-jo2025back.up.railway.app/api/reservation";
-  
+
 
   constructor(private http: HttpClient) { }
 
@@ -25,8 +25,10 @@ export class ReservationService {
   }
 
   validateTicket(finalKey: string): Observable<any> {
-    const params = new HttpParams().set('finalKey', finalKey);
-    return this.http.post(`${this.baseUrl}/validate`, null, { params });
+    return this.http.get(`${this.baseUrl}/validate-ticket`, {
+      params: new HttpParams().set('finalKey', finalKey)
+    });
   }
-  
+
+
 }

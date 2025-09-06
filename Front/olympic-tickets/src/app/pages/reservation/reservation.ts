@@ -27,9 +27,7 @@ export class Reservation implements OnInit {
     }
     this.isLoading = true;
     this.ReservatioS.getUserReservationId(userId).subscribe({
-      next: (data) => {
-        console.log("tutto qui",data);
-        
+      next: (data) => {       
         this.reservations = data;
         this.isLoading = false;
       },
