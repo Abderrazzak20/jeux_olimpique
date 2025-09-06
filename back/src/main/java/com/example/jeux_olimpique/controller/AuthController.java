@@ -1,6 +1,5 @@
 package com.example.jeux_olimpique.controller;
 
-
 import com.example.jeux_olimpique.DTO.AuthRequest;
 import com.example.jeux_olimpique.DTO.AuthResponse;
 import com.example.jeux_olimpique.models.User;
@@ -20,29 +19,29 @@ import org.springframework.web.bind.annotation.*;
 public class AuthController {
 
 	@Autowired
-  private AuthService authService;
+	private AuthService authService;
 
-    @PostMapping("/login")
-    public ResponseEntity<AuthResponse> login(@RequestBody AuthRequest request) {
-     return authService.login(request);
-    }
-    
-    @PostMapping("/register")
-    public ResponseEntity<AuthResponse> register(@RequestBody User user) {
-    	AuthResponse createUser = authService.register(user);
-        return ResponseEntity.ok(createUser);
-    }
-    
-    @ExceptionHandler(RuntimeException.class)
-    public ResponseEntity<String> handleRuntimeException(RuntimeException ex) {
-        if (ex.getMessage().contains("Invalid credentials")) {
-            return ResponseEntity.status(401).body(ex.getMessage());
-        }
-       
-        if (ex.getMessage().contains("User already exists")) {
-            return ResponseEntity.status(409).body(ex.getMessage());
-        }
-        return ResponseEntity.internalServerError().body("Errore del server");
-    }
+	@PostMapping("/login")
+	public ResponseEntity<AuthResponse> login(@RequestBody AuthRequest request) {
+		return authService.login(request);
+	}
+
+	@PostMapping("/register")
+	public ResponseEntity<AuthResponse> register(@RequestBody User user) {
+		AuthResponse createUser = authService.register(user);
+		return ResponseEntity.ok(createUser);
+	}
+
+	@ExceptionHandler(RuntimeException.class)
+	public ResponseEntity<String> handleRuntimeException(RuntimeException ex) {
+		if (ex.getMessage().contains("Invalid credentials")) {
+			return ResponseEntity.status(401).body(ex.getMessage());
+		}
+
+		if (ex.getMessage().contains("User already exists")) {
+			return ResponseEntity.status(409).body(ex.getMessage());
+		}
+		return ResponseEntity.internalServerError().body("Erreur du serveur ");
+	}
 
 }

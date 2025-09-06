@@ -23,24 +23,23 @@ public class CarteController {
 
 	@Autowired
 	private CarteService carteService;
-
-	@GetMapping // tutti i carrelli presenti
+	@GetMapping 
 	public List<Cart> getCart() {
 		return carteService.getAllCart();
 	}
 
-	@GetMapping("/{userId}/items") // tutti i prodotti presenti per un user
+	@GetMapping("/{userId}/items") 
 	public List<CarteItem> getAllItems(@PathVariable Long userId) {
 		return carteService.getCarteItems(userId);
 	}
 
-	@PostMapping("/{userId}") // aggiungi un offerta al carrello
+	@PostMapping("/{userId}") 
 	public String addOffertToCart(@PathVariable Long userId, @RequestParam Long offerid, @RequestParam Integer quantity) {
 		carteService.addOffertToCart(userId, offerid, quantity);
 		return "offert added to Cart";
 	}
 
-	@DeleteMapping("/{userId}/items") // elima un prodotto nel carrello
+	@DeleteMapping("/{userId}/items") 
 	public String deletecarteItem(@PathVariable Long userId, @RequestParam Long cartItemId) {
 		carteService.removeCartItems(userId, cartItemId);
 		return "produit elimine";

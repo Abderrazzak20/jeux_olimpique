@@ -76,7 +76,7 @@ public class ReservationController {
 	            return ResponseEntity.badRequest().body("❌ Billet non valide ou déjà utilisé, la clé finale est = "+finalKey);
 	        }
 	    } catch (Exception e) {
-	        return ResponseEntity.status(500).body("Errore interno: " + e.getMessage());
+	        return ResponseEntity.status(500).body("Erreur interne : " + e.getMessage());
 	    }
 	}
 

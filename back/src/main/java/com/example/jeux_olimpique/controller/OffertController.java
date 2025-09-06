@@ -79,24 +79,22 @@ public class OffertController {
 		res.put("id", id);
 		return ResponseEntity.ok(res);
 	}
-	
+
 	@PreAuthorize("hasRole('ADMIN')")
 	@PutMapping("/restore/{id}")
 	public ResponseEntity<Map<String, Object>> restoreOffert(@PathVariable Long id) {
-	    Offert offert = offertService.restoreOffertById(id);
-	    Map<String, Object> response = new HashMap<>();
-	    response.put("message", "Offre restaurée avec succès");
-	    response.put("id", offert.getId());
-	    return ResponseEntity.ok(response);
+		Offert offert = offertService.restoreOffertById(id);
+		Map<String, Object> response = new HashMap<>();
+		response.put("message", "Offre restaurée avec succès");
+		response.put("id", offert.getId());
+		return ResponseEntity.ok(response);
 	}
-	
+
 	@PreAuthorize("hasRole('ADMIN')")
 	@GetMapping("/sales")
 	public ResponseEntity<List<SalesDTO>> getSalesPerOffer() {
-	    List<SalesDTO> salesList = offertService.getSalesPerOffer();
-	    return ResponseEntity.ok(salesList);
+		List<SalesDTO> salesList = offertService.getSalesPerOffer();
+		return ResponseEntity.ok(salesList);
 	}
-
-
 
 }
