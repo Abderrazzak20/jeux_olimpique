@@ -42,7 +42,7 @@ public class ReservationController {
 
 		List<Reservation> listReservationByUser = reservationService.getReservationByUser(userId);
 		listReservationByUser.forEach(r -> {
-			System.out.println(r.getOffert()); // controlla se qui è null o ha dati
+			System.out.println(r.getOffert()); 
 		});
 		return listReservationByUser;
 	}
@@ -71,9 +71,9 @@ public class ReservationController {
 	    try {
 	        boolean valid = reservationService.validateTicket(finalKey);
 	        if (valid) {
-	            return ResponseEntity.ok("✅ Billet valido e utilizzato");
+	            return ResponseEntity.ok("✅ Billet valide et utilisé"+finalKey);
 	        } else {
-	            return ResponseEntity.badRequest().body("❌ Billet non valido o già utilizzato");
+	            return ResponseEntity.badRequest().body("❌ Billet non valide ou déjà utilisé"+finalKey);
 	        }
 	    } catch (Exception e) {
 	        return ResponseEntity.status(500).body("Errore interno: " + e.getMessage());
