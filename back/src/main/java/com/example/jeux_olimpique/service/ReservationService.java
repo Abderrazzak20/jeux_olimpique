@@ -61,7 +61,7 @@ public class ReservationService {
 	    reservation.setTicketKey(ticketKey);
 	    reservation.setFinalKey(finalKey);
 	    reservation.setQrCode(qrCode);
-	    reservation.setStatus(ReservationStatus.EN_ATTENTE);
+	    reservation.setStatus(ReservationStatus.VALIDE);
 
 	    return reservationRepository.save(reservation);
 	}
