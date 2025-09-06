@@ -10,7 +10,11 @@
         <p><strong>Lieu:</strong> {{ res.offert?.location }}</p>
         <p><strong>Date:</strong> {{ res.offert?.date | date:'dd/MM/yyyy HH:mm' }}</p>
         <p><strong>Places réservées:</strong> {{ res.seats }}</p>
-        <p><strong>Statut:</strong> {{ res.status || res.Status }}</p>
+        <p *ngIf="res.status === 'EXPIRE'"><strong>Statut:</strong> Expiré ❌</p>
+        <p *ngIf="res.status === 'UTILISE'"><strong>Statut:</strong> Utilisé ✅</p>
+        <p *ngIf="res.status === 'VALIDE'"><strong>Statut:</strong> Valide ✅</p>
+
+
       </div>
       <div class="qr" *ngIf="res.qrCode">
         <img [src]="'data:image/png;base64,' + res.qrCode" alt="QR Code">

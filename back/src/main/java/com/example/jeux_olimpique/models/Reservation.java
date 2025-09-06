@@ -1,5 +1,7 @@
 package com.example.jeux_olimpique.models;
 
+
+import java.util.Date;
 import java.util.List;
 
 import com.example.jeux_olimpique.Enum.ReservationStatus;
@@ -41,4 +43,6 @@ public class Reservation {
     private String qrCode;
     @Enumerated(EnumType.STRING)
     private ReservationStatus status;
+    private Date expirationDate;
+
 }

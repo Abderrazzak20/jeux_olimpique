@@ -5,6 +5,7 @@ import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 import java.util.List;
 import java.util.Optional;
+import java.util.Date;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -54,7 +55,10 @@ public class ReservationService {
 	    String finalKey = accountKey + ":" + ticketKey;  
 	    String validateUrl = baseUrl + "?finalKey=" + finalKey;
 	    String qrCode = utilss.generateQRCode(validateUrl);
+	  
+
 	    Reservation reservation = new Reservation();
+	    reservation.setExpirationDate(new Date(System.currentTimeMillis() + 24 * 60 * 60 * 1000));
 	    reservation.setUser(user);
 	    reservation.setOffert(offert);
 	    reservation.setSeats(seats);
@@ -135,19 +139,35 @@ public class ReservationService {
 	public boolean validateTicket(String finalKey) {
 	    Reservation reservation = reservationRepository.findByFinalKey(finalKey);
 	    if (reservation == null) {
+	        System.out.println("❌ Billet non trouvé");
 	        return false;
 	    }
+
+	    // Vérification du statut
 	    if (reservation.getStatus() == ReservationStatus.UTILISE) {
+	        System.out.println("❌ Billet déjà utilisé");
 	        return false;
 	    }
-	    if (reservation.getStatus() == ReservationStatus.VALIDE){
-	        System.out.println("✅ Ticket valido, avrei impostato lo status a USED");
+
+	    // Vérification de l'expiration (supposons que expirationDate soit un champ Date)
+	    if (reservation.getExpirationDate() != null && reservation.getExpirationDate().before(new Date())) {
+	        System.out.println("❌ Billet expiré");
+	        reservation.setStatus(ReservationStatus.EXPIRE); // optionnel, si vous voulez suivre l'état
+	        reservationRepository.save(reservation);
+	        return false;
+	    }
+
+	    // Si le billet est valide
+	    if (reservation.getStatus() == ReservationStatus.VALIDE) {
+	        System.out.println("✅ Billet valide");
 	        reservation.setStatus(ReservationStatus.UTILISE);
 	        reservationRepository.save(reservation);
 	        return true;
 	    }
+
 	    return false;
 	}
+
 
 	public List<Reservation> getReservationsByStatus(ReservationStatus status) {
 		return reservationRepository.findByStatus(status);
