@@ -27,7 +27,7 @@ export class Reservation implements OnInit {
     }
     this.isLoading = true;
     this.ReservatioS.getUserReservationId(userId).subscribe({
-      next: (data) => {       
+      next: (data) => {
         this.reservations = data;
         this.isLoading = false;
       },
@@ -36,5 +36,15 @@ export class Reservation implements OnInit {
         this.isLoading = false;
       }
     })
+  }
+  validateTicket(finalKey: string) {
+    this.ReservatioS.validateTicket(finalKey).subscribe({
+      next: (res) => {
+        alert(res);
+      },
+      error: (err) => {
+        alert(err.error || "Erreur lors de la validation du ticket.");
+      }
+    });
   }
 }
