@@ -71,9 +71,9 @@ public class ReservationController {
 	    try {
 	        boolean valid = reservationService.validateTicket(finalKey);
 	        if (valid) {
-	            return ResponseEntity.ok("✅ Billet valide et utilisé"+finalKey);
+	            return ResponseEntity.ok("✅ Billet valide et utilisé, la clé finale est = "+finalKey);
 	        } else {
-	            return ResponseEntity.badRequest().body("❌ Billet non valide ou déjà utilisé"+finalKey);
+	            return ResponseEntity.badRequest().body("❌ Billet non valide ou déjà utilisé, la clé finale est = "+finalKey);
 	        }
 	    } catch (Exception e) {
 	        return ResponseEntity.status(500).body("Errore interno: " + e.getMessage());
