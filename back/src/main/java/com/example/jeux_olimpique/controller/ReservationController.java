@@ -37,16 +37,6 @@ public class ReservationController {
 		}
 	}
 
-	@GetMapping("/user/{userId}")
-	public List<Reservation> getReservationByUser(@PathVariable Long userId) {
-
-		List<Reservation> listReservationByUser = reservationService.getReservationByUser(userId);
-		listReservationByUser.forEach(r -> {
-			System.out.println(r.getOffert()); 
-		});
-		return listReservationByUser;
-	}
-
 	@GetMapping("/offert/{offertId}")
 	public List<Reservation> getReservationByOffert(@PathVariable Long offertId) {
 
@@ -65,6 +55,13 @@ public class ReservationController {
 		Reservation reservation = reservationService.confirmPayment(reservationId);
 		return ResponseEntity.ok(reservation);
 	}
+	@GetMapping("/user/{userId}")
+	public List<Reservation> getReservationByUser(@PathVariable Long userId) {	    
+	    reservationService.updateExpiredReservations();
+
+	    return reservationService.getReservationByUser(userId);
+	}
+
 
 	@GetMapping("/validate-ticket")
 	public ResponseEntity<String> validateTicketPublic(@RequestParam String finalKey) {

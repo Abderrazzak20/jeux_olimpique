@@ -135,6 +135,17 @@ public class ReservationService {
 		return reservationRepository.save(reservation);
 
 	}
+	public void updateExpiredReservations() {
+	    List<Reservation> reservations = reservationRepository.findByStatus(ReservationStatus.VALIDE);
+	    Date now = new Date();
+
+	    for (Reservation r : reservations) {
+	        if (r.getExpirationDate() != null && r.getExpirationDate().before(now)) {
+	            r.setStatus(ReservationStatus.EXPIRE);
+	            reservationRepository.save(r);
+	        }
+	    }
+	}
 
 	public boolean validateTicket(String finalKey) {
 	    Reservation reservation = reservationRepository.findByFinalKey(finalKey);
@@ -143,13 +154,13 @@ public class ReservationService {
 	        return false;
 	    }
 
-	    // Vérification du statut
+	  
 	    if (reservation.getStatus() == ReservationStatus.UTILISE) {
 	        System.out.println("❌ Billet déjà utilisé");
 	        return false;
 	    }
 
-	    // Vérification de l'expiration (supposons que expirationDate soit un champ Date)
+
 	    if (reservation.getExpirationDate() != null && reservation.getExpirationDate().before(new Date())) {
 	        System.out.println("❌ Billet expiré");
 	        reservation.setStatus(ReservationStatus.EXPIRE); // optionnel, si vous voulez suivre l'état
@@ -157,7 +168,7 @@ public class ReservationService {
 	        return false;
 	    }
 
-	    // Si le billet est valide
+	
 	    if (reservation.getStatus() == ReservationStatus.VALIDE) {
 	        System.out.println("✅ Billet valide");
 	        reservation.setStatus(ReservationStatus.UTILISE);
