@@ -3,6 +3,7 @@ package com.example.jeux_olimpique.service;
 import java.io.IOException;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 import java.util.Date;
@@ -58,7 +59,7 @@ public class ReservationService {
 	  
 
 	    Reservation reservation = new Reservation();
-	    reservation.setExpirationDate(new Date(System.currentTimeMillis() + 24 * 60 * 60 * 1000));
+	    reservation.setExpirationDate(offert.getDate());
 	    reservation.setUser(user);
 	    reservation.setOffert(offert);
 	    reservation.setSeats(seats);
@@ -137,10 +138,10 @@ public class ReservationService {
 	}
 	public void updateExpiredReservations() {
 	    List<Reservation> reservations = reservationRepository.findByStatus(ReservationStatus.VALIDE);
-	    Date now = new Date();
+	    LocalDateTime now = LocalDateTime.now();
 
 	    for (Reservation r : reservations) {
-	        if (r.getExpirationDate() != null && r.getExpirationDate().before(now)) {
+	        if (r.getExpirationDate() != null && r.getExpirationDate().isBefore(now)) {
 	            r.setStatus(ReservationStatus.EXPIRE);
 	            reservationRepository.save(r);
 	        }
@@ -154,21 +155,19 @@ public class ReservationService {
 	        return false;
 	    }
 
-	  
 	    if (reservation.getStatus() == ReservationStatus.UTILISE) {
 	        System.out.println("❌ Billet déjà utilisé");
 	        return false;
 	    }
 
-
-	    if (reservation.getExpirationDate() != null && reservation.getExpirationDate().before(new Date())) {
+	    LocalDateTime now = LocalDateTime.now();
+	    if (reservation.getExpirationDate() != null && reservation.getExpirationDate().isBefore(now)) {
 	        System.out.println("❌ Billet expiré");
-	        reservation.setStatus(ReservationStatus.EXPIRE); // optionnel, si vous voulez suivre l'état
+	        reservation.setStatus(ReservationStatus.EXPIRE);
 	        reservationRepository.save(reservation);
 	        return false;
 	    }
 
-	
 	    if (reservation.getStatus() == ReservationStatus.VALIDE) {
 	        System.out.println("✅ Billet valide");
 	        reservation.setStatus(ReservationStatus.UTILISE);
@@ -178,6 +177,7 @@ public class ReservationService {
 
 	    return false;
 	}
+
 
 
 	public List<Reservation> getReservationsByStatus(ReservationStatus status) {

@@ -1,6 +1,7 @@
 package com.example.jeux_olimpique.models;
 
 
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
 
@@ -43,6 +44,6 @@ public class Reservation {
     private String qrCode;
     @Enumerated(EnumType.STRING)
     private ReservationStatus status;
-    private Date expirationDate;
+    private LocalDateTime expirationDate;
 
 }
