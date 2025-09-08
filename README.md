@@ -1,49 +1,108 @@
-Olympic Tickets
+🏅 Olympic Tickets
+
 Application web pour la gestion et la réservation de billets pour les Jeux Olympiques.
-Le projet est basé sur un back-end Spring Boot (Java 17 + MySQL) et un front-end Angular 20.
+Le projet est basé sur un backend Spring Boot (Java 17 + MySQL) et un frontend Angular 20.
+
+✅ Prérequis
 
 Avant de lancer le projet, assurez-vous d’avoir installé :
 
 Java 17
+
 Maven 3.9+
+
 Node.js 22.12.0
+
 Angular CLI (npm install -g @angular/cli)
+
 MySQL (ou une base Railway déjà configurée)
 
-Installation & Configuration
-Back-end (Spring Boot)
+⚙️ Installation & Configuration
+🔹 Backend (Spring Boot)
 
-Cloner le dépôt et entrer dans le dossier back-end :
+Cloner le dépôt et entrer dans le dossier backend :
+
 git clone https://github.com/Abderrazzak20/jeux_olimpique.git
 cd jeux_olimpique/back
 
+
 Configurer la base de données dans src/main/resources/application.properties :
+
 spring.datasource.url=jdbc:mysql://localhost:3306/olympic_tickets
 spring.datasource.username=root
-spring.datasource.password=votre mot de passe
+spring.datasource.password=mot_de_passe
 spring.jpa.hibernate.ddl-auto=create
 spring.jpa.show-sql=true
 server.port=8080
 
-Front-end (Angular)
-Aller dans le dossier front-end :
+🔹 Frontend (Angular)
+
+Aller dans le dossier frontend :
+
 cd jeux_olimpique/olympic-tickets/frontend
 
+
 Installer les dépendances :
+
 npm install
 
-Lancer l’application en mode développement :
-npm start
-Front disponible sur http://localhost:4200
-Déploiement avec Docker
-Construire l’image Angular :
-docker build -t olympic-frontend .
-Lancer le conteneur :
-docker run -p 8080:8080 olympic-frontend
 
-Fonctionnalités principales:
+Lancer l’application en mode développement :
+
+npm start
+
+
+Frontend disponible sur http://localhost:4200
+
+ Déploiement avec Docker & Railway
+
+Un Dockerfile et un fichier nginx.conf sont déjà fournis dans frontend/olympic-tickets/.
+
+Ce Dockerfile :
+
+Compile l’application Angular
+
+Sert les fichiers statiques via Nginx
+
+Utilise la variable d’environnement $PORT imposée par Railway
+
+Déploiement sur Railway
+Étapes :
+
+Pousser votre projet sur GitHub
+
+Aller sur Railway
+
+Créer un nouveau projet et connecter le repo GitHub
+
+Définir le dossier pour le frontend et le backend dans les paramètres de Railway
+
+Ajouter vos variables d’environnement :
+
+SPRING_DATASOURCE_URL
+
+SPRING_DATASOURCE_USERNAME
+
+SPRING_DATASOURCE_PASSWORD
+
+Railway déploiera automatiquement le frontend et le backend 
+
+Fonctionnalités principales
+
 Gestion des utilisateurs (Admin / Client)
+
 Réservation de billets
-Génération & validation des QR Codes
+
+Génération et validation des QR Codes
+
 Sécurisation avec JWT
-Tableau de bord administrateur (offres, ventes, réservations,Panel de Ventes)
+
+Tableau de bord administrateur :
+
+Gestion des offres
+
+Suivi des ventes
+
+Liste des réservations
+
+Panel de ventes
