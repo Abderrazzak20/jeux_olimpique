@@ -15,7 +15,7 @@ Node.js 22.12.0
 
 Angular CLI (npm install -g @angular/cli)
 
-MySQL (ou une base Railway déjà configurée)
+MySQL
 
 ⚙️ Installation & Configuration
 🔹 Backend (Spring Boot)
@@ -29,10 +29,15 @@ cd jeux_olimpique/back
 Configurer la base de données dans src/main/resources/application.properties :
 
 spring.datasource.url=jdbc:mysql://localhost:3306/olympic_tickets
+
 spring.datasource.username=root
-spring.datasource.password=mot_de_passe
+
+spring.datasource.password=mot de passe
+
 spring.jpa.hibernate.ddl-auto=create
+
 spring.jpa.show-sql=true
+
 server.port=8080
 
 🔹 Frontend (Angular)
@@ -47,7 +52,7 @@ Installer les dépendances :
 npm install
 
 
-Lancer l’application en mode développement :
+Lancer l’application:
 
 npm start
 
