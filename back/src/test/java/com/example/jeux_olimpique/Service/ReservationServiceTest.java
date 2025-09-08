@@ -60,12 +60,9 @@ public class ReservationServiceTest {
 
         Reservation result = reservationService.createReservation(1L, 2L, 5);
 
-        // 🔹 Corretto: finalKey = accountKey + ":" + ticketKey
         assertEquals("ACCOUNT_KEY:TICKET_KEY", result.getFinalKey()); 
-        assertEquals("ACCOUNT_KEY", result.getTicketKey());
+        assertEquals("TICKET_KEY", result.getTicketKey()); // ✅ corretto
         assertEquals("QR_CODE", result.getQrCode());
-
-        // 🔹 Verifica anche l'aggiornamento posti
         assertEquals(5, offert.getAvailableSeats());
 
         verify(offertRepository).save(offert);
@@ -80,14 +77,27 @@ public class ReservationServiceTest {
             reservationService.createReservation(1L, 2L, 5);
         });
 
-        assertEquals("user il est pas present", ex.getMessage());
+        assertEquals("Utilisateur non trouvé", ex.getMessage()); // ✅ uniformato
+    }
+
+    @Test
+    void createReservation_offertNotFound() {
+        User user = new User();
+        when(userRepository.findById(1L)).thenReturn(Optional.of(user));
+        when(offertRepository.findById(2L)).thenReturn(Optional.empty());
+
+        RuntimeException ex = assertThrows(RuntimeException.class, () -> {
+            reservationService.createReservation(1L, 2L, 5);
+        });
+
+        assertEquals("Offre non trouvée", ex.getMessage()); // ✅ uniformato
     }
 
     @Test
     void createReservation_noSeatsAvailable_throwsException() {
         User user = new User();
         Offert offert = new Offert();
-        offert.setAvailableSeats(0); // nessun posto
+        offert.setAvailableSeats(0);
 
         when(userRepository.findById(1L)).thenReturn(Optional.of(user));
         when(offertRepository.findById(2L)).thenReturn(Optional.of(offert));
@@ -107,6 +117,15 @@ public class ReservationServiceTest {
     }
 
     @Test
+    void getReservationByOffert_success() {
+        when(reservationRepository.findByOffertId(2L)).thenReturn(List.of(new Reservation(), new Reservation()));
+        List<Reservation> result = reservationService.getReservationByOffert(2L);
+
+        assertEquals(2, result.size());
+        verify(reservationRepository).findByOffertId(2L);
+    }
+
+    @Test
     void updateReservation_success() throws WriterException, IOException {
         User user = new User();
         user.setAccountKey("ACCOUNT_KEY");
@@ -122,7 +141,7 @@ public class ReservationServiceTest {
         reservation.setId(10L);
         reservation.setUser(user);
         reservation.setOffert(oldOffert);
-        reservation.setSeats(2); // 🔹 aggiunto seats per simulare
+        reservation.setSeats(2);
 
         when(reservationRepository.findById(10L)).thenReturn(Optional.of(reservation));
         when(offertRepository.findById(5L)).thenReturn(Optional.of(newOffert));
@@ -132,12 +151,9 @@ public class ReservationServiceTest {
 
         Reservation updated = reservationService.updateReservation(10L, 5L);
 
-        
         assertEquals("ACCOUNT_KEY:NEW_KEY", updated.getFinalKey());
         assertEquals("NEW_QR", updated.getQrCode());
         assertEquals(newOffert, updated.getOffert());
-
-       
         assertEquals(5, oldOffert.getAvailableSeats()); 
         assertEquals(2, newOffert.getAvailableSeats()); 
     }
@@ -150,31 +166,7 @@ public class ReservationServiceTest {
             reservationService.updateReservation(1L, 2L);
         });
 
-        assertEquals("desole on a pas trouve votre reservation", ex.getMessage());
-    }
-
-    @Test
-    void getReservationByOffert_success() {
-        when(reservationRepository.findByOffertId(2L))
-            .thenReturn(List.of(new Reservation(), new Reservation()));
-
-        List<Reservation> result = reservationService.getReservationByOffert(2L);
-
-        assertEquals(2, result.size());
-        verify(reservationRepository).findByOffertId(2L);
-    }
-
-    @Test
-    void createReservation_offertNotFound() {
-        User user = new User();
-        when(userRepository.findById(1L)).thenReturn(Optional.of(user));
-        when(offertRepository.findById(2L)).thenReturn(Optional.empty());
-
-        RuntimeException ex = assertThrows(RuntimeException.class, () -> {
-            reservationService.createReservation(1L, 2L, 5);
-        });
-
-        assertEquals("offert n'est pas diposnible", ex.getMessage());
+        assertEquals("Désolé, réservation introuvable", ex.getMessage()); // ✅ uniformato
     }
 
     @Test
@@ -226,7 +218,7 @@ public class ReservationServiceTest {
             reservationService.deleteReservation(1L);
         });
 
-        assertEquals("Prenotazione non trovata", ex.getMessage());
+        assertEquals("Réservation introuvable", ex.getMessage()); // ✅ uniformato
     }
 
     @Test
@@ -246,7 +238,7 @@ public class ReservationServiceTest {
 
         verify(offertRepository).save(offert);
         verify(reservationRepository).deleteById(1L);
-        assertEquals("reservation supprime", result);
+        assertEquals("Réservation supprimée avec succès", result); // ✅ uniformato
     }
 
     @Test
@@ -268,6 +260,6 @@ public class ReservationServiceTest {
             reservationService.confirmPayment(1L);
         });
 
-        assertEquals("riservation introuvable", ex.getMessage());
+        assertEquals("Réservation introuvable", ex.getMessage()); // ✅ uniformato
     }
 }

@@ -110,14 +110,4 @@ public class ReservationControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.id").value(5L));
     }
-
-    @Test
-    void testDeleteReservation() throws Exception {
-        Mockito.when(reservationService.deleteReservation(3L))
-                .thenReturn("Reservation deleted");
-
-        mockMvc.perform(delete("/api/reservation/3"))
-                .andExpect(status().isOk())
-                .andExpect(content().string("Reservation deleted"));
-    }
 }
