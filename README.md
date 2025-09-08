@@ -14,20 +14,20 @@ Installation & Configuration
 Back-end (Spring Boot)
 
 Cloner le dépôt et entrer dans le dossier back-end :
-git clone https://github.com/username/olympic-tickets.git
-cd olympic-tickets/backend
+git clone https://github.com/Abderrazzak20/jeux_olimpique.git
+cd jeux_olimpique/back
 
 Configurer la base de données dans src/main/resources/application.properties :
 spring.datasource.url=jdbc:mysql://localhost:3306/olympic_tickets
 spring.datasource.username=root
-spring.datasource.password=VOTRE_MOT_DE_PASSE
-spring.jpa.hibernate.ddl-auto=update
+spring.datasource.password=votre mot de passe
+spring.jpa.hibernate.ddl-auto=create
 spring.jpa.show-sql=true
 server.port=8080
 
 Front-end (Angular)
 Aller dans le dossier front-end :
-cd olympic-tickets/frontend
+cd jeux_olimpique/olympic-tickets/frontend
 
 Installer les dépendances :
 npm install
