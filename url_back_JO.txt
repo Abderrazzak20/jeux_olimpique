@@ -1,0 +1,38 @@
+Test JEUX OLYMPIQUE
+Base URL: https://jeuxolimpique-jo2025back.up.railway.app
+
+AuthController (/auth)
+POST   /auth/register
+POST   /auth/login
+
+CarteController (/api/cart)
+GET    /api/cart
+GET    /api/cart/{userId}/items
+POST   /api/cart/{userId}  (Params: offerid, quantity)
+DELETE /api/cart/{userId}/items  (Params: cartItemId)
+DELETE /api/cart/{cartId}
+
+OffertController (/api/offert)
+GET    /api/offert/active
+GET    /api/offert/all  (admin)
+GET    /api/offert/{id}
+POST   /api/offert  (admin)
+PUT    /api/offert/{id}  (admin)
+DELETE /api/offert/{id}  (admin)
+PUT    /api/offert/restore/{id}  (admin)
+GET    /api/offert/sales  (admin)
+
+ReservationController (/api/reservation)
+POST   /api/reservation  (Params: userId, offertId, seat)
+GET    /api/reservation/offert/{offertId}
+PUT    /api/reservation/{reservationId}  (Params: newOffertId)
+POST   /api/reservation/{reservationId}/pay
+GET    /api/reservation/user/{userId}
+GET    /api/reservation/validate-ticket  (Params: finalKey)
+GET    /api/reservation/status  (Params: status)
+
+UserController (/api/users)
+GET    /api/users/{id}
+GET    /api/users
+PUT    /api/users/{id}
+DELETE /api/users/{id}
