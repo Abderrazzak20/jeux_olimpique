@@ -9,7 +9,7 @@
   <p><strong>Description :</strong> {{ offertM.description }}</p>
 
   <p *ngIf="offertM.location"><strong>Lieu :</strong> {{ offertM.location }}</p>
-  <p *ngIf="offertM.date"><strong>Date :</strong> {{ offertM.date | date:'dd/MM/yyyy' }}</p>
+  <p *ngIf="offertM.date"><strong>Date :</strong> {{ offertM.date | date:'dd/MM/yyyy HH:mm' }}</p>
 
   <div class="ajout-panier">
     <p>Chaque billet accepte jusqu'à {{ offertM.max_People }} personnes.</p>
