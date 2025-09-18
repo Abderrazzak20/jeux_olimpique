@@ -4,6 +4,7 @@ import io.jsonwebtoken.*;
 import io.jsonwebtoken.security.Keys;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -20,7 +21,8 @@ import java.util.List;
 @Service
 public class JwtService {
 
-	private final String SECRET_KEY = "xG7h!kVbWpTz@98A2sLq#R1fP0eD5uYjC6nM$ZlS4oQ3wXbVtKpH";
+	@Value("${JWT_SECRET_KEY}")
+	private  String SECRET_KEY;
 
 	private final long EXPIRATION = 1000 * 60 * 60 * 1; 
 
