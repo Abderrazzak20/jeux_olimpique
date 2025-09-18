@@ -28,11 +28,11 @@ cd jeux_olimpique/back
 
 Configurer la base de données dans src/main/resources/application.properties :
 
-spring.datasource.url=jdbc:mysql://localhost:3306/olympic_tickets
+spring.datasource.url=${DB_URL}
 
-spring.datasource.username=root
+spring.datasource.username=${DB_USERNAME}
 
-spring.datasource.password=mot de passe
+spring.datasource.password=${DB_PASSWORD}
 
 spring.jpa.hibernate.ddl-auto=create
 
