@@ -40,7 +40,7 @@ public class JwtService {
 		User user = userRepository.findByEmail(userDetails.getUsername())
 				.orElseThrow(() -> new UsernameNotFoundException("Utilisateur introuvable"));
 
-		return Jwts.builder().setSubject(userDetails.getUsername()) // di solito email
+		return Jwts.builder().setSubject(userDetails.getUsername()) 
 				.claim("roles", userDetails.getAuthorities().stream().map(GrantedAuthority::getAuthority).toList())
 				.claim("id", user.getId()).setIssuedAt(new Date(System.currentTimeMillis()))
 				.claim("is_admin", user.isAdmin())
