@@ -26,12 +26,9 @@ git clone https://github.com/Abderrazzak20/jeux_olimpique.git
 cd jeux_olimpique/back
 
 
-Configuration de la base MySQL avec Railway et Spring Boot
-
-Créer la base
+Configuration de database MySQL avec Railway et Spring Boot
 
 Va sur Railway
-.
 
 Crée un service MySQL.
 
