@@ -26,7 +26,31 @@ git clone https://github.com/Abderrazzak20/jeux_olimpique.git
 cd jeux_olimpique/back
 
 
-Configurer la base de données dans src/main/resources/application.properties :
+Configuration de la base MySQL avec Railway et Spring Boot
+
+Créer la base
+
+Va sur Railway
+.
+
+Crée un service MySQL.
+
+Récupérer les informations
+Dans l’onglet Variables de Railway, note :
+
+MYSQLHOST 
+
+MYSQLPORT 
+
+MYSQLDATABASE 
+
+MYSQLUSER 
+
+MYSQLPASSWORD 
+
+Construire l’URL JDBC: jdbc:mysql://<MYSQLHOST>:<MYSQLPORT>/<MYSQLDATABASE>?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC
+
+Configurer src/main/resources/application.properties
 
 spring.datasource.url=${DB_URL}
 
