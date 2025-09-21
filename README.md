@@ -48,7 +48,7 @@ MYSQLUSER
 
 MYSQLPASSWORD 
 
-Construire l’URL JDBC: jdbc:mysql://<MYSQLHOST>:<MYSQLPORT>/<MYSQLDATABASE>?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC
+Construire l’URL JDBC: jdbc:mysql://MYSQLHOST:MYSQLPORT/MYSQLDATABASE?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC
 
 Configurer src/main/resources/application.properties
 
