@@ -36,5 +36,3 @@ GET    /api/users/{id}
 GET    /api/users
 PUT    /api/users/{id}
 DELETE /api/users/{id}
-
-test_ci_cd
